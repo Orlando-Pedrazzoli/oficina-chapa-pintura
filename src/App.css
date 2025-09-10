@@ -1,0 +1,12 @@
+/* src/App.css - NAVBAR TRANSPARENTE EM TODAS AS PÁGINAS */
+.App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Todas as páginas sem padding para navbar transparente */
+.main-content {
+  flex: 1;
+  padding-top: 0;
+}
