@@ -143,24 +143,6 @@ const Contact = () => {
                 </div>
               </div>
             </div>
-
-            <div className='service-areas'>
-              <h3>Áreas de Serviço</h3>
-              <div className='areas-grid'>
-                <span>Lisboa Centro</span>
-                <span>Benfica</span>
-                <span>Alvalade</span>
-                <span>Lumiar</span>
-                <span>Olivais</span>
-                <span>Marvila</span>
-                <span>Beato</span>
-                <span>Areeiro</span>
-                <span>Avenidas Novas</span>
-                <span>Campo de Ourique</span>
-                <span>Estrela</span>
-                <span>Misericórdia</span>
-              </div>
-            </div>
           </div>
 
           <div className='contact-form-section'>

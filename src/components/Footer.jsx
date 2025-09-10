@@ -1,3 +1,4 @@
+// src/components/Footer.jsx - CORRIGIDO E MELHORADO
 import './Footer.css';
 
 const Footer = () => {
@@ -6,61 +7,70 @@ const Footer = () => {
   return (
     <footer className='footer'>
       <div className='footer-container'>
+        {/* Coluna 1 - Sobre */}
         <div className='footer-section'>
-          <h3>ChapaPintura Lisboa</h3>
+          <h3>Street Paint</h3>
           <p>
             Especialistas em reparação automóvel com mais de 15 anos de
-            experiência em Lisboa.
+            experiência em Sintra e região.
           </p>
           <div className='social-links'>
-            <a href='#' aria-label='Facebook'>
+            <a href='#' aria-label='Facebook' title='Facebook'>
               📘
             </a>
-            <a href='#' aria-label='Instagram'>
+            <a href='#' aria-label='Instagram' title='Instagram'>
               📷
             </a>
-            <a href='#' aria-label='WhatsApp'>
+            <a
+              href='https://wa.me/351960172705'
+              aria-label='WhatsApp'
+              title='WhatsApp'
+              target='_blank'
+              rel='noopener noreferrer'
+            >
               📱
             </a>
           </div>
         </div>
 
+        {/* Coluna 2 - Serviços */}
         <div className='footer-section'>
           <h4>Serviços</h4>
           <ul>
-            <li>Reparação de Colisões</li>
+            <li>Bate Chapa</li>
             <li>Pintura Automóvel</li>
-            <li>Remoção de Amolgadelas</li>
-            <li>Substituição de Vidros</li>
+            <li>Martelinho de Ouro</li>
+            <li>Polimento de Óticas</li>
+            <li>Restauração de Volantes</li>
           </ul>
         </div>
 
+        {/* Coluna 3 - Contacto */}
         <div className='footer-section'>
           <h4>Contacto</h4>
           <div className='contact-info'>
-            <p>📍 Lisboa, Portugal</p>
-            <p>📞 +351 XXX XXX XXX</p>
-            <p>✉️ info@chapapinturalisboa.pt</p>
-            <p>🕒 Seg-Sex: 8h-18h | Sáb: 9h-13h</p>
+            <p>📍 Av. Pedro Álvares Cabral 13, Sintra</p>
+            <p>📞 +351 960 172 705</p>
+            <p>✉️ info@streetpaint.pt</p>
+            <p>🕒 Seg-Sex: 9h-18h | Sáb: 9h-13h</p>
           </div>
         </div>
 
+        {/* Coluna 4 - Áreas de Serviço */}
         <div className='footer-section'>
           <h4>Áreas de Serviço</h4>
           <ul>
-            <li>Lisboa Centro</li>
-            <li>Benfica & Alvalade</li>
-            <li>Olivais & Marvila</li>
-            <li>Campo de Ourique</li>
+            <li>Sintra Centro</li>
+            <li>Queluz & Massamá</li>
+            <li>Agualva-Cacém</li>
+            <li>Rio de Mouro</li>
+            <li>Mem Martins</li>
           </ul>
         </div>
       </div>
 
       <div className='footer-bottom'>
-        <p>
-          &copy; {currentYear} ChapaPintura Lisboa. Todos os direitos
-          reservados.
-        </p>
+        <p>&copy; {currentYear} Street Paint. Todos os direitos reservados.</p>
       </div>
     </footer>
   );

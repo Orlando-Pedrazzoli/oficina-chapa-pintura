@@ -1,83 +1,195 @@
-/* src/index.css - REMOVIDO CSS ANTIGO DA NAVBAR */
+/* src/index.css - ESTILOS BASE LIMPOS */
+:root {
+  /* Cores principais */
+  --primary: #dc2626;
+  --primary-dark: #b91c1c;
+  --primary-darker: #991b1b;
+  --secondary: #4285f4;
+  --dark: #2c3e50;
+  --dark-light: #34495e;
+  --gray: #6b7280;
+  --gray-light: #9ca3af;
+  --white: #ffffff;
+  --off-white: #f8fafc;
+  --text-dark: #333333;
+  --text-light: #ecf0f1;
+
+  /* Espaçamentos */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-xxl: 3rem;
+
+  /* Fontes */
+  --font-primary: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+
+  /* Transições */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+}
+
+/* Reset básico */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  line-height: 1.6;
-  color: #333;
-  background-color: #fff;
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
+body {
+  font-family: var(--font-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
+  color: var(--text-dark);
+  background-color: var(--white);
+  overflow-x: hidden;
+}
+
+/* Container global */
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
+  width: 100%;
 }
 
-.btn-primary {
-  background: linear-gradient(135deg, #374151, #1f2937);
-  color: white;
+/* Botões globais */
+.btn {
   padding: 15px 30px;
-  border: 2px solid #dc2626;
   border-radius: 8px;
   font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: var(--transition-normal);
   text-decoration: none;
   display: inline-block;
   text-align: center;
+  border: none;
+  outline: none;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: var(--white);
+  box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
 }
 
 .btn-primary:hover {
-  background: linear-gradient(135deg, #dc2626, #b91c1c);
-  border-color: #ef4444;
+  background: linear-gradient(
+    135deg,
+    var(--primary-dark),
+    var(--primary-darker)
+  );
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(220, 38, 38, 0.3);
+  box-shadow: 0 6px 20px rgba(220, 38, 38, 0.4);
 }
 
 .btn-secondary {
   background: transparent;
-  color: #374151;
-  padding: 15px 30px;
-  border: 2px solid #6b7280;
-  border-radius: 8px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-decoration: none;
-  display: inline-block;
-  text-align: center;
+  color: var(--dark);
+  border: 2px solid var(--gray);
 }
 
 .btn-secondary:hover {
-  background: #374151;
-  color: white;
-  border-color: #dc2626;
+  background: var(--dark);
+  color: var(--white);
+  border-color: var(--dark);
   transform: translateY(-2px);
 }
 
+/* Spinner de loading */
 .spinner {
   border: 2px solid rgba(255, 255, 255, 0.3);
   border-radius: 50%;
-  border-top: 2px solid white;
+  border-top: 2px solid var(--white);
   width: 20px;
   height: 20px;
   animation: spin 1s linear infinite;
   display: inline-block;
-  margin-right: 10px;
 }
 
 @keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
+  to {
     transform: rotate(360deg);
+  }
+}
+
+/* Scrollbar personalizada */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 5px;
+  transition: background var(--transition-fast);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-dark);
+}
+
+/* Seleção de texto */
+::selection {
+  background: var(--primary);
+  color: var(--white);
+}
+
+::-moz-selection {
+  background: var(--primary);
+  color: var(--white);
+}
+
+/* Focus para acessibilidade */
+*:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Responsividade base */
+@media (max-width: 1024px) {
+  .container {
+    max-width: 960px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 15px;
+  }
+
+  .btn {
+    padding: 12px 25px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 10px;
+  }
+
+  .btn {
+    padding: 10px 20px;
+    font-size: 0.95rem;
   }
 }

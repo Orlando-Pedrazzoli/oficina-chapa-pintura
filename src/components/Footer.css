@@ -1,15 +1,11 @@
-/* src/components/Footer.css - ATUALIZADO PARA 100% WIDTH */
+/* src/components/Footer.css - CORRIGIDO PARA MELHOR LEGIBILIDADE */
 .footer {
   background: #2c3e50;
   color: white;
   padding: 50px 0 20px;
   margin: 0;
-  width: 100vw;
+  width: 100%;
   position: relative;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
 }
 
 .footer-container {
@@ -26,18 +22,21 @@
   color: #4285f4;
   margin-bottom: 20px;
   font-size: 1.4rem;
+  font-weight: 600;
 }
 
 .footer-section h4 {
-  color: #ecf0f1;
+  color: #ffffff;
   margin-bottom: 15px;
   font-size: 1.2rem;
+  font-weight: 600;
 }
 
 .footer-section p {
   line-height: 1.8;
   margin-bottom: 15px;
-  color: #bdc3c7;
+  color: #ecf0f1;
+  font-size: 0.95rem;
 }
 
 .footer-section ul {
@@ -47,16 +46,19 @@
 }
 
 .footer-section ul li {
-  padding: 5px 0;
-  color: #bdc3c7;
-  transition: color 0.3s ease;
+  padding: 8px 0;
+  color: #ecf0f1;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  font-size: 0.95rem;
 }
 
 .footer-section ul li:hover {
   color: #4285f4;
-  cursor: pointer;
+  padding-left: 5px;
 }
 
+/* Social Links */
 .social-links {
   display: flex;
   gap: 15px;
@@ -67,124 +69,135 @@
   font-size: 1.5rem;
   transition: transform 0.3s ease;
   text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .social-links a:hover {
-  transform: scale(1.2);
+  transform: scale(1.1);
+  background: rgba(66, 133, 244, 0.2);
+  border-color: #4285f4;
+}
+
+/* Contact Info - CORRIGIDO */
+.contact-info {
+  background: transparent !important;
 }
 
 .contact-info p {
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   display: flex;
   align-items: center;
   gap: 10px;
+  color: #ecf0f1 !important;
+  background: transparent !important;
+  font-size: 0.95rem;
 }
 
+.contact-info p:hover {
+  color: #ffffff !important;
+}
+
+/* Ícones na contact info */
+.contact-info p::before {
+  font-size: 1.1rem;
+  filter: brightness(1.2);
+}
+
+/* Footer Bottom */
 .footer-bottom {
-  border-top: 1px solid #34495e;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
   margin-top: 30px;
   padding-top: 20px;
   text-align: center;
-  color: #95a5a6;
+  color: #bdc3c7;
+  font-size: 0.9rem;
   width: 100%;
+  background: transparent;
 }
 
+.footer-bottom p {
+  margin: 0;
+  color: #bdc3c7;
+}
+
+/* Melhorias de contraste e legibilidade */
+.footer * {
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.footer h3,
+.footer h4 {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+/* Links com melhor visibilidade */
+.footer a {
+  color: #ecf0f1;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer a:hover {
+  color: #4285f4;
+}
+
+/* Responsividade */
 @media (max-width: 768px) {
   .footer-container {
     grid-template-columns: 1fr;
     gap: 30px;
   }
-}
 
-/* ADICIONE TAMBÉM NO src/index.css - Para garantir que não há margens globais */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  line-height: 1.6;
-  color: #333;
-  background-color: #fff;
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden; /* Evita scroll horizontal */
-}
-
-html {
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden; /* Evita scroll horizontal */
-}
-
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-  width: 100%;
-}
-
-/* Estilos para botões globais */
-.btn-primary {
-  background: linear-gradient(135deg, #4285f4, #1a73e8);
-  color: white;
-  padding: 15px 30px;
-  border: none;
-  border-radius: 50px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-decoration: none;
-  display: inline-block;
-  text-align: center;
-}
-
-.btn-primary:hover {
-  background: linear-gradient(135deg, #3367d6, #1557b0);
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-}
-
-.btn-secondary {
-  background: transparent;
-  color: #4285f4;
-  padding: 15px 30px;
-  border: 2px solid #4285f4;
-  border-radius: 50px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-decoration: none;
-  display: inline-block;
-  text-align: center;
-}
-
-.btn-secondary:hover {
-  background: #4285f4;
-  color: white;
-  transform: translateY(-2px);
-}
-
-.spinner {
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-radius: 50%;
-  border-top: 2px solid white;
-  width: 20px;
-  height: 20px;
-  animation: spin 1s linear infinite;
-  display: inline-block;
-  margin-right: 10px;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
+  .footer {
+    padding: 40px 0 20px;
   }
-  100% {
-    transform: rotate(360deg);
+
+  .footer-section h3 {
+    font-size: 1.3rem;
   }
+
+  .footer-section h4 {
+    font-size: 1.1rem;
+  }
+
+  .contact-info p {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-container {
+    padding: 0 15px;
+  }
+
+  .social-links a {
+    width: 35px;
+    height: 35px;
+    font-size: 1.3rem;
+  }
+}
+
+/* Fix para garantir que não há sobreposições */
+.footer-section {
+  position: relative;
+  z-index: 1;
+  background: transparent !important;
+}
+
+.footer-section * {
+  background: transparent !important;
+}
+
+/* Garantir que texto seja sempre legível */
+.footer-section:not(.social-links) * {
+  color: inherit;
+  opacity: 1 !important;
+  visibility: visible !important;
 }
