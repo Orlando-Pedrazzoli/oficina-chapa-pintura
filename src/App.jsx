@@ -2,11 +2,11 @@
 import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import WhatsAppButton from './components/WhatsAppButton';
+import FloatingButtons from './components/FloatingButtons';
 import Homepage from './pages/Homepage';
 import Services from './pages/Services';
 import Contact from './pages/Contact';
-import Chatbot from './components/Chatbot';
+
 import ScrollToTop from './components/ScrollToTop';
 import './App.css';
 
@@ -23,8 +23,7 @@ function App() {
         </Routes>
       </main>
       <Footer />
-      <WhatsAppButton />
-      <Chatbot />
+      <FloatingButtons />
     </div>
   );
 }
