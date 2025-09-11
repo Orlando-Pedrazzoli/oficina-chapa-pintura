@@ -21,7 +21,7 @@ const BudgetEstimator = () => {
     {
       id: 'hatchback',
       name: 'Hatchback',
-      image: '/HATCHBACK.png',
+      image: '/hatchback.png',
       description: 'Compactos e urbanos',
       priceMultiplier: 1.0, // Preço base
       examples: 'VW Golf, Ford Fiesta, Renault Clio',
@@ -30,7 +30,7 @@ const BudgetEstimator = () => {
     {
       id: 'sedan',
       name: 'Sedan',
-      image: '/SEDAN.png',
+      image: '/sedan.png',
       description: 'Sedans médios e executivos',
       priceMultiplier: 1.1, // 10% mais caro
       examples: 'BMW Série 3, Mercedes C, Audi A4',
@@ -39,7 +39,7 @@ const BudgetEstimator = () => {
     {
       id: 'suv',
       name: 'SUV',
-      image: '/SUV.png',
+      image: '/suv.png',
       description: 'Utilitários esportivos',
       priceMultiplier: 1.2, // 20% mais caro
       examples: 'BMW X5, Range Rover, VW Tiguan',
@@ -48,7 +48,7 @@ const BudgetEstimator = () => {
     {
       id: 'van',
       name: 'Van',
-      image: '/VAN.png',
+      image: '/van.png',
       description: 'Vans e comerciais leves',
       priceMultiplier: 1.25, // 25% mais caro
       examples: 'Mercedes Vito, VW Transporter',
@@ -57,7 +57,7 @@ const BudgetEstimator = () => {
     {
       id: 'pickup',
       name: 'Pickup',
-      image: '/PICKUP.PNG',
+      image: '/pickup.png',
       description: 'Pick-ups e utilitários',
       priceMultiplier: 1.15, // 15% mais caro
       examples: 'Ford Ranger, Toyota Hilux, VW Amarok',
