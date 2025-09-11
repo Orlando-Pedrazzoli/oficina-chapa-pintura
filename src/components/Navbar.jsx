@@ -1,4 +1,4 @@
-// src/components/Navbar.jsx - PROFISSIONAL E RESPONSIVA
+// src/components/Navbar.jsx - CORRIGIDO COM NOVO LINK ORÇAMENTO ESTIMADO
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import './Navbar.css';
@@ -66,6 +66,11 @@ const Navbar = () => {
     window.scrollTo(0, 0);
   };
 
+  const goToBudgetEstimator = () => {
+    navigate('/orcamento');
+    setIsMenuOpen(false);
+  };
+
   return (
     <>
       <nav className={`navbar ${isScrolled ? 'scrolled' : 'transparent'}`}>
@@ -96,6 +101,15 @@ const Navbar = () => {
               onClick={handleLinkClick}
             >
               Serviços
+            </Link>
+            <Link
+              to='/orcamento'
+              className={`nav-link ${
+                location.pathname.includes('/orcamento') ? 'active' : ''
+              }`}
+              onClick={handleLinkClick}
+            >
+              Orçamento Estimado
             </Link>
             <Link
               to='/contact'

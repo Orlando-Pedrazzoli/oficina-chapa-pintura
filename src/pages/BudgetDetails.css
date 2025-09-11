@@ -1,0 +1,614 @@
+/* src/pages/BudgetDetails.css - ESTILOS DA PÁGINA DE DETALHES */
+
+.budget-details-page {
+  min-height: 100vh;
+  background: #f8f9fa;
+  padding-bottom: 40px;
+}
+
+/* Header */
+.details-header {
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  color: white;
+  padding: 100px 0 40px;
+  margin-bottom: 40px;
+}
+
+.back-button {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 20px;
+}
+
+.back-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateX(-5px);
+}
+
+.details-header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.details-header p {
+  font-size: 1.1rem;
+  opacity: 0.95;
+}
+
+/* Main Content Layout */
+.details-content {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 30px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Car View Section */
+.car-view-section {
+  background: white;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* View Selector */
+.view-selector {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.view-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 12px 20px;
+  background: #f3f4f6;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 100px;
+}
+
+.view-btn:hover {
+  background: #e5e7eb;
+  transform: translateY(-2px);
+}
+
+.view-btn.active {
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  color: white;
+  border-color: #dc2626;
+}
+
+.view-icon {
+  font-size: 1.5rem;
+}
+
+.view-name {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* Interactive Car Container */
+.car-interactive-container {
+  position: relative;
+  background: #f9fafb;
+  border-radius: 15px;
+  padding: 20px;
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.car-view-image {
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Interactive Part Points */
+.part-point {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.point-indicator {
+  width: 40px;
+  height: 40px;
+  background: white;
+  border: 3px solid #dc2626;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: #dc2626;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.part-point:hover .point-indicator {
+  transform: scale(1.2);
+  box-shadow: 0 4px 20px rgba(220, 38, 38, 0.3);
+}
+
+.part-point.selected .point-indicator {
+  background: #dc2626;
+  color: white;
+}
+
+/* Part Popup */
+.part-popup {
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  border-radius: 12px;
+  padding: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  min-width: 250px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 100;
+}
+
+.part-point:hover .part-popup {
+  opacity: 1;
+  visibility: visible;
+  bottom: 55px;
+}
+
+.part-popup h4 {
+  margin: 0 0 10px 0;
+  color: #1f2937;
+  font-size: 1.1rem;
+  text-align: center;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.service-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.service-btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  background: #f9fafb;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.service-btn:hover {
+  background: #f3f4f6;
+  border-color: #dc2626;
+}
+
+.service-btn.active {
+  background: linear-gradient(
+    135deg,
+    rgba(220, 38, 38, 0.1) 0%,
+    rgba(220, 38, 38, 0.05) 100%
+  );
+  border-color: #dc2626;
+}
+
+.service-btn span {
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+.service-btn strong {
+  color: #dc2626;
+  font-size: 1rem;
+}
+
+/* Instructions */
+.instructions {
+  margin-top: 20px;
+  padding: 15px;
+  background: #fef2f2;
+  border-left: 4px solid #dc2626;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.instructions p {
+  margin: 0;
+  color: #7f1d1d;
+}
+
+.highlight {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background: white;
+  border: 2px solid #dc2626;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 20px;
+  color: #dc2626;
+  font-weight: bold;
+  margin: 0 5px;
+}
+
+/* Cart Section */
+.cart-section {
+  background: white;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+  height: fit-content;
+  position: sticky;
+  top: 20px;
+}
+
+.cart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.cart-header h3 {
+  margin: 0;
+  color: #1f2937;
+  font-size: 1.3rem;
+}
+
+.cart-toggle {
+  display: none;
+}
+
+/* Selected Parts List */
+.selected-parts-list {
+  max-height: 400px;
+  overflow-y: auto;
+  margin-bottom: 20px;
+}
+
+.empty-cart {
+  text-align: center;
+  padding: 40px 20px;
+  color: #9ca3af;
+}
+
+.empty-cart p {
+  margin: 0 0 8px 0;
+  font-size: 1.1rem;
+}
+
+.empty-cart small {
+  font-size: 0.9rem;
+}
+
+/* Cart Item */
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: #f9fafb;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  transition: all 0.2s ease;
+}
+
+.cart-item:hover {
+  background: #f3f4f6;
+}
+
+.item-info h4 {
+  margin: 0 0 5px 0;
+  color: #1f2937;
+  font-size: 1rem;
+}
+
+.service-type {
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+.item-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.item-price {
+  font-weight: 600;
+  color: #dc2626;
+  font-size: 1.1rem;
+}
+
+.remove-btn {
+  width: 28px;
+  height: 28px;
+  background: #fee2e2;
+  border: none;
+  border-radius: 50%;
+  color: #dc2626;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.remove-btn:hover {
+  background: #dc2626;
+  color: white;
+  transform: scale(1.1);
+}
+
+/* Cart Total */
+.cart-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background: linear-gradient(
+    135deg,
+    rgba(220, 38, 38, 0.05) 0%,
+    rgba(220, 38, 38, 0.02) 100%
+  );
+  border-radius: 12px;
+  margin-bottom: 20px;
+  border: 2px solid #fecaca;
+}
+
+.cart-total span {
+  font-size: 1.1rem;
+  color: #6b7280;
+}
+
+.cart-total strong {
+  font-size: 1.8rem;
+  color: #dc2626;
+}
+
+/* Customer Info Form */
+.customer-info-form {
+  margin-bottom: 20px;
+}
+
+.customer-info-form h4 {
+  margin: 0 0 15px 0;
+  color: #1f2937;
+  font-size: 1rem;
+}
+
+.customer-info-form input {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 1rem;
+  margin-bottom: 10px;
+  transition: border-color 0.2s ease;
+}
+
+.customer-info-form input:focus {
+  outline: none;
+  border-color: #dc2626;
+}
+
+/* Cart Actions */
+.cart-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.whatsapp-btn {
+  width: 100%;
+  padding: 15px;
+  background: #25d366;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+}
+
+.whatsapp-btn:hover {
+  background: #128c7e;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(37, 211, 102, 0.3);
+}
+
+.clear-btn {
+  width: 100%;
+  padding: 12px;
+  background: transparent;
+  color: #dc2626;
+  border: 2px solid #dc2626;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.clear-btn:hover {
+  background: #dc2626;
+  color: white;
+}
+
+/* Mobile Cart Toggle */
+.mobile-cart-toggle {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  border: none;
+  border-radius: 50%;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+  z-index: 100;
+  transition: all 0.3s ease;
+}
+
+.mobile-cart-toggle:hover {
+  transform: scale(1.1);
+}
+
+.cart-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: #10b981;
+  color: white;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: bold;
+}
+
+/* Responsividade */
+@media (max-width: 1200px) {
+  .details-content {
+    grid-template-columns: 1fr 350px;
+  }
+}
+
+@media (max-width: 968px) {
+  .details-content {
+    grid-template-columns: 1fr;
+  }
+
+  .cart-section {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 90%;
+    max-width: 400px;
+    height: 100vh;
+    border-radius: 0;
+    z-index: 1000;
+    transition: right 0.3s ease;
+    overflow-y: auto;
+  }
+
+  .cart-section.mobile-show {
+    right: 0;
+  }
+
+  .mobile-cart-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cart-toggle {
+    display: block;
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+
+  .mobile-only {
+    display: block;
+  }
+}
+
+@media (max-width: 768px) {
+  .details-header {
+    padding: 80px 0 30px;
+  }
+
+  .details-header h1 {
+    font-size: 2rem;
+  }
+
+  .view-selector {
+    gap: 5px;
+  }
+
+  .view-btn {
+    min-width: 80px;
+    padding: 10px 15px;
+  }
+
+  .car-view-section {
+    padding: 20px;
+  }
+
+  .part-popup {
+    min-width: 220px;
+  }
+}
+
+@media (max-width: 480px) {
+  .details-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .view-btn {
+    min-width: 60px;
+    padding: 8px 10px;
+  }
+
+  .view-icon {
+    font-size: 1.2rem;
+  }
+
+  .view-name {
+    font-size: 0.8rem;
+  }
+
+  .point-indicator {
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
+  }
+
+  .cart-section.mobile-show {
+    width: 100%;
+  }
+}
