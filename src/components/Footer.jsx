@@ -55,18 +55,6 @@ const Footer = () => {
             <p>🕒 Seg-Sex: 9h-18h | Sáb: 9h-13h</p>
           </div>
         </div>
-
-        {/* Coluna 4 - Áreas de Serviço */}
-        <div className='footer-section'>
-          <h4>Áreas de Serviço</h4>
-          <ul>
-            <li>Sintra Centro</li>
-            <li>Queluz & Massamá</li>
-            <li>Agualva-Cacém</li>
-            <li>Rio de Mouro</li>
-            <li>Mem Martins</li>
-          </ul>
-        </div>
       </div>
 
       <div className='footer-bottom'>

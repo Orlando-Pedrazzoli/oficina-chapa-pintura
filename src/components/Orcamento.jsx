@@ -264,28 +264,6 @@ const Orcamento = () => {
                   placeholder='Ex: BMW Serie 3, Mercedes Classe A'
                 />
               </div>
-
-              <div className='form-group'>
-                <label htmlFor='location'>Localização</label>
-                <select
-                  id='location'
-                  name='location'
-                  value={formData.location}
-                  onChange={handleInputChange}
-                >
-                  <option value=''>Selecione a área</option>
-                  <option value='sintra-centro'>Sintra Centro</option>
-                  <option value='queluz'>Queluz</option>
-                  <option value='agualva-cacem'>Agualva-Cacém</option>
-                  <option value='algueirão'>Algueirão</option>
-                  <option value='rio-de-mouro'>Rio de Mouro</option>
-                  <option value='massamá'>Massamá</option>
-                  <option value='monte-abraão'>Monte Abraão</option>
-                  <option value='mem-martins'>Mem Martins</option>
-                  <option value='belas'>Belas</option>
-                  <option value='outros'>Outros</option>
-                </select>
-              </div>
             </div>
 
             <div className='form-group full-width'>

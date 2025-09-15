@@ -1,4 +1,4 @@
-/* src/components/Navbar.css - PROFISSIONAL E RESPONSIVO */
+/* src/components/Navbar.css - ATUALIZADO COM DESTAQUE NO ORÇAMENTO ESTIMADO */
 .navbar {
   position: fixed;
   top: 0;
@@ -107,27 +107,68 @@
   width: 100%;
 }
 
+/* BOTÃO PRINCIPAL - ORÇAMENTO ESTIMADO COM DESTAQUE ESPECIAL */
 .nav-cta-btn {
   background: linear-gradient(135deg, #dc2626, #b91c1c);
   color: white;
-  padding: 12px 28px;
-  border: 2px solid rgba(255, 255, 255, 0.2);
+  padding: 14px 32px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
   border-radius: 50px;
-  font-size: 0.95rem;
-  font-weight: 600;
+  font-size: 1rem;
+  font-weight: 700;
   cursor: pointer;
   transition: all 0.3s ease;
   text-shadow: none;
-  box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
+  box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4), 0 0 30px rgba(220, 38, 38, 0.2);
   letter-spacing: 0.5px;
   white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+  animation: pulse 3s infinite;
+}
+
+/* Animação de pulso para chamar atenção */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4),
+      0 0 30px rgba(220, 38, 38, 0.2);
+  }
+  50% {
+    box-shadow: 0 4px 20px rgba(220, 38, 38, 0.6),
+      0 0 40px rgba(220, 38, 38, 0.4);
+  }
+  100% {
+    box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4),
+      0 0 30px rgba(220, 38, 38, 0.2);
+  }
+}
+
+/* Efeito de brilho no botão */
+.nav-cta-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: left 0.5s ease;
 }
 
 .nav-cta-btn:hover {
-  background: linear-gradient(135deg, #b91c1c, #991b1b);
-  border-color: rgba(255, 255, 255, 0.4);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 25px rgba(220, 38, 38, 0.5);
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 8px 25px rgba(220, 38, 38, 0.6), 0 0 50px rgba(220, 38, 38, 0.4);
+}
+
+.nav-cta-btn:hover::before {
+  left: 100%;
 }
 
 .nav-toggle {
@@ -258,10 +299,11 @@
 
   .nav-cta-btn {
     margin-top: 10px;
-    padding: 14px 35px;
-    font-size: 1rem;
+    padding: 16px 40px;
+    font-size: 1.1rem;
     width: 90%;
-    max-width: 250px;
+    max-width: 280px;
+    animation: pulse 2s infinite;
   }
 
   /* Animação do hamburger menu */
@@ -302,8 +344,8 @@
   }
 
   .nav-cta-btn {
-    padding: 12px 25px;
-    font-size: 0.95rem;
+    padding: 14px 30px;
+    font-size: 1rem;
   }
 
   .bar {

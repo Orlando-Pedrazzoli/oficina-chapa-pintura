@@ -1,4 +1,4 @@
-// src/components/Navbar.jsx - CORRIGIDO COM NOVO LINK ORÇAMENTO ESTIMADO
+// src/components/Navbar.jsx - ATUALIZADO COM ORÇAMENTO ESTIMADO EM DESTAQUE
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import './Navbar.css';
@@ -102,14 +102,8 @@ const Navbar = () => {
             >
               Serviços
             </Link>
-            <Link
-              to='/orcamento'
-              className={`nav-link ${
-                location.pathname.includes('/orcamento') ? 'active' : ''
-              }`}
-              onClick={handleLinkClick}
-            >
-              Orçamento Estimado
+            <Link to='/' className={`nav-link`} onClick={scrollToEstimate}>
+              Orçamento Gratuito
             </Link>
             <Link
               to='/contact'
@@ -120,8 +114,8 @@ const Navbar = () => {
             >
               Contacto
             </Link>
-            <button className='nav-cta-btn' onClick={scrollToEstimate}>
-              Orçamento Gratuito
+            <button className='nav-cta-btn' onClick={goToBudgetEstimator}>
+              🎯 Orçamento Estimado
             </button>
           </div>
 
