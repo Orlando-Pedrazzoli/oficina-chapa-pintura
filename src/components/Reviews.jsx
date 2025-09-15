@@ -1,263 +1,401 @@
-import React, { useState, useEffect } from 'react';
+// src/components/Reviews.jsx - CORRIGIDO SEM BADGE E AUTO-ROTAÇÃO MOBILE
+import { useState, useEffect } from 'react';
 import './Reviews.css';
 
 const Reviews = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isAnimating, setIsAnimating] = useState(false);
+  const [selectedReview, setSelectedReview] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
 
-  // Reviews reais do Google da Street Paint
+  // Reviews reais do Google (sem o campo localGuide)
   const reviews = [
     {
       id: 1,
-      name: 'Estefanía Táriba',
+      name: 'Núria Cruz',
       rating: 5,
-      timeAgo: 'há 1 mês',
-      text: 'Excelente atenção por parte do Júlio e a sua equipa, profissionalismo. 100% recomendado.',
+      date: 'há 2 semanas',
+      text: 'Fiquei muito satisfeita pelo excelente atendimento e pelos serviços prestados. Recomendo a 100%.',
+      avatar: 'NC',
       verified: true,
     },
     {
       id: 2,
-      name: 'Tiago Martins',
+      name: 'Estefanía Táriba',
       rating: 5,
-      timeAgo: 'há 4 meses',
-      text: '5 estrelas é pouco para o profissionalismo e dedicação do Julio e equipa! Excelente trabalho no isolamento da mala. Pintura com um acabamento como de origem!',
+      date: 'há 3 meses',
+      text: 'Excelente atenção por parte do Júlio e a sua equipa, profissionalismo. 100% recomendado.',
+      avatar: 'ET',
       verified: true,
     },
     {
       id: 3,
-      name: 'George Nussbaum',
+      name: 'Tiago Martins',
       rating: 5,
-      timeAgo: 'há 10 meses',
-      text: 'Só tenho grandes coisas a dizer sobre o Julio e a sua equipa. Fizeram um excelente trabalho no pára-choques riscado e no guarda-lamas traseiro do nosso carro.',
+      date: 'há 5 meses',
+      text: '5 estrelas é pouco para o profissionalismo e dedicação do Julio e equipa! Excelente trabalho no isolamento da mala. Pintura com um acabamento como de origem!',
+      avatar: 'TM',
       verified: true,
     },
     {
       id: 4,
-      name: 'Priscila Brandão',
+      name: 'George Nussbaum',
       rating: 5,
-      timeAgo: 'há 3 anos',
-      text: 'Ambiente bem estruturado e adequada aos trabalho que oferece, o proprietário é bastante atencioso as necessidades dos clientes e pintura impecável, vale a pena conhecer, gostei muito!!!! Obrigado Sr. Júlio.',
+      date: 'há um ano',
+      text: 'Só tenho grandes coisas a dizer sobre o Julio e a sua equipa. Fizeram um excelente trabalho no pára-choques riscado e no guarda-lamas traseiro do nosso carro. O preço foi bom e o trabalho foi feito muito rapidamente.',
+      avatar: 'GN',
       verified: true,
     },
     {
       id: 5,
       name: 'Ricardo TUCCI',
       rating: 5,
-      timeAgo: 'há 3 anos',
+      date: 'há 3 anos',
       text: 'Excelente oficina, com pessoas qualificadas para um ótimo trabalho, Parabéns!!!',
+      avatar: 'RT',
       verified: true,
+      ownerResponse: 'Obrigado pela credibilidade!',
     },
     {
       id: 6,
-      name: 'Carlos Monho',
+      name: 'Priscila Brandão',
       rating: 5,
-      timeAgo: 'há 3 anos',
-      text: 'É sem dúvida uma oficina profissional, com pessoal qualificado e equipamento adequado à realização de uma reparação de qualidade. Recomendo 😉👌',
+      date: 'há 3 anos',
+      text: 'Ambiente bem estruturado e adequado aos trabalhos que oferece, o proprietário é bastante atencioso às necessidades dos clientes e pintura impecável, vale a pena conhecer, gostei muito!!!! Obrigado Sr. Júlio.',
+      avatar: 'PB',
       verified: true,
+      ownerResponse: 'Obrigado!',
     },
     {
       id: 7,
-      name: 'Otamiel Ferreira',
+      name: 'Carlos Monho',
       rating: 5,
-      timeAgo: 'há 3 meses',
-      text: 'Top qualidade e preços top',
+      date: 'há 3 anos',
+      text: 'É sem dúvida uma oficina profissional, com pessoal qualificado e equipamento adequado à realização de uma reparação de qualidade. Recomendo 😉👌',
+      avatar: 'CM',
       verified: true,
+      ownerResponse: 'Obrigado! Conte sempre com a gente!',
     },
     {
       id: 8,
-      name: 'António Rodrigues',
+      name: 'Otamiel Ferreira',
       rating: 5,
-      timeAgo: 'há 1 ano',
-      text: 'Top. Recomendo a quem precisa de reparações no seu carro.',
+      date: 'há 4 meses',
+      text: 'Top qualidade e preços top',
+      avatar: 'OF',
       verified: true,
     },
     {
       id: 9,
-      name: 'Felipe Grillo',
+      name: 'António Rodrigues',
       rating: 5,
-      timeAgo: 'há 3 anos',
-      text: 'Serviço com qualidade e no prazo prometido! Recomendo',
+      date: 'há um ano',
+      text: 'Top. Recomendo a quem precisa de reparações no seu carro.',
+      avatar: 'AR',
       verified: true,
     },
     {
       id: 10,
-      name: 'Thais Rangel',
+      name: 'Vanderson Guilherme',
       rating: 5,
-      timeAgo: 'há 3 anos',
-      text: 'Ótima oficina com profissionais competentes!',
+      date: 'há um ano',
+      text: 'Excelente trabalho',
+      avatar: 'VG',
       verified: true,
     },
     {
       id: 11,
-      name: 'Fred Gabrielli',
+      name: 'Felipe Grillo',
       rating: 5,
-      timeAgo: 'há 3 anos',
-      text: 'Serviço impecável, atencioso e cuidadoso.',
+      date: 'há 3 anos',
+      text: 'Serviço com qualidade e no prazo prometido! Recomendo',
+      avatar: 'FG',
       verified: true,
+      ownerResponse: 'Agradeço imenso!',
     },
     {
       id: 12,
-      name: 'Viviane Barreto',
-      rating: 4,
-      timeAgo: 'há 2 anos',
-      text: 'Ótimo local para reparação automotiva!',
+      name: 'Tiago Santos',
+      rating: 5,
+      date: 'há 3 anos',
+      text: 'Trabalho muito profissional! Recomendo!',
+      avatar: 'TS',
       verified: true,
+      ownerResponse: 'Agradeço imenso!',
+    },
+    {
+      id: 13,
+      name: 'Thais Rangel',
+      rating: 5,
+      date: 'há 3 anos',
+      text: 'Ótima oficina com profissionais competentes!',
+      avatar: 'TR',
+      verified: true,
+    },
+    {
+      id: 14,
+      name: 'Fred Gabrielli',
+      rating: 5,
+      date: 'há 3 anos',
+      text: 'Serviço impecável, atencioso e cuidadoso.',
+      avatar: 'FG',
+      verified: true,
+      ownerResponse: 'Obrigado! Estamos a disposição!',
+    },
+    {
+      id: 15,
+      name: 'Viviane Barreto',
+      rating: 5,
+      date: 'há 2 anos',
+      text: 'Ótimo local para reparação automotiva!',
+      avatar: 'VB',
+      verified: true,
+    },
+    {
+      id: 16,
+      name: 'Renato Maia',
+      rating: 5,
+      date: 'há 2 anos',
+      text: 'Profissionalismo e excelência.',
+      avatar: 'RM',
+      verified: true,
+    },
+    {
+      id: 17,
+      name: 'Paulo Tomé',
+      rating: 5,
+      date: 'há 2 dias',
+      text: '',
+      avatar: 'PT',
+      verified: true,
+    },
+    {
+      id: 18,
+      name: 'Gefesson Leite da Silva',
+      rating: 5,
+      date: 'há 3 anos',
+      text: '',
+      avatar: 'GL',
+      verified: true,
+      ownerResponse: '👍🏼',
+    },
+    {
+      id: 19,
+      name: 'Cleomar Aliane',
+      rating: 5,
+      date: 'há 3 anos',
+      text: '',
+      avatar: 'CA',
+      verified: true,
+      ownerResponse: 'Obrigado!',
     },
   ];
 
-  // Calcula a média das avaliações
-  const averageRating = (
-    reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length
-  ).toFixed(1);
-  const totalReviews = reviews.length;
+  // Estatísticas reais
+  const stats = {
+    totalReviews: 19,
+    averageRating: 4.9,
+    ratings: {
+      5: 19,
+      4: 0,
+      3: 0,
+      2: 0,
+      1: 0,
+    },
+    highlights: [
+      { keyword: 'equipa', count: 3 },
+      { keyword: 'profissionalismo', count: 2 },
+      { keyword: 'preço', count: 2 },
+    ],
+  };
 
-  // Auto-rotate reviews
+  // Detectar se é mobile
   useEffect(() => {
-    const interval = setInterval(() => {
-      setIsAnimating(true);
-      setTimeout(() => {
-        setCurrentIndex(prevIndex =>
-          prevIndex >= reviews.length - 3 ? 0 : prevIndex + 1
-        );
-        setIsAnimating(false);
-      }, 300);
-    }, 4000);
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
 
-    return () => clearInterval(interval);
-  }, [reviews.length]);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Auto-rotação APENAS no desktop
+  useEffect(() => {
+    if (!isMobile) {
+      const interval = setInterval(() => {
+        setSelectedReview(prev => (prev + 1) % reviews.length);
+      }, 5000);
+
+      return () => clearInterval(interval);
+    }
+  }, [reviews.length, isMobile]);
 
   const renderStars = rating => {
-    return Array.from({ length: 5 }, (_, index) => (
-      <span key={index} className={`star ${index < rating ? 'filled' : ''}`}>
+    return Array.from({ length: 5 }, (_, i) => (
+      <span key={i} className={`star ${i < rating ? 'filled' : ''}`}>
         ★
       </span>
     ));
   };
 
-  const getInitials = name => {
-    return name
-      .split(' ')
-      .map(n => n[0])
-      .join('')
-      .toUpperCase();
+  const handlePrevReview = () => {
+    setSelectedReview(prev => (prev - 1 + reviews.length) % reviews.length);
   };
 
-  const getVisibleReviews = () => {
-    const visibleReviews = [];
-    for (let i = 0; i < 3; i++) {
-      const index = (currentIndex + i) % reviews.length;
-      visibleReviews.push(reviews[index]);
-    }
-    return visibleReviews;
+  const handleNextReview = () => {
+    setSelectedReview(prev => (prev + 1) % reviews.length);
   };
+
+  // Determinar quantos reviews mostrar baseado no tamanho da tela
+  const getReviewsToShow = () => {
+    if (isMobile) return 1;
+    if (window.innerWidth <= 1200) return 2;
+    return 3;
+  };
+
+  const reviewsToShow = getReviewsToShow();
 
   return (
     <section className='reviews-section'>
       <div className='container'>
-        {/* Header com estatísticas do Google */}
         <div className='reviews-header'>
-          <div className='google-stats'>
-            <div className='google-logo'>
-              <svg
-                width='24'
-                height='24'
-                viewBox='0 0 24 24'
-                xmlns='http://www.w3.org/2000/svg'
-              >
-                <path
-                  fill='#4285F4'
-                  d='M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z'
-                />
-                <path
-                  fill='#34A853'
-                  d='M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z'
-                />
-                <path
-                  fill='#FBBC05'
-                  d='M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z'
-                />
-                <path
-                  fill='#EA4335'
-                  d='M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z'
-                />
-              </svg>
-              <span>Google</span>
+          <h2>O Que Dizem Nossos Clientes</h2>
+          <p>Avaliações reais do Google</p>
+        </div>
+
+        {/* Estatísticas */}
+        <div className='reviews-stats'>
+          <div className='rating-summary'>
+            <div className='average-rating'>
+              <span className='rating-number'>{stats.averageRating}</span>
+              <div className='stars'>{renderStars(5)}</div>
+              <span className='total-reviews'>
+                {stats.totalReviews} avaliações no Google
+              </span>
             </div>
-            <div className='rating-summary'>
-              <div className='rating-score'>
-                <span className='score'>{averageRating}</span>
-                <div className='stars-summary'>
-                  {renderStars(Math.round(parseFloat(averageRating)))}
+
+            <div className='rating-bars'>
+              {[5, 4, 3, 2, 1].map(star => (
+                <div key={star} className='rating-bar'>
+                  <span className='star-label'>{star}★</span>
+                  <div className='bar-container'>
+                    <div
+                      className='bar-fill'
+                      style={{
+                        width: `${
+                          (stats.ratings[star] / stats.totalReviews) * 100
+                        }%`,
+                      }}
+                    />
+                  </div>
+                  <span className='count'>{stats.ratings[star]}</span>
                 </div>
-              </div>
-              <div className='rating-info'>
-                <span className='total-reviews'>{totalReviews} avaliações</span>
-                <span className='verified-badge'>Verificado pelo Google</span>
-              </div>
+              ))}
             </div>
           </div>
 
-          <div className='reviews-title'>
-            <h2>O que dizem nossos clientes</h2>
-            <p>Avaliações reais de clientes satisfeitos da Street Paint</p>
+          <div className='highlights'>
+            <h4>Mais mencionado:</h4>
+            <div className='highlight-tags'>
+              {stats.highlights.map((highlight, index) => (
+                <span key={index} className='tag'>
+                  {highlight.keyword} ({highlight.count})
+                </span>
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* Reviews Cards */}
-        <div className='reviews-container'>
-          <div className={`reviews-grid ${isAnimating ? 'animating' : ''}`}>
-            {getVisibleReviews().map((review, index) => (
-              <div key={`${review.id}-${currentIndex}`} className='review-card'>
-                <div className='review-header'>
-                  <div className='reviewer-info'>
-                    <div className='reviewer-avatar'>
-                      {getInitials(review.name)}
+        {/* Carrossel de Reviews */}
+        <div className='reviews-carousel'>
+          <button className='carousel-btn prev' onClick={handlePrevReview}>
+            ←
+          </button>
+
+          <div className='review-cards'>
+            {reviews
+              .slice(selectedReview, selectedReview + reviewsToShow)
+              .concat(
+                reviews.slice(
+                  0,
+                  Math.max(0, selectedReview + reviewsToShow - reviews.length)
+                )
+              )
+              .map((review, index) => (
+                <div
+                  key={review.id}
+                  className={`review-card ${index === 0 ? 'active' : ''}`}
+                >
+                  <div className='review-header'>
+                    <div className='reviewer-info'>
+                      <div className='avatar'>{review.avatar}</div>
+                      <div>
+                        <h4>{review.name}</h4>
+                        <div className='review-meta'>
+                          <span className='date'>{review.date}</span>
+                          {review.verified && (
+                            <span className='verified'>✓ Verificado</span>
+                          )}
+                        </div>
+                      </div>
                     </div>
-                    <div className='reviewer-details'>
-                      <h4>{review.name}</h4>
-                      <span className='review-time'>{review.timeAgo}</span>
+                    <div className='review-rating'>
+                      {renderStars(review.rating)}
                     </div>
                   </div>
-                  <div className='review-source'>
-                    <svg
-                      width='16'
-                      height='16'
-                      viewBox='0 0 24 24'
-                      xmlns='http://www.w3.org/2000/svg'
-                    >
-                      <path
-                        fill='#4285F4'
-                        d='M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z'
-                      />
-                      <path
-                        fill='#34A853'
-                        d='M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z'
-                      />
-                      <path
-                        fill='#FBBC05'
-                        d='M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z'
-                      />
-                      <path
-                        fill='#EA4335'
-                        d='M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z'
-                      />
-                    </svg>
-                  </div>
+
+                  {review.text && <p className='review-text'>{review.text}</p>}
+
+                  {review.ownerResponse && (
+                    <div className='owner-response'>
+                      <strong>Resposta do proprietário:</strong>
+                      <p>{review.ownerResponse}</p>
+                    </div>
+                  )}
                 </div>
+              ))}
+          </div>
 
-                <div className='review-rating'>
-                  {renderStars(review.rating)}
-                </div>
+          <button className='carousel-btn next' onClick={handleNextReview}>
+            →
+          </button>
+        </div>
 
-                <p className='review-text'>{review.text}</p>
+        {/* Indicador de rotação automática - apenas desktop */}
+        {!isMobile && (
+          <div className='auto-rotation-indicator'>
+            <span>Rotação automática ativa</span>
+            <div className='progress-bar'>
+              <div className='progress-fill'></div>
+            </div>
+          </div>
+        )}
 
-                {review.verified && (
-                  <div className='verified-review'>
-                    <span>✓ Avaliação verificada</span>
-                  </div>
-                )}
-              </div>
-            ))}
+        {/* CTA */}
+        <div className='reviews-cta'>
+          <h3>Junte-se aos nossos clientes satisfeitos!</h3>
+          <p>Agende seu orçamento gratuito hoje mesmo</p>
+          <div className='cta-buttons'>
+            <a
+              href='https://www.google.com/maps/place/Street+Paint+Bate+Chapa+Pintura+e+Recondicionamento+de+Viaturas/@38.7989,-9.3856,15z/data=!4m6!3m5!1s0x0:0x0!8m2!3d38.7989!4d-9.3856!16s%2Fg%2F11c5q0q0q0'
+              target='_blank'
+              rel='noopener noreferrer'
+              className='btn-secondary'
+            >
+              <span>Ver no Google</span>
+            </a>
+            <button
+              className='btn-primary'
+              onClick={() => {
+                const estimateSection =
+                  document.getElementById('estimate-section');
+                if (estimateSection) {
+                  estimateSection.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+            >
+              <span>Orçamento Gratuito</span>
+            </button>
           </div>
         </div>
       </div>
