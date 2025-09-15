@@ -1,4 +1,4 @@
-// src/pages/BudgetDetails.jsx - PÁGINA DE DETALHES E SELEÇÃO DE PEÇAS
+// src/pages/BudgetDetails.jsx - CORRIGIDO SEM LOOP INFINITO
 import { useState, useEffect } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import './BudgetDetails.css';
@@ -285,7 +285,16 @@ const BudgetDetails = () => {
                 alt={`${carType} - ${currentView}`}
                 className='car-view-image'
                 onError={e => {
-                  e.target.src = `/images/cars/${carType}.png`;
+                  // CORREÇÃO DO LOOP INFINITO
+                  // Previne loop infinito - só tenta fallback uma vez
+                  if (!e.target.dataset.fallbackAttempted) {
+                    e.target.dataset.fallbackAttempted = 'true';
+                    e.target.src = `/images/cars/${carType}.png`;
+                  } else if (!e.target.dataset.placeholderAttempted) {
+                    // Se fallback também falhar, usa placeholder genérico
+                    e.target.dataset.placeholderAttempted = 'true';
+                    e.target.src = '/images/car-placeholder.png';
+                  }
                 }}
               />
 
