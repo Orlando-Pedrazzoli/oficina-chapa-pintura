@@ -23,6 +23,7 @@
   margin-bottom: 20px;
   font-size: 1.4rem;
   font-weight: 600;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
 }
 
 .footer-section h4 {
@@ -30,6 +31,7 @@
   margin-bottom: 15px;
   font-size: 1.2rem;
   font-weight: 600;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
 }
 
 .footer-section p {
@@ -37,6 +39,7 @@
   margin-bottom: 15px;
   color: #ecf0f1;
   font-size: 0.95rem;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .footer-section ul {
@@ -51,6 +54,7 @@
   transition: all 0.3s ease;
   cursor: pointer;
   font-size: 0.95rem;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .footer-section ul li:hover {
@@ -86,22 +90,18 @@
 }
 
 /* Contact Info - CORRIGIDO */
-.contact-info {
-  background: transparent !important;
-}
-
 .contact-info p {
   margin-bottom: 12px;
   display: flex;
   align-items: center;
   gap: 10px;
-  color: #ecf0f1 !important;
-  background: transparent !important;
+  color: #ecf0f1;
   font-size: 0.95rem;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .contact-info p:hover {
-  color: #ffffff !important;
+  color: #ffffff;
 }
 
 /* Ícones na contact info */
@@ -116,25 +116,14 @@
   margin-top: 30px;
   padding-top: 20px;
   text-align: center;
-  color: #bdc3c7;
   font-size: 0.9rem;
   width: 100%;
-  background: transparent;
 }
 
 .footer-bottom p {
   margin: 0;
   color: #bdc3c7;
-}
-
-/* Melhorias de contraste e legibilidade */
-.footer * {
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-}
-
-.footer h3,
-.footer h4 {
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
 }
 
 /* Links com melhor visibilidade */
@@ -182,22 +171,4 @@
     height: 35px;
     font-size: 1.3rem;
   }
-}
-
-/* Fix para garantir que não há sobreposições */
-.footer-section {
-  position: relative;
-  z-index: 1;
-  background: transparent !important;
-}
-
-.footer-section * {
-  background: transparent !important;
-}
-
-/* Garantir que texto seja sempre legível */
-.footer-section:not(.social-links) * {
-  color: inherit;
-  opacity: 1 !important;
-  visibility: visible !important;
 }

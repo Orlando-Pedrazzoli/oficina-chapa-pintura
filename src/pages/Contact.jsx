@@ -86,7 +86,7 @@ const Contact = () => {
                 <div className='method-icon'>📞</div>
                 <div className='method-details'>
                   <h3>Telefone</h3>
-                  <p>+351 XXX XXX XXX</p>
+                  <p>+351 960 172 705</p>
                   <small>Segunda a Sexta: 8h-18h</small>
                 </div>
               </div>
@@ -104,7 +104,7 @@ const Contact = () => {
                 <div className='method-icon'>📱</div>
                 <div className='method-details'>
                   <h3>WhatsApp</h3>
-                  <p>+351 XXX XXX XXX</p>
+                  <p>+351 960 172 705</p>
                   <small>Resposta rápida</small>
                 </div>
               </div>

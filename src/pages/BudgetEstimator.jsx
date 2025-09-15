@@ -1,4 +1,4 @@
-// src/pages/BudgetEstimator.jsx - SELEÇÃO DO TIPO DE CARRO
+// src/pages/BudgetEstimator.jsx - VERSÃO LIMPA SEM INDICADORES DE PREÇO
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './BudgetEstimator.css';
@@ -14,7 +14,7 @@ const BudgetEstimator = () => {
       name: 'Sport',
       image: '/images/sport.png',
       description: 'Carros esportivos e coupés',
-      priceMultiplier: 1.3, // 30% mais caro
+      priceMultiplier: 1.3,
       examples: 'BMW M3, Audi TT, Porsche 911',
       color: '#ef4444',
     },
@@ -23,7 +23,7 @@ const BudgetEstimator = () => {
       name: 'Hatchback',
       image: '/images/hatchback.png',
       description: 'Compactos e urbanos',
-      priceMultiplier: 1.0, // Preço base
+      priceMultiplier: 1.0,
       examples: 'VW Golf, Ford Fiesta, Renault Clio',
       color: '#3b82f6',
     },
@@ -32,7 +32,7 @@ const BudgetEstimator = () => {
       name: 'Sedan',
       image: '/images/sedan.png',
       description: 'Sedans médios e executivos',
-      priceMultiplier: 1.1, // 10% mais caro
+      priceMultiplier: 1.1,
       examples: 'BMW Série 3, Mercedes C, Audi A4',
       color: '#10b981',
     },
@@ -41,7 +41,7 @@ const BudgetEstimator = () => {
       name: 'SUV',
       image: '/images/suv.png',
       description: 'Utilitários esportivos',
-      priceMultiplier: 1.2, // 20% mais caro
+      priceMultiplier: 1.2,
       examples: 'BMW X5, Range Rover, VW Tiguan',
       color: '#f59e0b',
     },
@@ -50,7 +50,7 @@ const BudgetEstimator = () => {
       name: 'Van',
       image: '/images/van.png',
       description: 'Vans e comerciais leves',
-      priceMultiplier: 1.25, // 25% mais caro
+      priceMultiplier: 1.25,
       examples: 'Mercedes Vito, VW Transporter',
       color: '#8b5cf6',
     },
@@ -59,7 +59,7 @@ const BudgetEstimator = () => {
       name: 'Pickup',
       image: '/images/pickup.png',
       description: 'Pick-ups e utilitários',
-      priceMultiplier: 1.15, // 15% mais caro
+      priceMultiplier: 1.15,
       examples: 'Ford Ranger, Toyota Hilux, VW Amarok',
       color: '#06b6d4',
     },
@@ -150,29 +150,6 @@ const BudgetEstimator = () => {
                   <h3 className='car-name'>{carType.name}</h3>
                   <p className='car-description'>{carType.description}</p>
                   <p className='car-examples'>{carType.examples}</p>
-
-                  {/* Indicador de Preço */}
-                  <div className='price-indicator'>
-                    {carType.priceMultiplier === 1.0 && (
-                      <span className='price-level base'>Preço Base</span>
-                    )}
-                    {carType.priceMultiplier > 1.0 &&
-                      carType.priceMultiplier <= 1.1 && (
-                        <span className='price-level medium'>
-                          +10% no valor
-                        </span>
-                      )}
-                    {carType.priceMultiplier > 1.1 &&
-                      carType.priceMultiplier <= 1.2 && (
-                        <span className='price-level high'>+20% no valor</span>
-                      )}
-                    {carType.priceMultiplier > 1.2 && (
-                      <span className='price-level premium'>
-                        +{Math.round((carType.priceMultiplier - 1) * 100)}% no
-                        valor
-                      </span>
-                    )}
-                  </div>
                 </div>
 
                 {/* Call to Action */}
