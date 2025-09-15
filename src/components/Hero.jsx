@@ -1,4 +1,4 @@
-// src/components/Hero.jsx - PROFISSIONAL E RESPONSIVO
+// src/components/Hero.jsx - VERSÃO ORIGINAL COM VÍDEO
 import { useState, useEffect } from 'react';
 import './Hero.css';
 
