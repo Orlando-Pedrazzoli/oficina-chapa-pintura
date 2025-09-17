@@ -4,7 +4,7 @@
 }
 
 .contact-hero {
-  background: linear-gradient(135deg, #dc2626, #b91c1c, #374151);
+  background: linear-gradient(135deg, #dc2626 0%, #1c1c1c 100%);
   color: white;
   padding: 200px 0 80px;
   text-align: center;
