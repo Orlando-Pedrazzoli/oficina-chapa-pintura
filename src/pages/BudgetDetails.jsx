@@ -1,4 +1,4 @@
-// src/pages/BudgetDetails.jsx - CORRIGIDO SEM LOOP INFINITO
+// src/pages/BudgetDetails.jsx - CÓDIGO COMPLETO ATUALIZADO
 import { useState, useEffect } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import './BudgetDetails.css';
@@ -17,7 +17,7 @@ const BudgetDetails = () => {
     email: '',
   });
 
-  // Preços base (para hatchback) - outros tipos aplicam multiplicador
+  // Preços base - iguais para todos os tipos de carro
   const basePrices = {
     'para-choque-dianteiro': { paint: 180, paintAndDent: 380 },
     'para-choque-traseiro': { paint: 180, paintAndDent: 380 },
@@ -36,105 +36,730 @@ const BudgetDetails = () => {
     'retrovisor-direito': { paint: 80, paintAndDent: 150 },
     'soleira-esquerda': { paint: 120, paintAndDent: 250 },
     'soleira-direita': { paint: 120, paintAndDent: 250 },
+    aileron: { paint: 100, paintAndDent: 200 },
   };
 
-  // Multiplicadores por tipo de carro
-  const priceMultipliers = {
-    sport: 1.3,
-    hatchback: 1.0,
-    sedan: 1.1,
-    suv: 1.2,
-    van: 1.25,
-    pickup: 1.15,
-  };
+  // ESTRUTURA COMPLETA: Peças por vista para cada tipo de carro
+  const partsByCarType = {
+    // SPORT
+    sport: {
+      front: [
+        {
+          id: 'para-choque-dianteiro',
+          name: 'Pára-choques Dianteiro',
+          x: 47,
+          y: 60,
+        },
+        {
+          id: 'capo',
+          name: 'Capô',
+          x: 47,
+          y: 35,
+        },
+        {
+          id: 'retrovisor-esquerdo',
+          name: 'Retrovisor Esquerdo',
+          x: 8,
+          y: 25,
+        },
+        {
+          id: 'retrovisor-direito',
+          name: 'Retrovisor Direito',
+          x: 86,
+          y: 25,
+        },
+      ],
+      back: [
+        {
+          id: 'para-choque-traseiro',
+          name: 'Pára-choques Traseiro',
+          x: 47,
+          y: 72,
+        },
+        {
+          id: 'mala',
+          name: 'Tampa da Bagageira',
+          x: 47,
+          y: 45,
+        },
+      ],
+      left: [
+        {
+          id: 'porta-dianteira-esquerda',
+          name: 'Porta Dianteira (Lado Esq.)',
+          x: 40,
+          y: 45,
+        },
+        {
+          id: 'porta-traseira-esquerda',
+          name: 'Porta Traseira (Lado Esq.)',
+          x: 60,
+          y: 45,
+        },
+        {
+          id: 'para-lama-dianteiro-esquerdo',
+          name: 'Para-lama Dianteiro (Lado Esq.)',
+          x: 24,
+          y: 41,
+        },
+        {
+          id: 'para-lama-traseiro-esquerdo',
+          name: 'Para-lama Traseiro (Lado Esq.)',
+          x: 77,
+          y: 38,
+        },
+        {
+          id: 'soleira-esquerda',
+          name: 'Soleira (Lado Esq.)',
+          x: 50,
+          y: 61,
+        },
+      ],
+      right: [
+        {
+          id: 'porta-dianteira-direita',
+          name: 'Porta Dianteira (Lado Dir.)',
+          x: 55,
+          y: 45,
+        },
+        {
+          id: 'porta-traseira-direita',
+          name: 'Porta Traseira (Lado Dir.)',
+          x: 35,
+          y: 45,
+        },
+        {
+          id: 'para-lama-dianteiro-direito',
+          name: 'Para-lama Dianteiro (Lado Dir.)',
+          x: 69,
+          y: 43,
+        },
+        {
+          id: 'para-lama-traseiro-direito',
+          name: 'Para-lama Traseiro (Lado Dir.)',
+          x: 17,
+          y: 40,
+        },
+        {
+          id: 'soleira-direita',
+          name: 'Soleira (Lado Dir.)',
+          x: 45,
+          y: 62,
+        },
+      ],
+      top: [
+        {
+          id: 'teto',
+          name: 'Teto',
+          x: 40,
+          y: 42,
+        },
+        {
+          id: 'aileron',
+          name: 'Aileron',
+          x: 16,
+          y: 42,
+        },
+      ],
+    },
 
-  // Peças por vista
-  const partsByView = {
-    front: [
-      {
-        id: 'para-choque-dianteiro',
-        name: 'Para-choque Dianteiro',
-        x: 50,
-        y: 80,
-      },
-      { id: 'capo', name: 'Capô', x: 50, y: 50 },
-      {
-        id: 'para-lama-dianteiro-esquerdo',
-        name: 'Para-lama Dianteiro Esq.',
-        x: 20,
-        y: 60,
-      },
-      {
-        id: 'para-lama-dianteiro-direito',
-        name: 'Para-lama Dianteiro Dir.',
-        x: 80,
-        y: 60,
-      },
-      { id: 'retrovisor-esquerdo', name: 'Retrovisor Esquerdo', x: 15, y: 45 },
-      { id: 'retrovisor-direito', name: 'Retrovisor Direito', x: 85, y: 45 },
-    ],
-    back: [
-      {
-        id: 'para-choque-traseiro',
-        name: 'Para-choque Traseiro',
-        x: 50,
-        y: 80,
-      },
-      { id: 'mala', name: 'Tampa do Porta-malas', x: 50, y: 50 },
-      {
-        id: 'para-lama-traseiro-esquerdo',
-        name: 'Para-lama Traseiro Esq.',
-        x: 20,
-        y: 60,
-      },
-      {
-        id: 'para-lama-traseiro-direito',
-        name: 'Para-lama Traseiro Dir.',
-        x: 80,
-        y: 60,
-      },
-    ],
-    left: [
-      { id: 'porta-dianteira-esquerda', name: 'Porta Dianteira', x: 35, y: 50 },
-      { id: 'porta-traseira-esquerda', name: 'Porta Traseira', x: 65, y: 50 },
-      {
-        id: 'para-lama-dianteiro-esquerdo',
-        name: 'Para-lama Dianteiro',
-        x: 15,
-        y: 50,
-      },
-      {
-        id: 'para-lama-traseiro-esquerdo',
-        name: 'Para-lama Traseiro',
-        x: 85,
-        y: 50,
-      },
-      { id: 'soleira-esquerda', name: 'Soleira', x: 50, y: 75 },
-      { id: 'retrovisor-esquerdo', name: 'Retrovisor', x: 25, y: 35 },
-    ],
-    right: [
-      { id: 'porta-dianteira-direita', name: 'Porta Dianteira', x: 65, y: 50 },
-      { id: 'porta-traseira-direita', name: 'Porta Traseira', x: 35, y: 50 },
-      {
-        id: 'para-lama-dianteiro-direito',
-        name: 'Para-lama Dianteiro',
-        x: 85,
-        y: 50,
-      },
-      {
-        id: 'para-lama-traseiro-direito',
-        name: 'Para-lama Traseiro',
-        x: 15,
-        y: 50,
-      },
-      { id: 'soleira-direita', name: 'Soleira', x: 50, y: 75 },
-      { id: 'retrovisor-direito', name: 'Retrovisor', x: 75, y: 35 },
-    ],
-    top: [
-      { id: 'teto', name: 'Teto', x: 50, y: 50 },
-      { id: 'capo', name: 'Capô', x: 30, y: 50 },
-      { id: 'mala', name: 'Tampa Traseira', x: 70, y: 50 },
-    ],
+    // HATCHBACK
+    hatchback: {
+      front: [
+        {
+          id: 'para-choque-dianteiro',
+          name: 'Pára-choques Dianteiro',
+          x: 47,
+          y: 60,
+        },
+        {
+          id: 'capo',
+          name: 'Capô',
+          x: 47,
+          y: 35,
+        },
+        {
+          id: 'retrovisor-esquerdo',
+          name: 'Retrovisor Esquerdo',
+          x: 8,
+          y: 25,
+        },
+        {
+          id: 'retrovisor-direito',
+          name: 'Retrovisor Direito',
+          x: 86,
+          y: 25,
+        },
+      ],
+      back: [
+        {
+          id: 'para-choque-traseiro',
+          name: 'Pára-choques Traseiro',
+          x: 47,
+          y: 72,
+        },
+        {
+          id: 'mala',
+          name: 'Tampa da Bagageira',
+          x: 47,
+          y: 45,
+        },
+      ],
+      left: [
+        {
+          id: 'porta-dianteira-esquerda',
+          name: 'Porta Dianteira (Lado Esq.)',
+          x: 40,
+          y: 45,
+        },
+        {
+          id: 'porta-traseira-esquerda',
+          name: 'Porta Traseira (Lado Esq.)',
+          x: 60,
+          y: 45,
+        },
+        {
+          id: 'para-lama-dianteiro-esquerdo',
+          name: 'Para-lama Dianteiro (Lado Esq.)',
+          x: 24,
+          y: 41,
+        },
+        {
+          id: 'para-lama-traseiro-esquerdo',
+          name: 'Para-lama Traseiro (Lado Esq.)',
+          x: 77,
+          y: 38,
+        },
+        {
+          id: 'soleira-esquerda',
+          name: 'Soleira (Lado Esq.)',
+          x: 50,
+          y: 61,
+        },
+      ],
+      right: [
+        {
+          id: 'porta-dianteira-direita',
+          name: 'Porta Dianteira (Lado Dir.)',
+          x: 55,
+          y: 45,
+        },
+        {
+          id: 'porta-traseira-direita',
+          name: 'Porta Traseira (Lado Dir.)',
+          x: 35,
+          y: 45,
+        },
+        {
+          id: 'para-lama-dianteiro-direito',
+          name: 'Para-lama Dianteiro (Lado Dir.)',
+          x: 69,
+          y: 43,
+        },
+        {
+          id: 'para-lama-traseiro-direito',
+          name: 'Para-lama Traseiro (Lado Dir.)',
+          x: 17,
+          y: 40,
+        },
+        {
+          id: 'soleira-direita',
+          name: 'Soleira (Lado Dir.)',
+          x: 45,
+          y: 62,
+        },
+      ],
+      top: [
+        {
+          id: 'teto',
+          name: 'Teto',
+          x: 40,
+          y: 42,
+        },
+        {
+          id: 'aileron',
+          name: 'Aileron',
+          x: 16,
+          y: 42,
+        },
+      ],
+    },
+
+    // SEDAN
+    sedan: {
+      front: [
+        {
+          id: 'para-choque-dianteiro',
+          name: 'Pára-choques Dianteiro',
+          x: 47,
+          y: 60,
+        },
+        {
+          id: 'capo',
+          name: 'Capô',
+          x: 47,
+          y: 35,
+        },
+        {
+          id: 'retrovisor-esquerdo',
+          name: 'Retrovisor Esquerdo',
+          x: 8,
+          y: 25,
+        },
+        {
+          id: 'retrovisor-direito',
+          name: 'Retrovisor Direito',
+          x: 86,
+          y: 25,
+        },
+      ],
+      back: [
+        {
+          id: 'para-choque-traseiro',
+          name: 'Pára-choques Traseiro',
+          x: 47,
+          y: 72,
+        },
+        {
+          id: 'mala',
+          name: 'Tampa da Bagageira',
+          x: 47,
+          y: 45,
+        },
+      ],
+      left: [
+        {
+          id: 'porta-dianteira-esquerda',
+          name: 'Porta Dianteira (Lado Esq.)',
+          x: 40,
+          y: 45,
+        },
+        {
+          id: 'porta-traseira-esquerda',
+          name: 'Porta Traseira (Lado Esq.)',
+          x: 60,
+          y: 45,
+        },
+        {
+          id: 'para-lama-dianteiro-esquerdo',
+          name: 'Para-lama Dianteiro (Lado Esq.)',
+          x: 24,
+          y: 41,
+        },
+        {
+          id: 'para-lama-traseiro-esquerdo',
+          name: 'Para-lama Traseiro (Lado Esq.)',
+          x: 77,
+          y: 38,
+        },
+        {
+          id: 'soleira-esquerda',
+          name: 'Soleira (Lado Esq.)',
+          x: 50,
+          y: 61,
+        },
+      ],
+      right: [
+        {
+          id: 'porta-dianteira-direita',
+          name: 'Porta Dianteira (Lado Dir.)',
+          x: 55,
+          y: 45,
+        },
+        {
+          id: 'porta-traseira-direita',
+          name: 'Porta Traseira (Lado Dir.)',
+          x: 35,
+          y: 45,
+        },
+        {
+          id: 'para-lama-dianteiro-direito',
+          name: 'Para-lama Dianteiro (Lado Dir.)',
+          x: 69,
+          y: 43,
+        },
+        {
+          id: 'para-lama-traseiro-direito',
+          name: 'Para-lama Traseiro (Lado Dir.)',
+          x: 17,
+          y: 40,
+        },
+        {
+          id: 'soleira-direita',
+          name: 'Soleira (Lado Dir.)',
+          x: 45,
+          y: 62,
+        },
+      ],
+      top: [
+        {
+          id: 'teto',
+          name: 'Teto',
+          x: 40,
+          y: 42,
+        },
+        {
+          id: 'aileron',
+          name: 'Aileron',
+          x: 16,
+          y: 42,
+        },
+      ],
+    },
+
+    // SUV
+    suv: {
+      front: [
+        {
+          id: 'para-choque-dianteiro',
+          name: 'Pára-choques Dianteiro',
+          x: 47,
+          y: 60,
+        },
+        {
+          id: 'capo',
+          name: 'Capô',
+          x: 47,
+          y: 35,
+        },
+        {
+          id: 'retrovisor-esquerdo',
+          name: 'Retrovisor Esquerdo',
+          x: 8,
+          y: 25,
+        },
+        {
+          id: 'retrovisor-direito',
+          name: 'Retrovisor Direito',
+          x: 86,
+          y: 25,
+        },
+      ],
+      back: [
+        {
+          id: 'para-choque-traseiro',
+          name: 'Pára-choques Traseiro',
+          x: 47,
+          y: 72,
+        },
+        {
+          id: 'mala',
+          name: 'Tampa da Bagageira',
+          x: 47,
+          y: 45,
+        },
+      ],
+      left: [
+        {
+          id: 'porta-dianteira-esquerda',
+          name: 'Porta Dianteira (Lado Esq.)',
+          x: 40,
+          y: 45,
+        },
+        {
+          id: 'porta-traseira-esquerda',
+          name: 'Porta Traseira (Lado Esq.)',
+          x: 60,
+          y: 45,
+        },
+        {
+          id: 'para-lama-dianteiro-esquerdo',
+          name: 'Para-lama Dianteiro (Lado Esq.)',
+          x: 24,
+          y: 41,
+        },
+        {
+          id: 'para-lama-traseiro-esquerdo',
+          name: 'Para-lama Traseiro (Lado Esq.)',
+          x: 77,
+          y: 38,
+        },
+        {
+          id: 'soleira-esquerda',
+          name: 'Soleira (Lado Esq.)',
+          x: 50,
+          y: 61,
+        },
+      ],
+      right: [
+        {
+          id: 'porta-dianteira-direita',
+          name: 'Porta Dianteira (Lado Dir.)',
+          x: 55,
+          y: 45,
+        },
+        {
+          id: 'porta-traseira-direita',
+          name: 'Porta Traseira (Lado Dir.)',
+          x: 35,
+          y: 45,
+        },
+        {
+          id: 'para-lama-dianteiro-direito',
+          name: 'Para-lama Dianteiro (Lado Dir.)',
+          x: 69,
+          y: 43,
+        },
+        {
+          id: 'para-lama-traseiro-direito',
+          name: 'Para-lama Traseiro (Lado Dir.)',
+          x: 17,
+          y: 40,
+        },
+        {
+          id: 'soleira-direita',
+          name: 'Soleira (Lado Dir.)',
+          x: 45,
+          y: 62,
+        },
+      ],
+      top: [
+        {
+          id: 'teto',
+          name: 'Teto',
+          x: 40,
+          y: 42,
+        },
+        {
+          id: 'aileron',
+          name: 'Aileron',
+          x: 16,
+          y: 42,
+        },
+      ],
+    },
+
+    // VAN
+    van: {
+      front: [
+        {
+          id: 'para-choque-dianteiro',
+          name: 'Pára-choques Dianteiro',
+          x: 47,
+          y: 60,
+        },
+        {
+          id: 'capo',
+          name: 'Capô',
+          x: 47,
+          y: 35,
+        },
+        {
+          id: 'retrovisor-esquerdo',
+          name: 'Retrovisor Esquerdo',
+          x: 8,
+          y: 25,
+        },
+        {
+          id: 'retrovisor-direito',
+          name: 'Retrovisor Direito',
+          x: 86,
+          y: 25,
+        },
+      ],
+      back: [
+        {
+          id: 'para-choque-traseiro',
+          name: 'Pára-choques Traseiro',
+          x: 47,
+          y: 72,
+        },
+        {
+          id: 'mala',
+          name: 'Portas Traseiras',
+          x: 47,
+          y: 45,
+        },
+      ],
+      left: [
+        {
+          id: 'porta-dianteira-esquerda',
+          name: 'Porta Dianteira (Lado Esq.)',
+          x: 40,
+          y: 45,
+        },
+        {
+          id: 'porta-traseira-esquerda',
+          name: 'Porta Lateral Deslizante (Lado Esq.)',
+          x: 60,
+          y: 45,
+        },
+        {
+          id: 'para-lama-dianteiro-esquerdo',
+          name: 'Para-lama Dianteiro (Lado Esq.)',
+          x: 24,
+          y: 41,
+        },
+        {
+          id: 'para-lama-traseiro-esquerdo',
+          name: 'Para-lama Traseiro (Lado Esq.)',
+          x: 77,
+          y: 38,
+        },
+        {
+          id: 'soleira-esquerda',
+          name: 'Soleira (Lado Esq.)',
+          x: 50,
+          y: 61,
+        },
+      ],
+      right: [
+        {
+          id: 'porta-dianteira-direita',
+          name: 'Porta Dianteira (Lado Dir.)',
+          x: 55,
+          y: 45,
+        },
+        {
+          id: 'porta-traseira-direita',
+          name: 'Porta Lateral Deslizante (Lado Dir.)',
+          x: 35,
+          y: 45,
+        },
+        {
+          id: 'para-lama-dianteiro-direito',
+          name: 'Para-lama Dianteiro (Lado Dir.)',
+          x: 69,
+          y: 43,
+        },
+        {
+          id: 'para-lama-traseiro-direito',
+          name: 'Para-lama Traseiro (Lado Dir.)',
+          x: 17,
+          y: 40,
+        },
+        {
+          id: 'soleira-direita',
+          name: 'Soleira (Lado Dir.)',
+          x: 45,
+          y: 62,
+        },
+      ],
+      top: [
+        {
+          id: 'teto',
+          name: 'Teto',
+          x: 40,
+          y: 42,
+        },
+      ],
+    },
+
+    // PICKUP
+    pickup: {
+      front: [
+        {
+          id: 'para-choque-dianteiro',
+          name: 'Pára-choques Dianteiro',
+          x: 47,
+          y: 60,
+        },
+        {
+          id: 'capo',
+          name: 'Capô',
+          x: 47,
+          y: 35,
+        },
+        {
+          id: 'retrovisor-esquerdo',
+          name: 'Retrovisor Esquerdo',
+          x: 8,
+          y: 25,
+        },
+        {
+          id: 'retrovisor-direito',
+          name: 'Retrovisor Direito',
+          x: 86,
+          y: 25,
+        },
+      ],
+      back: [
+        {
+          id: 'para-choque-traseiro',
+          name: 'Pára-choques Traseiro',
+          x: 47,
+          y: 72,
+        },
+        {
+          id: 'mala',
+          name: 'Tampa da Caçamba',
+          x: 47,
+          y: 45,
+        },
+      ],
+      left: [
+        {
+          id: 'porta-dianteira-esquerda',
+          name: 'Porta Dianteira (Lado Esq.)',
+          x: 40,
+          y: 45,
+        },
+        {
+          id: 'porta-traseira-esquerda',
+          name: 'Porta Traseira (Lado Esq.)',
+          x: 60,
+          y: 45,
+        },
+        {
+          id: 'para-lama-dianteiro-esquerdo',
+          name: 'Para-lama Dianteiro (Lado Esq.)',
+          x: 24,
+          y: 41,
+        },
+        {
+          id: 'para-lama-traseiro-esquerdo',
+          name: 'Para-lama Traseiro (Lado Esq.)',
+          x: 77,
+          y: 38,
+        },
+        {
+          id: 'soleira-esquerda',
+          name: 'Soleira (Lado Esq.)',
+          x: 50,
+          y: 61,
+        },
+      ],
+      right: [
+        {
+          id: 'porta-dianteira-direita',
+          name: 'Porta Dianteira (Lado Dir.)',
+          x: 55,
+          y: 45,
+        },
+        {
+          id: 'porta-traseira-direita',
+          name: 'Porta Traseira (Lado Dir.)',
+          x: 35,
+          y: 45,
+        },
+        {
+          id: 'para-lama-dianteiro-direito',
+          name: 'Para-lama Dianteiro (Lado Dir.)',
+          x: 69,
+          y: 43,
+        },
+        {
+          id: 'para-lama-traseiro-direito',
+          name: 'Para-lama Traseiro (Lado Dir.)',
+          x: 17,
+          y: 40,
+        },
+        {
+          id: 'soleira-direita',
+          name: 'Soleira (Lado Dir.)',
+          x: 45,
+          y: 62,
+        },
+      ],
+      top: [
+        {
+          id: 'teto',
+          name: 'Teto da Cabine',
+          x: 40,
+          y: 42,
+        },
+      ],
+    },
   };
 
   const views = [
@@ -145,11 +770,10 @@ const BudgetDetails = () => {
     { id: 'top', name: 'Superior', icon: '⬇️' },
   ];
 
-  // Calcular preço com multiplicador
+  // Calcular preço (sem multiplicador)
   const getPrice = (partId, serviceType) => {
     const basePrice = basePrices[partId]?.[serviceType] || 0;
-    const multiplier = priceMultipliers[carType] || 1;
-    return Math.round(basePrice * multiplier);
+    return basePrice;
   };
 
   // Toggle seleção de peça
@@ -169,9 +793,10 @@ const BudgetDetails = () => {
         }
       } else {
         // Adiciona nova peça
+        const currentCarParts = partsByCarType[carType];
         const part =
-          partsByView[currentView].find(p => p.id === partId) ||
-          Object.values(partsByView)
+          currentCarParts[currentView].find(p => p.id === partId) ||
+          Object.values(currentCarParts)
             .flat()
             .find(p => p.id === partId);
         return [
@@ -241,6 +866,20 @@ const BudgetDetails = () => {
     return part?.service || null;
   };
 
+  // Obter as peças baseado no tipo de carro atual
+  const getCurrentParts = () => {
+    // Verificar se o tipo de carro existe na estrutura
+    if (!partsByCarType[carType]) {
+      console.warn(
+        `Tipo de carro '${carType}' não encontrado. Usando hatchback como padrão.`
+      );
+      return partsByCarType.hatchback[currentView] || [];
+    }
+
+    // Retornar as peças específicas do tipo de carro e vista atual
+    return partsByCarType[carType][currentView] || [];
+  };
+
   return (
     <div className='budget-details-page'>
       {/* Header */}
@@ -285,13 +924,11 @@ const BudgetDetails = () => {
                 alt={`${carType} - ${currentView}`}
                 className='car-view-image'
                 onError={e => {
-                  // CORREÇÃO DO LOOP INFINITO
-                  // Previne loop infinito - só tenta fallback uma vez
+                  // Previne loop infinito
                   if (!e.target.dataset.fallbackAttempted) {
                     e.target.dataset.fallbackAttempted = 'true';
                     e.target.src = `/images/cars/${carType}.png`;
                   } else if (!e.target.dataset.placeholderAttempted) {
-                    // Se fallback também falhar, usa placeholder genérico
                     e.target.dataset.placeholderAttempted = 'true';
                     e.target.src = '/images/car-placeholder.png';
                   }
@@ -299,7 +936,7 @@ const BudgetDetails = () => {
               />
 
               {/* Interactive Points */}
-              {partsByView[currentView].map(part => (
+              {getCurrentParts().map(part => (
                 <div
                   key={part.id}
                   className={`part-point ${
