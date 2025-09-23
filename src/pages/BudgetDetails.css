@@ -1,9 +1,31 @@
 /* src/pages/BudgetDetails.css - ESTILOS COM MELHORIAS MOBILE */
 
+/* Reset e configurações gerais para prevenir overflow */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
 .budget-details-page {
   min-height: 100vh;
   background: #f8f9fa;
   padding-bottom: 40px;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* Container global */
+.container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
 }
 
 /* Header */
@@ -537,8 +559,24 @@
 
 /* ===== MOBILE VIEW OTIMIZADO ===== */
 @media (max-width: 968px) {
+  /* Corrigir grid e padding do container principal */
+  .container {
+    padding: 0 10px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
   .details-content {
     grid-template-columns: 1fr;
+    gap: 15px;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Ajuste da seção do carro */
+  .car-view-section {
+    margin: 0 5px;
+    padding: 15px;
   }
 
   /* Mobile Cart Section - Fullscreen Modal */
@@ -637,9 +675,13 @@
     box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
   }
 
-  /* Mobile Cart Toggle Button Enhanced */
+  /* Mobile Cart Toggle Button - FORÇAR POSIÇÃO À ESQUERDA */
   .mobile-cart-toggle {
-    display: flex;
+    display: flex !important;
+    position: fixed !important;
+    bottom: 20px !important;
+    left: 20px !important;
+    right: auto !important;
     animation: pulse 2s infinite;
   }
 
@@ -661,8 +703,23 @@
 }
 
 @media (max-width: 768px) {
+  /* Corrigir o corpo da página */
+  body {
+    overflow-x: hidden !important;
+  }
+
+  .budget-details-page {
+    width: 100% !important;
+    overflow-x: hidden !important;
+  }
+
   .details-header {
-    padding: 80px 20px 30px;
+    padding: 80px 15px 30px;
+    width: 100%;
+  }
+
+  .details-header .container {
+    padding: 0 10px;
   }
 
   .details-header h1 {
@@ -689,10 +746,20 @@
 
   .car-view-section {
     padding: 15px;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .car-interactive-container {
     padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .car-view-image {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
   }
 
   /* CENTRALIZAR POPUPS EM MOBILE - CORREÇÃO IMPORTANTE */
@@ -735,9 +802,28 @@
     padding: 14px;
     font-size: 16px; /* Previne zoom no iOS */
   }
+
+  /* Forçar botão do carrinho à esquerda em mobile */
+  .mobile-cart-toggle {
+    left: 20px !important;
+    right: auto !important;
+  }
 }
 
 @media (max-width: 480px) {
+  /* Garantir que nada ultrapasse a largura da tela */
+  * {
+    max-width: 100vw !important;
+  }
+
+  .budget-details-page,
+  .container,
+  .details-content {
+    width: 100% !important;
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+  }
+
   .details-header h1 {
     font-size: 1.5rem;
   }
@@ -771,10 +857,13 @@
     height: 30px;
   }
 
-  /* Mobile Cart Enhanced - Posicionado à ESQUERDA */
+  /* Mobile Cart Enhanced - FORÇAR POSIÇÃO À ESQUERDA EM TODOS OS DISPOSITIVOS */
   .mobile-cart-toggle {
-    bottom: 15px;
-    left: 15px; /* Mantém à esquerda em telas pequenas */
+    position: fixed !important;
+    bottom: 15px !important;
+    left: 15px !important;
+    right: unset !important;
+    right: auto !important;
     padding: 12px 16px;
   }
 
@@ -807,6 +896,12 @@
     min-width: 260px !important;
     max-width: 95% !important;
   }
+
+  /* Garantir que a imagem do carro não ultrapasse a tela */
+  .car-interactive-container {
+    max-width: calc(100vw - 20px);
+    margin: 0 auto;
+  }
 }
 
 /* ===== MELHORIAS ADICIONAIS PARA MOBILE ===== */
@@ -838,6 +933,34 @@
     opacity: 0.8;
     transform: scale(0.98);
   }
+
+  /* FORÇAR BOTÃO À ESQUERDA EM TODOS OS DISPOSITIVOS MÓVEIS */
+  .mobile-cart-toggle {
+    position: fixed !important;
+    left: 20px !important;
+    right: auto !important;
+    bottom: 20px !important;
+  }
+}
+
+/* Correções específicas para iOS Safari */
+@supports (-webkit-touch-callout: none) {
+  .mobile-cart-toggle {
+    position: fixed !important;
+    left: 20px !important;
+    right: auto !important;
+    bottom: 20px !important;
+    -webkit-transform: translateZ(0);
+  }
+
+  .budget-details-page {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .container {
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
 }
 
 /* iOS Safe Area Support */
@@ -848,10 +971,10 @@
     }
 
     .mobile-cart-toggle {
-      bottom: calc(20px + env(safe-area-inset-bottom));
-      left: calc(
-        20px + env(safe-area-inset-left)
-      ); /* Ajustado para esquerda com safe area */
+      position: fixed !important;
+      bottom: calc(20px + env(safe-area-inset-bottom)) !important;
+      left: calc(20px + env(safe-area-inset-left)) !important;
+      right: auto !important;
     }
   }
 }
