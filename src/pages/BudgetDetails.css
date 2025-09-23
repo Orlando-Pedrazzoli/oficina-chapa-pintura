@@ -1,4 +1,4 @@
-/* src/pages/BudgetDetails.css - ESTILOS DA PÁGINA DE DETALHES */
+/* src/pages/BudgetDetails.css - POPUP POR CLICK, NÃO HOVER */
 
 .budget-details-page {
   min-height: 100vh;
@@ -130,13 +130,6 @@
   z-index: 10;
 }
 
-/* Classe temporária para prevenir hover após fechar popup */
-.part-point.no-hover .part-popup {
-  visibility: hidden !important;
-  opacity: 0 !important;
-  pointer-events: none !important;
-}
-
 .point-indicator {
   width: 40px;
   height: 40px;
@@ -177,15 +170,16 @@
   opacity: 0;
   visibility: hidden;
   transition: all 0.3s ease;
-  z-index: 1000; /* Aumentado de 100 para 1000 */
-  pointer-events: none; /* IMPORTANTE: Não bloqueia cliques quando invisível */
+  z-index: 1000;
+  pointer-events: none;
 }
 
-.part-point:hover .part-popup {
+/* Classe controlada apenas por JavaScript, sem hover CSS */
+.part-point.popup-visible .part-popup {
   opacity: 1;
   visibility: visible;
   bottom: 55px;
-  pointer-events: auto; /* IMPORTANTE: Permite cliques apenas quando visível */
+  pointer-events: auto;
 }
 
 /* Garantir que o ponto seja sempre clicável */
@@ -197,15 +191,6 @@
   position: relative;
   z-index: 11;
   pointer-events: auto;
-}
-
-/* Quando hover em um ponto, apenas seu popup fica com z-index alto */
-.part-point:hover {
-  z-index: 500;
-}
-
-.part-point:hover .part-popup {
-  z-index: 1000;
 }
 
 /* Botão de Fechar no Popup */
@@ -523,19 +508,19 @@
   color: white;
 }
 
-/* Mobile Cart Toggle - ALTERAÇÃO 1: MOVIDO PARA ESQUERDA E FORMATO RETANGULAR */
+/* Mobile Cart Toggle */
 .mobile-cart-toggle {
   display: none;
   position: fixed;
   bottom: 20px;
-  left: 20px; /* MUDANÇA: estava right: 20px */
-  padding: 10px 15px; /* Padding para formato retangular */
-  width: auto; /* Largura automática ao invés de 60px fixo */
-  min-width: 80px; /* Largura mínima */
-  height: auto; /* Altura automática */
+  left: 20px;
+  padding: 10px 15px;
+  width: auto;
+  min-width: 80px;
+  height: auto;
   background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
   border: none;
-  border-radius: 25px; /* Bordas arredondadas ao invés de círculo */
+  border-radius: 25px;
   color: white;
   cursor: pointer;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
@@ -569,7 +554,7 @@
 .cart-total-preview {
   font-weight: bold;
   font-size: 1rem;
-  white-space: nowrap; /* Evita quebra de linha */
+  white-space: nowrap;
 }
 
 /* Responsividade */
@@ -643,7 +628,7 @@
     padding: 20px;
   }
 
-  /* ALTERAÇÃO 2: Popup centralizado em mobile */
+  /* Popup centralizado em mobile */
   .part-popup {
     position: fixed !important;
     top: 50% !important;
@@ -651,15 +636,13 @@
     transform: translate(-50%, -50%) !important;
     min-width: 280px;
     max-width: 90%;
-    z-index: 2000 !important; /* Z-index alto para ficar acima de tudo */
+    z-index: 2000 !important;
     bottom: auto !important;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-    pointer-events: none !important; /* Não bloqueia cliques quando invisível */
+    pointer-events: none !important;
   }
 
-  /* Para mobile, usar :focus e :active em vez de :hover */
-  .part-point:focus .part-popup,
-  .part-point:active .part-popup,
+  /* Para mobile, usar classe controlada por JavaScript */
   .part-point.popup-visible .part-popup {
     opacity: 1 !important;
     visibility: visible !important;
@@ -675,7 +658,7 @@
 
   .part-point:focus,
   .part-point:active {
-    z-index: 1500; /* Alto mas abaixo do popup */
+    z-index: 1500;
   }
 
   /* Overlay escuro para o popup */
@@ -687,7 +670,7 @@
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.5);
-    z-index: 1999; /* Abaixo do popup mas acima de tudo */
+    z-index: 1999;
   }
 }
 

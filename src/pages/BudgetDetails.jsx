@@ -1,4 +1,4 @@
-// src/pages/BudgetDetails.jsx - CÓDIGO COMPLETO ATUALIZADO
+// src/pages/BudgetDetails.jsx - CORRIGIDO PARA USAR CLICK EM VEZ DE HOVER
 import { useState, useEffect } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import './BudgetDetails.css';
@@ -961,26 +961,12 @@ const BudgetDetails = () => {
                   } ${activePopup === part.id ? 'popup-visible' : ''}`}
                   style={{ left: `${part.x}%`, top: `${part.y}%` }}
                   onClick={e => {
-                    // Para mobile - controle por click
-                    if (window.innerWidth <= 768) {
-                      e.stopPropagation();
-                      if (activePopup === part.id) {
-                        setActivePopup(null);
-                      } else {
-                        setActivePopup(part.id);
-                      }
-                    }
-                  }}
-                  onMouseEnter={() => {
-                    // Para desktop - mantém hover
-                    if (window.innerWidth > 768) {
-                      setActivePopup(part.id);
-                    }
-                  }}
-                  onMouseLeave={() => {
-                    // Para desktop - remove hover
-                    if (window.innerWidth > 768) {
+                    // Agora funciona com click tanto em mobile quanto desktop
+                    e.stopPropagation();
+                    if (activePopup === part.id) {
                       setActivePopup(null);
+                    } else {
+                      setActivePopup(part.id);
                     }
                   }}
                 >
