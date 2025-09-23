@@ -26,16 +26,16 @@ const BudgetDetails = () => {
     'porta-dianteira-direita': { paint: 200, paintAndDent: 400 },
     'porta-traseira-esquerda': { paint: 200, paintAndDent: 400 },
     'porta-traseira-direita': { paint: 200, paintAndDent: 400 },
-    'para-lama-dianteiro-esquerdo': { paint: 150, paintAndDent: 300 },
-    'para-lama-dianteiro-direito': { paint: 150, paintAndDent: 300 },
-    'para-lama-traseiro-esquerdo': { paint: 150, paintAndDent: 300 },
-    'para-lama-traseiro-direito': { paint: 150, paintAndDent: 300 },
+    'guarda-lamas-dianteiro-esquerdo': { paint: 150, paintAndDent: 300 },
+    'guarda-lamas-dianteiro-direito': { paint: 150, paintAndDent: 300 },
+    'ilharga-esquerda': { paint: 150, paintAndDent: 300 },
+    'ilharga-direita': { paint: 150, paintAndDent: 300 },
     mala: { paint: 220, paintAndDent: 420 },
-    teto: { paint: 300, paintAndDent: 500 },
+    tejadilho: { paint: 300, paintAndDent: 500 },
     'retrovisor-esquerdo': { paint: 80, paintAndDent: 150 },
     'retrovisor-direito': { paint: 80, paintAndDent: 150 },
-    'soleira-esquerda': { paint: 120, paintAndDent: 250 },
-    'soleira-direita': { paint: 120, paintAndDent: 250 },
+    'embaladeira-esquerda': { paint: 120, paintAndDent: 250 },
+    'embaladeira-direita': { paint: 120, paintAndDent: 250 },
     aileron: { paint: 100, paintAndDent: 200 },
   };
 
@@ -54,7 +54,7 @@ const BudgetDetails = () => {
           id: 'capo',
           name: 'Capô',
           x: 47,
-          y: 35,
+          y: 37,
         },
         {
           id: 'retrovisor-esquerdo',
@@ -74,43 +74,38 @@ const BudgetDetails = () => {
           id: 'para-choque-traseiro',
           name: 'Pára-choques Traseiro',
           x: 47,
-          y: 72,
+          y: 62,
         },
         {
           id: 'mala',
           name: 'Tampa da Bagageira',
           x: 47,
-          y: 45,
+          y: 40,
         },
       ],
       left: [
         {
           id: 'porta-dianteira-esquerda',
           name: 'Porta Dianteira (Lado Esq.)',
-          x: 40,
+          x: 44,
           y: 45,
         },
+
         {
-          id: 'porta-traseira-esquerda',
-          name: 'Porta Traseira (Lado Esq.)',
-          x: 60,
-          y: 45,
-        },
-        {
-          id: 'para-lama-dianteiro-esquerdo',
-          name: 'Para-lama Dianteiro (Lado Esq.)',
+          id: 'guarda-lamas-dianteiro-esquerdo',
+          name: 'Guarda-lamas Dianteiro (Lado Esq.)',
           x: 24,
           y: 41,
         },
         {
-          id: 'para-lama-traseiro-esquerdo',
-          name: 'Para-lama Traseiro (Lado Esq.)',
-          x: 77,
-          y: 38,
+          id: 'ilharga-esquerda',
+          name: 'Ilharga (Lado Esq.)',
+          x: 70,
+          y: 39,
         },
         {
-          id: 'soleira-esquerda',
-          name: 'Soleira (Lado Esq.)',
+          id: 'embaladeira-esquerda',
+          name: 'Embaladeira (Lado Esq.)',
           x: 50,
           y: 61,
         },
@@ -119,45 +114,34 @@ const BudgetDetails = () => {
         {
           id: 'porta-dianteira-direita',
           name: 'Porta Dianteira (Lado Dir.)',
-          x: 55,
+          x: 50,
           y: 45,
         },
+
         {
-          id: 'porta-traseira-direita',
-          name: 'Porta Traseira (Lado Dir.)',
-          x: 35,
-          y: 45,
-        },
-        {
-          id: 'para-lama-dianteiro-direito',
-          name: 'Para-lama Dianteiro (Lado Dir.)',
+          id: 'guarda-lamas-dianteiro-direito',
+          name: 'Guarda-lamas Dianteiro (Lado Dir.)',
           x: 69,
           y: 43,
         },
         {
-          id: 'para-lama-traseiro-direito',
-          name: 'Para-lama Traseiro (Lado Dir.)',
-          x: 17,
+          id: 'ilharga-direita',
+          name: 'Ilharga (Lado Dir.)',
+          x: 26,
           y: 40,
         },
         {
-          id: 'soleira-direita',
-          name: 'Soleira (Lado Dir.)',
+          id: 'embaladeira-direita',
+          name: 'Embaladeira (Lado Dir.)',
           x: 45,
           y: 62,
         },
       ],
       top: [
         {
-          id: 'teto',
-          name: 'Teto',
+          id: 'tejadilho',
+          name: 'Tejadilho',
           x: 40,
-          y: 42,
-        },
-        {
-          id: 'aileron',
-          name: 'Aileron',
-          x: 16,
           y: 42,
         },
       ],
@@ -170,7 +154,7 @@ const BudgetDetails = () => {
           id: 'para-choque-dianteiro',
           name: 'Pára-choques Dianteiro',
           x: 47,
-          y: 60,
+          y: 62,
         },
         {
           id: 'capo',
@@ -196,7 +180,7 @@ const BudgetDetails = () => {
           id: 'para-choque-traseiro',
           name: 'Pára-choques Traseiro',
           x: 47,
-          y: 72,
+          y: 67,
         },
         {
           id: 'mala',
@@ -219,60 +203,60 @@ const BudgetDetails = () => {
           y: 45,
         },
         {
-          id: 'para-lama-dianteiro-esquerdo',
-          name: 'Para-lama Dianteiro (Lado Esq.)',
+          id: 'guarda-lamas-dianteiro-esquerdo',
+          name: 'Guarda-lamas Dianteiro (Lado Esq.)',
           x: 24,
-          y: 41,
+          y: 43,
         },
         {
-          id: 'para-lama-traseiro-esquerdo',
-          name: 'Para-lama Traseiro (Lado Esq.)',
-          x: 77,
-          y: 38,
+          id: 'ilharga-esquerda',
+          name: 'Ilharga (Lado Esq.)',
+          x: 78,
+          y: 40,
         },
         {
-          id: 'soleira-esquerda',
-          name: 'Soleira (Lado Esq.)',
+          id: 'embaladeira-esquerda',
+          name: 'Embaladeira (Lado Esq.)',
           x: 50,
-          y: 61,
+          y: 64,
         },
       ],
       right: [
         {
           id: 'porta-dianteira-direita',
           name: 'Porta Dianteira (Lado Dir.)',
-          x: 55,
+          x: 52,
           y: 45,
         },
         {
           id: 'porta-traseira-direita',
           name: 'Porta Traseira (Lado Dir.)',
-          x: 35,
+          x: 32,
           y: 45,
         },
         {
-          id: 'para-lama-dianteiro-direito',
-          name: 'Para-lama Dianteiro (Lado Dir.)',
+          id: 'guarda-lamas-dianteiro-direito',
+          name: 'Guarda-lamas Dianteiro (Lado Dir.)',
           x: 69,
           y: 43,
         },
         {
-          id: 'para-lama-traseiro-direito',
-          name: 'Para-lama Traseiro (Lado Dir.)',
-          x: 17,
+          id: 'ilharga-direita',
+          name: 'Ilharga (Lado Dir.)',
+          x: 16,
           y: 40,
         },
         {
-          id: 'soleira-direita',
-          name: 'Soleira (Lado Dir.)',
+          id: 'embaladeira-direita',
+          name: 'Embaladeira (Lado Dir.)',
           x: 45,
-          y: 62,
+          y: 64,
         },
       ],
       top: [
         {
-          id: 'teto',
-          name: 'Teto',
+          id: 'tejadilho',
+          name: 'Tejadilho',
           x: 40,
           y: 42,
         },
@@ -292,7 +276,7 @@ const BudgetDetails = () => {
           id: 'para-choque-dianteiro',
           name: 'Pára-choques Dianteiro',
           x: 47,
-          y: 60,
+          y: 62,
         },
         {
           id: 'capo',
@@ -318,7 +302,7 @@ const BudgetDetails = () => {
           id: 'para-choque-traseiro',
           name: 'Pára-choques Traseiro',
           x: 47,
-          y: 72,
+          y: 63,
         },
         {
           id: 'mala',
@@ -341,20 +325,20 @@ const BudgetDetails = () => {
           y: 45,
         },
         {
-          id: 'para-lama-dianteiro-esquerdo',
-          name: 'Para-lama Dianteiro (Lado Esq.)',
+          id: 'guarda-lamas-dianteiro-esquerdo',
+          name: 'Guarda-lamas Dianteiro (Lado Esq.)',
           x: 24,
           y: 41,
         },
         {
-          id: 'para-lama-traseiro-esquerdo',
-          name: 'Para-lama Traseiro (Lado Esq.)',
+          id: 'ilharga-esquerda',
+          name: 'Ilharga (Lado Esq.)',
           x: 77,
           y: 38,
         },
         {
-          id: 'soleira-esquerda',
-          name: 'Soleira (Lado Esq.)',
+          id: 'embaladeira-esquerda',
+          name: 'Embaladeira (Lado Esq.)',
           x: 50,
           y: 61,
         },
@@ -373,35 +357,29 @@ const BudgetDetails = () => {
           y: 45,
         },
         {
-          id: 'para-lama-dianteiro-direito',
-          name: 'Para-lama Dianteiro (Lado Dir.)',
+          id: 'guarda-lamas-dianteiro-direito',
+          name: 'Guarda-lamas Dianteiro (Lado Dir.)',
           x: 69,
           y: 43,
         },
         {
-          id: 'para-lama-traseiro-direito',
-          name: 'Para-lama Traseiro (Lado Dir.)',
+          id: 'ilharga-direita',
+          name: 'Ilharga (Lado Dir.)',
           x: 17,
           y: 40,
         },
         {
-          id: 'soleira-direita',
-          name: 'Soleira (Lado Dir.)',
+          id: 'embaladeira-direita',
+          name: 'Embaladeira (Lado Dir.)',
           x: 45,
           y: 62,
         },
       ],
       top: [
         {
-          id: 'teto',
-          name: 'Teto',
+          id: 'tejadilho',
+          name: 'Tejadilho',
           x: 40,
-          y: 42,
-        },
-        {
-          id: 'aileron',
-          name: 'Aileron',
-          x: 16,
           y: 42,
         },
       ],
@@ -463,20 +441,20 @@ const BudgetDetails = () => {
           y: 45,
         },
         {
-          id: 'para-lama-dianteiro-esquerdo',
-          name: 'Para-lama Dianteiro (Lado Esq.)',
+          id: 'guarda-lamas-dianteiro-esquerdo',
+          name: 'Guarda-lamas Dianteiro (Lado Esq.)',
           x: 24,
           y: 41,
         },
         {
-          id: 'para-lama-traseiro-esquerdo',
-          name: 'Para-lama Traseiro (Lado Esq.)',
+          id: 'ilharga-esquerda',
+          name: 'Ilharga (Lado Esq.)',
           x: 77,
           y: 38,
         },
         {
-          id: 'soleira-esquerda',
-          name: 'Soleira (Lado Esq.)',
+          id: 'embaladeira-esquerda',
+          name: 'Embaladeira (Lado Esq.)',
           x: 50,
           y: 61,
         },
@@ -495,28 +473,28 @@ const BudgetDetails = () => {
           y: 45,
         },
         {
-          id: 'para-lama-dianteiro-direito',
-          name: 'Para-lama Dianteiro (Lado Dir.)',
+          id: 'guarda-lamas-dianteiro-direito',
+          name: 'Guarda-lamas Dianteiro (Lado Dir.)',
           x: 69,
           y: 43,
         },
         {
-          id: 'para-lama-traseiro-direito',
-          name: 'Para-lama Traseiro (Lado Dir.)',
+          id: 'ilharga-direita',
+          name: 'Ilharga (Lado Dir.)',
           x: 17,
           y: 40,
         },
         {
-          id: 'soleira-direita',
-          name: 'Soleira (Lado Dir.)',
+          id: 'embaladeira-direita',
+          name: 'Embaladeira (Lado Dir.)',
           x: 45,
           y: 62,
         },
       ],
       top: [
         {
-          id: 'teto',
-          name: 'Teto',
+          id: 'tejadilho',
+          name: 'Tejadilho',
           x: 40,
           y: 42,
         },
@@ -536,7 +514,7 @@ const BudgetDetails = () => {
           id: 'para-choque-dianteiro',
           name: 'Pára-choques Dianteiro',
           x: 47,
-          y: 60,
+          y: 68,
         },
         {
           id: 'capo',
@@ -548,13 +526,13 @@ const BudgetDetails = () => {
           id: 'retrovisor-esquerdo',
           name: 'Retrovisor Esquerdo',
           x: 8,
-          y: 25,
+          y: 27,
         },
         {
           id: 'retrovisor-direito',
           name: 'Retrovisor Direito',
           x: 86,
-          y: 25,
+          y: 27,
         },
       ],
       back: [
@@ -562,7 +540,7 @@ const BudgetDetails = () => {
           id: 'para-choque-traseiro',
           name: 'Pára-choques Traseiro',
           x: 47,
-          y: 72,
+          y: 75,
         },
         {
           id: 'mala',
@@ -575,70 +553,70 @@ const BudgetDetails = () => {
         {
           id: 'porta-dianteira-esquerda',
           name: 'Porta Dianteira (Lado Esq.)',
-          x: 40,
-          y: 45,
+          x: 36,
+          y: 48,
         },
         {
           id: 'porta-traseira-esquerda',
           name: 'Porta Lateral Deslizante (Lado Esq.)',
-          x: 60,
+          x: 57,
+          y: 48,
+        },
+        {
+          id: 'guarda-lamas-dianteiro-esquerdo',
+          name: 'Guarda-lamas Dianteiro (Lado Esq.)',
+          x: 21,
           y: 45,
         },
         {
-          id: 'para-lama-dianteiro-esquerdo',
-          name: 'Para-lama Dianteiro (Lado Esq.)',
-          x: 24,
-          y: 41,
-        },
-        {
-          id: 'para-lama-traseiro-esquerdo',
-          name: 'Para-lama Traseiro (Lado Esq.)',
+          id: 'ilharga-esquerda',
+          name: 'Ilharga (Lado Esq.)',
           x: 77,
-          y: 38,
+          y: 43,
         },
         {
-          id: 'soleira-esquerda',
-          name: 'Soleira (Lado Esq.)',
-          x: 50,
-          y: 61,
+          id: 'embaladeira-esquerda',
+          name: 'Embaladeira (Lado Esq.)',
+          x: 46,
+          y: 64,
         },
       ],
       right: [
         {
           id: 'porta-dianteira-direita',
           name: 'Porta Dianteira (Lado Dir.)',
-          x: 55,
-          y: 45,
+          x: 60,
+          y: 48,
         },
         {
           id: 'porta-traseira-direita',
           name: 'Porta Lateral Deslizante (Lado Dir.)',
-          x: 35,
+          x: 38,
+          y: 48,
+        },
+        {
+          id: 'guarda-lamas-dianteiro-direito',
+          name: 'Guarda-lamas Dianteiro (Lado Dir.)',
+          x: 74,
           y: 45,
         },
         {
-          id: 'para-lama-dianteiro-direito',
-          name: 'Para-lama Dianteiro (Lado Dir.)',
-          x: 69,
-          y: 43,
-        },
-        {
-          id: 'para-lama-traseiro-direito',
-          name: 'Para-lama Traseiro (Lado Dir.)',
+          id: 'ilharga-direita',
+          name: 'Ilharga (Lado Dir.)',
           x: 17,
-          y: 40,
+          y: 45,
         },
         {
-          id: 'soleira-direita',
-          name: 'Soleira (Lado Dir.)',
+          id: 'embaladeira-direita',
+          name: 'Embaladeira (Lado Dir.)',
           x: 45,
-          y: 62,
+          y: 64,
         },
       ],
       top: [
         {
-          id: 'teto',
-          name: 'Teto',
+          id: 'tejadilho',
+          name: 'Tejadilho',
           x: 40,
           y: 42,
         },
@@ -658,7 +636,7 @@ const BudgetDetails = () => {
           id: 'capo',
           name: 'Capô',
           x: 47,
-          y: 35,
+          y: 32,
         },
         {
           id: 'retrovisor-esquerdo',
@@ -678,7 +656,7 @@ const BudgetDetails = () => {
           id: 'para-choque-traseiro',
           name: 'Pára-choques Traseiro',
           x: 47,
-          y: 72,
+          y: 66,
         },
         {
           id: 'mala',
@@ -691,71 +669,71 @@ const BudgetDetails = () => {
         {
           id: 'porta-dianteira-esquerda',
           name: 'Porta Dianteira (Lado Esq.)',
-          x: 40,
+          x: 37,
           y: 45,
         },
         {
           id: 'porta-traseira-esquerda',
           name: 'Porta Traseira (Lado Esq.)',
-          x: 60,
+          x: 54,
           y: 45,
         },
         {
-          id: 'para-lama-dianteiro-esquerdo',
-          name: 'Para-lama Dianteiro (Lado Esq.)',
-          x: 24,
+          id: 'guarda-lamas-dianteiro-esquerdo',
+          name: 'Guarda-lamas Dianteiro (Lado Esq.)',
+          x: 23,
           y: 41,
         },
         {
-          id: 'para-lama-traseiro-esquerdo',
-          name: 'Para-lama Traseiro (Lado Esq.)',
-          x: 77,
-          y: 38,
+          id: 'ilharga-esquerda',
+          name: 'Ilharga (Lado Esq.)',
+          x: 75,
+          y: 40,
         },
         {
-          id: 'soleira-esquerda',
-          name: 'Soleira (Lado Esq.)',
-          x: 50,
-          y: 61,
+          id: 'embaladeira-esquerda',
+          name: 'Embaladeira (Lado Esq.)',
+          x: 44,
+          y: 58,
         },
       ],
       right: [
         {
           id: 'porta-dianteira-direita',
           name: 'Porta Dianteira (Lado Dir.)',
-          x: 55,
+          x: 57,
           y: 45,
         },
         {
           id: 'porta-traseira-direita',
           name: 'Porta Traseira (Lado Dir.)',
-          x: 35,
+          x: 40,
           y: 45,
         },
         {
-          id: 'para-lama-dianteiro-direito',
-          name: 'Para-lama Dianteiro (Lado Dir.)',
-          x: 69,
-          y: 43,
-        },
-        {
-          id: 'para-lama-traseiro-direito',
-          name: 'Para-lama Traseiro (Lado Dir.)',
-          x: 17,
+          id: 'guarda-lamas-dianteiro-direito',
+          name: 'Guarda-lamas Dianteiro (Lado Dir.)',
+          x: 73,
           y: 40,
         },
         {
-          id: 'soleira-direita',
-          name: 'Soleira (Lado Dir.)',
-          x: 45,
-          y: 62,
+          id: 'ilharga-direita',
+          name: 'Ilharga (Lado Dir.)',
+          x: 20,
+          y: 40,
+        },
+        {
+          id: 'embaladeira-direita',
+          name: 'Embaladeira (Lado Dir.)',
+          x: 48,
+          y: 58,
         },
       ],
       top: [
         {
-          id: 'teto',
-          name: 'Teto da Cabine',
-          x: 40,
+          id: 'tejadilho',
+          name: 'Tejadilho da Cabine',
+          x: 45,
           y: 42,
         },
       ],
@@ -880,6 +858,27 @@ const BudgetDetails = () => {
     return partsByCarType[carType][currentView] || [];
   };
 
+  // Fechar carrinho ao clicar fora (mobile)
+  useEffect(() => {
+    const handleClickOutside = event => {
+      if (showCart && window.innerWidth <= 968) {
+        const cartSection = document.querySelector('.cart-section');
+        const cartToggle = document.querySelector('.mobile-cart-toggle');
+
+        if (
+          cartSection &&
+          !cartSection.contains(event.target) &&
+          !cartToggle?.contains(event.target)
+        ) {
+          setShowCart(false);
+        }
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [showCart]);
+
   return (
     <div className='budget-details-page'>
       {/* Header */}
@@ -989,106 +988,119 @@ const BudgetDetails = () => {
 
           {/* Cart/Summary Section */}
           <div className={`cart-section ${showCart ? 'mobile-show' : ''}`}>
-            <div className='cart-header'>
-              <h3>📋 Resumo do Orçamento</h3>
-              <button
-                className='cart-toggle mobile-only'
-                onClick={() => setShowCart(!showCart)}
-              >
-                ✕
-              </button>
-            </div>
+            {/* Mobile overlay background */}
+            {showCart && (
+              <div
+                className='mobile-overlay'
+                onClick={() => setShowCart(false)}
+              ></div>
+            )}
 
-            {/* Selected Parts List */}
-            <div className='selected-parts-list'>
-              {selectedParts.length === 0 ? (
-                <div className='empty-cart'>
-                  <p>Nenhuma peça selecionada</p>
-                  <small>Clique nas peças do veículo para adicionar</small>
-                </div>
-              ) : (
-                selectedParts.map(part => (
-                  <div key={part.id} className='cart-item'>
-                    <div className='item-info'>
-                      <h4>{part.name}</h4>
-                      <span className='service-type'>
-                        {part.service === 'paint'
-                          ? '🎨 Pintura'
-                          : '🔧 Pintura + Chapa'}
-                      </span>
-                    </div>
-                    <div className='item-actions'>
-                      <span className='item-price'>€{part.price}</span>
-                      <button
-                        className='remove-btn'
-                        onClick={() => togglePart(part.id, part.service)}
-                      >
-                        ✕
-                      </button>
-                    </div>
+            <div className='cart-content'>
+              <div className='cart-header'>
+                <h3>📋 Resumo do Orçamento</h3>
+                <button
+                  className='cart-close mobile-only'
+                  onClick={() => setShowCart(false)}
+                >
+                  ✕
+                </button>
+              </div>
+
+              {/* Selected Parts List */}
+              <div className='selected-parts-list'>
+                {selectedParts.length === 0 ? (
+                  <div className='empty-cart'>
+                    <p>Nenhuma peça selecionada</p>
+                    <small>Clique nas peças do veículo para adicionar</small>
                   </div>
-                ))
+                ) : (
+                  selectedParts.map(part => (
+                    <div key={part.id} className='cart-item'>
+                      <div className='item-info'>
+                        <h4>{part.name}</h4>
+                        <span className='service-type'>
+                          {part.service === 'paint'
+                            ? '🎨 Pintura'
+                            : '🔧 Pintura + Chapa'}
+                        </span>
+                      </div>
+                      <div className='item-actions'>
+                        <span className='item-price'>€{part.price}</span>
+                        <button
+                          className='remove-btn'
+                          onClick={() => togglePart(part.id, part.service)}
+                        >
+                          ✕
+                        </button>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+
+              {/* Total */}
+              {selectedParts.length > 0 && (
+                <>
+                  <div className='cart-total'>
+                    <span>Total Estimado:</span>
+                    <strong>€{calculateTotal()}</strong>
+                  </div>
+
+                  {/* Customer Info */}
+                  <div className='customer-info-form'>
+                    <h4>Seus Dados (Opcional)</h4>
+                    <input
+                      type='text'
+                      placeholder='Nome'
+                      value={customerInfo.name}
+                      onChange={e =>
+                        setCustomerInfo({
+                          ...customerInfo,
+                          name: e.target.value,
+                        })
+                      }
+                    />
+                    <input
+                      type='tel'
+                      placeholder='Telefone'
+                      value={customerInfo.phone}
+                      onChange={e =>
+                        setCustomerInfo({
+                          ...customerInfo,
+                          phone: e.target.value,
+                        })
+                      }
+                    />
+                    <input
+                      type='email'
+                      placeholder='Email'
+                      value={customerInfo.email}
+                      onChange={e =>
+                        setCustomerInfo({
+                          ...customerInfo,
+                          email: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className='cart-actions'>
+                    <button className='whatsapp-btn' onClick={sendToWhatsApp}>
+                      <span>📱</span>
+                      Enviar para WhatsApp
+                    </button>
+                    <button
+                      className='clear-btn'
+                      onClick={() => setSelectedParts([])}
+                    >
+                      Limpar Tudo
+                    </button>
+                  </div>
+                </>
               )}
             </div>
-
-            {/* Total */}
-            {selectedParts.length > 0 && (
-              <>
-                <div className='cart-total'>
-                  <span>Total Estimado:</span>
-                  <strong>€{calculateTotal()}</strong>
-                </div>
-
-                {/* Customer Info */}
-                <div className='customer-info-form'>
-                  <h4>Seus Dados (Opcional)</h4>
-                  <input
-                    type='text'
-                    placeholder='Nome'
-                    value={customerInfo.name}
-                    onChange={e =>
-                      setCustomerInfo({ ...customerInfo, name: e.target.value })
-                    }
-                  />
-                  <input
-                    type='tel'
-                    placeholder='Telefone'
-                    value={customerInfo.phone}
-                    onChange={e =>
-                      setCustomerInfo({
-                        ...customerInfo,
-                        phone: e.target.value,
-                      })
-                    }
-                  />
-                  <input
-                    type='email'
-                    placeholder='Email'
-                    value={customerInfo.email}
-                    onChange={e =>
-                      setCustomerInfo({
-                        ...customerInfo,
-                        email: e.target.value,
-                      })
-                    }
-                  />
-                </div>
-
-                {/* Action Buttons */}
-                <div className='cart-actions'>
-                  <button className='whatsapp-btn' onClick={sendToWhatsApp}>
-                    <span>📱</span>
-                    Enviar para WhatsApp
-                  </button>
-                  <button
-                    className='clear-btn'
-                    onClick={() => setSelectedParts([])}
-                  >
-                    Limpar Tudo
-                  </button>
-                </div>
-              </>
-            )}
           </div>
         </div>
       </div>
@@ -1097,7 +1109,10 @@ const BudgetDetails = () => {
       <button className='mobile-cart-toggle' onClick={() => setShowCart(true)}>
         <span className='cart-icon'>🛒</span>
         {selectedParts.length > 0 && (
-          <span className='cart-badge'>{selectedParts.length}</span>
+          <>
+            <span className='cart-badge'>{selectedParts.length}</span>
+            <span className='cart-total-preview'>€{calculateTotal()}</span>
+          </>
         )}
       </button>
     </div>
