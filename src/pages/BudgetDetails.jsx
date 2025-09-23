@@ -944,6 +944,19 @@ const BudgetDetails = () => {
                   style={{ left: `${part.x}%`, top: `${part.y}%` }}
                 >
                   <div className='part-popup'>
+                    <button
+                      className='popup-close-btn'
+                      onClick={e => {
+                        e.stopPropagation();
+                        e.currentTarget.closest(
+                          '.part-popup'
+                        ).style.visibility = 'hidden';
+                        e.currentTarget.closest('.part-popup').style.opacity =
+                          '0';
+                      }}
+                    >
+                      ✕
+                    </button>
                     <h4>{part.name}</h4>
                     <div className='service-options'>
                       <button
@@ -1105,16 +1118,17 @@ const BudgetDetails = () => {
         </div>
       </div>
 
-      {/* Mobile Cart Toggle */}
-      <button className='mobile-cart-toggle' onClick={() => setShowCart(true)}>
-        <span className='cart-icon'>🛒</span>
-        {selectedParts.length > 0 && (
-          <>
-            <span className='cart-badge'>{selectedParts.length}</span>
-            <span className='cart-total-preview'>€{calculateTotal()}</span>
-          </>
-        )}
-      </button>
+      {/* Mobile Cart Toggle - Só aparece se houver itens selecionados */}
+      {selectedParts.length > 0 && (
+        <button
+          className='mobile-cart-toggle'
+          onClick={() => setShowCart(true)}
+        >
+          <span className='cart-icon'>🛒</span>
+          <span className='cart-badge'>{selectedParts.length}</span>
+          <span className='cart-total-preview'>€{calculateTotal()}</span>
+        </button>
+      )}
     </div>
   );
 };
