@@ -130,6 +130,13 @@
   z-index: 10;
 }
 
+/* Classe temporária para prevenir hover após fechar popup */
+.part-point.no-hover .part-popup {
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
 .point-indicator {
   width: 40px;
   height: 40px;
@@ -171,17 +178,34 @@
   visibility: hidden;
   transition: all 0.3s ease;
   z-index: 1000; /* Aumentado de 100 para 1000 */
+  pointer-events: none; /* IMPORTANTE: Não bloqueia cliques quando invisível */
 }
 
 .part-point:hover .part-popup {
   opacity: 1;
   visibility: visible;
   bottom: 55px;
+  pointer-events: auto; /* IMPORTANTE: Permite cliques apenas quando visível */
 }
 
-/* Garantir que outros pontos fiquem abaixo quando popup está aberto */
-.part-point:hover ~ .part-point .point-indicator {
-  z-index: 9;
+/* Garantir que o ponto seja sempre clicável */
+.part-point {
+  z-index: 10;
+}
+
+.part-point .point-indicator {
+  position: relative;
+  z-index: 11;
+  pointer-events: auto;
+}
+
+/* Quando hover em um ponto, apenas seu popup fica com z-index alto */
+.part-point:hover {
+  z-index: 500;
+}
+
+.part-point:hover .part-popup {
+  z-index: 1000;
 }
 
 /* Botão de Fechar no Popup */
@@ -630,14 +654,27 @@
     z-index: 2000 !important; /* Z-index alto para ficar acima de tudo */
     bottom: auto !important;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    pointer-events: none !important; /* Não bloqueia cliques quando invisível */
   }
 
-  /* Z-index baixo para outros pontos quando popup está visível */
+  /* Para mobile, usar :focus e :active em vez de :hover */
+  .part-point:focus .part-popup,
+  .part-point:active .part-popup,
+  .part-point.popup-visible .part-popup {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+  }
+
+  /* Garantir que o ponto seja focável em mobile */
   .part-point {
     z-index: 10;
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
   }
 
-  .part-point:hover {
+  .part-point:focus,
+  .part-point:active {
     z-index: 1500; /* Alto mas abaixo do popup */
   }
 

@@ -11,6 +11,7 @@ const BudgetDetails = () => {
   const [selectedParts, setSelectedParts] = useState([]);
   const [currentView, setCurrentView] = useState('front');
   const [showCart, setShowCart] = useState(false);
+  const [activePopup, setActivePopup] = useState(null); // Novo estado para controlar popup ativo
   const [customerInfo, setCustomerInfo] = useState({
     name: '',
     phone: '',
@@ -858,6 +859,23 @@ const BudgetDetails = () => {
     return partsByCarType[carType][currentView] || [];
   };
 
+  // Fechar popup ao clicar fora
+  useEffect(() => {
+    const handleClickOutside = event => {
+      if (activePopup && !event.target.closest('.part-point')) {
+        setActivePopup(null);
+      }
+    };
+
+    if (activePopup) {
+      document.addEventListener('click', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, [activePopup]);
+
   // Fechar carrinho ao clicar fora (mobile)
   useEffect(() => {
     const handleClickOutside = event => {
@@ -940,19 +958,45 @@ const BudgetDetails = () => {
                   key={part.id}
                   className={`part-point ${
                     isPartSelected(part.id) ? 'selected' : ''
-                  }`}
+                  } ${activePopup === part.id ? 'popup-visible' : ''}`}
                   style={{ left: `${part.x}%`, top: `${part.y}%` }}
+                  onClick={e => {
+                    // Para mobile - controle por click
+                    if (window.innerWidth <= 768) {
+                      e.stopPropagation();
+                      if (activePopup === part.id) {
+                        setActivePopup(null);
+                      } else {
+                        setActivePopup(part.id);
+                      }
+                    }
+                  }}
+                  onMouseEnter={() => {
+                    // Para desktop - mantém hover
+                    if (window.innerWidth > 768) {
+                      setActivePopup(part.id);
+                    }
+                  }}
+                  onMouseLeave={() => {
+                    // Para desktop - remove hover
+                    if (window.innerWidth > 768) {
+                      setActivePopup(null);
+                    }
+                  }}
                 >
-                  <div className='part-popup'>
+                  <div
+                    className='part-popup'
+                    style={{
+                      opacity: activePopup === part.id ? 1 : 0,
+                      visibility:
+                        activePopup === part.id ? 'visible' : 'hidden',
+                    }}
+                  >
                     <button
                       className='popup-close-btn'
                       onClick={e => {
                         e.stopPropagation();
-                        e.currentTarget.closest(
-                          '.part-popup'
-                        ).style.visibility = 'hidden';
-                        e.currentTarget.closest('.part-popup').style.opacity =
-                          '0';
+                        setActivePopup(null);
                       }}
                     >
                       ✕
@@ -965,7 +1009,10 @@ const BudgetDetails = () => {
                             ? 'active'
                             : ''
                         }`}
-                        onClick={() => togglePart(part.id, 'paint')}
+                        onClick={e => {
+                          e.stopPropagation();
+                          togglePart(part.id, 'paint');
+                        }}
                       >
                         <span>🎨 Pintura</span>
                         <strong>€{getPrice(part.id, 'paint')}</strong>
@@ -976,7 +1023,10 @@ const BudgetDetails = () => {
                             ? 'active'
                             : ''
                         }`}
-                        onClick={() => togglePart(part.id, 'paintAndDent')}
+                        onClick={e => {
+                          e.stopPropagation();
+                          togglePart(part.id, 'paintAndDent');
+                        }}
                       >
                         <span>🔧 Pintura + Chapa</span>
                         <strong>€{getPrice(part.id, 'paintAndDent')}</strong>
