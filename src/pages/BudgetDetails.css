@@ -170,13 +170,18 @@
   opacity: 0;
   visibility: hidden;
   transition: all 0.3s ease;
-  z-index: 100;
+  z-index: 1000; /* Aumentado de 100 para 1000 */
 }
 
 .part-point:hover .part-popup {
   opacity: 1;
   visibility: visible;
   bottom: 55px;
+}
+
+/* Garantir que outros pontos fiquem abaixo quando popup está aberto */
+.part-point:hover ~ .part-point .point-indicator {
+  z-index: 9;
 }
 
 /* Botão de Fechar no Popup */
@@ -494,43 +499,53 @@
   color: white;
 }
 
-/* Mobile Cart Toggle - ALTERAÇÃO 1: MOVIDO PARA ESQUERDA */
+/* Mobile Cart Toggle - ALTERAÇÃO 1: MOVIDO PARA ESQUERDA E FORMATO RETANGULAR */
 .mobile-cart-toggle {
   display: none;
   position: fixed;
   bottom: 20px;
   left: 20px; /* MUDANÇA: estava right: 20px */
-  width: 60px;
-  height: 60px;
+  padding: 10px 15px; /* Padding para formato retangular */
+  width: auto; /* Largura automática ao invés de 60px fixo */
+  min-width: 80px; /* Largura mínima */
+  height: auto; /* Altura automática */
   background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
   border: none;
-  border-radius: 50%;
+  border-radius: 25px; /* Bordas arredondadas ao invés de círculo */
   color: white;
-  font-size: 1.5rem;
   cursor: pointer;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
   z-index: 100;
   transition: all 0.3s ease;
+  display: none;
+  align-items: center;
+  gap: 8px;
+  font-size: 1rem;
 }
 
 .mobile-cart-toggle:hover {
-  transform: scale(1.1);
+  transform: scale(1.05);
+}
+
+.cart-icon {
+  font-size: 1.3rem;
 }
 
 .cart-badge {
-  position: absolute;
-  top: -5px;
-  right: -5px;
   background: #10b981;
   color: white;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  padding: 2px 6px;
+  border-radius: 10px;
   font-size: 0.85rem;
   font-weight: bold;
+  min-width: 20px;
+  text-align: center;
+}
+
+.cart-total-preview {
+  font-weight: bold;
+  font-size: 1rem;
+  white-space: nowrap; /* Evita quebra de linha */
 }
 
 /* Responsividade */
@@ -562,8 +577,9 @@
     right: 0;
   }
 
+  /* Garantir que o botão do cart apareça corretamente em mobile */
   .mobile-cart-toggle {
-    display: flex;
+    display: flex !important;
     align-items: center;
     justify-content: center;
   }
@@ -611,8 +627,18 @@
     transform: translate(-50%, -50%) !important;
     min-width: 280px;
     max-width: 90%;
-    z-index: 1000;
+    z-index: 2000 !important; /* Z-index alto para ficar acima de tudo */
     bottom: auto !important;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Z-index baixo para outros pontos quando popup está visível */
+  .part-point {
+    z-index: 10;
+  }
+
+  .part-point:hover {
+    z-index: 1500; /* Alto mas abaixo do popup */
   }
 
   /* Overlay escuro para o popup */
@@ -624,7 +650,7 @@
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.5);
-    z-index: 999;
+    z-index: 1999; /* Abaixo do popup mas acima de tudo */
   }
 }
 
