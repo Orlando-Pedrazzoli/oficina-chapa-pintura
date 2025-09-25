@@ -1,4 +1,4 @@
-// src/pages/BudgetDetails.jsx - CORRIGIDO PARA USAR CLICK EM VEZ DE HOVER
+// src/pages/BudgetDetails.jsx - CORRIGIDO BOTÃO VOLTAR NO CART MOBILE
 import { useState, useEffect } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import './BudgetDetails.css';
@@ -11,7 +11,7 @@ const BudgetDetails = () => {
   const [selectedParts, setSelectedParts] = useState([]);
   const [currentView, setCurrentView] = useState('front');
   const [showCart, setShowCart] = useState(false);
-  const [activePopup, setActivePopup] = useState(null); // Novo estado para controlar popup ativo
+  const [activePopup, setActivePopup] = useState(null);
   const [customerInfo, setCustomerInfo] = useState({
     name: '',
     phone: '',
@@ -897,6 +897,13 @@ const BudgetDetails = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [showCart]);
 
+  // Fechar carrinho automaticamente quando ficar vazio (principalmente para mobile)
+  useEffect(() => {
+    if (selectedParts.length === 0 && showCart) {
+      setShowCart(false);
+    }
+  }, [selectedParts, showCart]);
+
   return (
     <div className='budget-details-page'>
       {/* Header */}
@@ -1052,7 +1059,7 @@ const BudgetDetails = () => {
                   className='cart-close mobile-only'
                   onClick={() => setShowCart(false)}
                 >
-                  ✕
+                  {/* O CSS vai adicionar o texto "← Voltar" */}
                 </button>
               </div>
 

@@ -172,6 +172,8 @@
   color: #6c757d;
   transition: all 0.3s ease;
   flex-shrink: 0;
+  /* Garantir que os botões sejam sempre clicáveis */
+  z-index: 2;
 }
 
 .carousel-btn:hover {
@@ -181,11 +183,20 @@
   transform: scale(1.1);
 }
 
+/* Para touch devices - estado ativo */
+.carousel-btn:active {
+  background: #dc2626;
+  border-color: #dc2626;
+  color: white;
+  transform: scale(0.95);
+}
+
 .review-cards {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 30px;
   flex: 1;
+  overflow: visible; /* Garantir que o conteúdo não seja cortado */
 }
 
 .review-card {
@@ -435,10 +446,57 @@
     display: none;
   }
 
+  /* Ajustes para o carrossel no mobile */
+  .reviews-carousel {
+    position: relative;
+    padding: 0 50px; /* Espaço para os botões */
+    margin-bottom: 40px;
+    display: flex;
+    align-items: stretch; /* Garante altura uniforme */
+  }
+
   .carousel-btn {
     width: 40px;
     height: 40px;
     font-size: 1.2rem;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background: white;
+    border: 2px solid #dc2626;
+    color: #dc2626;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  .carousel-btn.prev {
+    left: 0;
+  }
+
+  .carousel-btn.next {
+    right: 0;
+  }
+
+  .carousel-btn:hover,
+  .carousel-btn:active {
+    background: #dc2626;
+    color: white;
+  }
+
+  /* Ajuste do card para ocupar o espaço disponível */
+  .review-cards {
+    width: 100%;
+    min-height: 250px; /* Altura mínima para o card */
+  }
+
+  .review-card {
+    width: 100%;
+    transform: scale(1); /* Resetar o scale no mobile */
+    opacity: 1; /* Todos os cards visíveis no mobile */
+  }
+
+  .review-card.active {
+    transform: scale(1); /* Sem diferença de scale no mobile */
   }
 
   .reviews-stats {
@@ -484,6 +542,17 @@
 
   .reviews-header h2 {
     font-size: 1.5rem;
+  }
+
+  /* Ajustes do carrossel para telas muito pequenas */
+  .reviews-carousel {
+    padding: 0 40px; /* Reduzir padding em telas muito pequenas */
+  }
+
+  .carousel-btn {
+    width: 35px;
+    height: 35px;
+    font-size: 1rem;
   }
 
   .reviews-cta {

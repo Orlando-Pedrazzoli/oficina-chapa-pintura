@@ -573,6 +573,10 @@
     width: 90%;
     max-width: 400px;
     height: 100vh;
+    max-height: calc(
+      100vh - 60px
+    ); /* Adicionar esta linha - ajusta para navbar */
+    padding-top: 80px; /* Adicionar esta linha - espaço para navbar sticky */
     border-radius: 0;
     z-index: 1000;
     transition: right 0.3s ease;

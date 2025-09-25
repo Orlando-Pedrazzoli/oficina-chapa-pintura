@@ -133,6 +133,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-shrink: 0; /* Importante para manter o tamanho fixo */
 }
 
 .chat-header-info {
@@ -193,6 +194,7 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  min-height: 0; /* Importante para permitir scroll correto */
 }
 
 .message {
@@ -286,6 +288,7 @@
   overflow-x: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  flex-shrink: 0; /* Importante para manter o tamanho fixo */
 }
 
 .quick-replies::-webkit-scrollbar {
@@ -319,6 +322,7 @@
   display: flex;
   gap: 10px;
   align-items: center;
+  flex-shrink: 0; /* Importante para manter o tamanho fixo */
 }
 
 .chat-input input {
@@ -374,6 +378,7 @@
   justify-content: center;
   gap: 8px;
   transition: background 0.2s ease;
+  flex-shrink: 0; /* Importante para manter o tamanho fixo */
 }
 
 .chat-whatsapp-cta:hover {
@@ -386,7 +391,7 @@
   fill: white;
 }
 
-/* Mobile Responsiveness */
+/* Mobile Responsiveness - AJUSTADO PARA NAVBAR */
 @media (max-width: 768px) {
   .floating-buttons-container {
     bottom: 15px;
@@ -405,14 +410,17 @@
 
   .chatbot-window {
     width: calc(100vw - 30px);
-    height: calc(100vh - 130px);
+    height: calc(100vh - 180px); /* Altura reduzida para dar espaço à navbar */
+    max-height: 450px; /* Altura máxima limitada */
     right: 15px;
     bottom: 90px;
+    top: auto; /* Garante posicionamento pela bottom */
     max-width: 400px;
   }
 
   .chat-messages {
     padding: 10px;
+    max-height: 200px; /* Limita altura das mensagens em mobile */
   }
 
   .message-bubble {
@@ -423,6 +431,25 @@
   .quick-reply-btn {
     font-size: 12px;
     padding: 5px 10px;
+  }
+
+  /* Reduz tamanhos em mobile para economizar espaço */
+  .chat-header {
+    padding: 12px;
+  }
+
+  .chat-input {
+    padding: 8px;
+  }
+
+  .quick-replies {
+    padding: 8px;
+  }
+
+  .chat-whatsapp-cta {
+    margin: 8px;
+    padding: 8px;
+    font-size: 13px;
   }
 }
 
@@ -444,14 +471,15 @@
 
   .chatbot-window {
     width: calc(100vw - 20px);
-    height: calc(100vh - 100px);
+    height: calc(100vh - 200px); /* Ainda mais reduzido em telas menores */
+    max-height: 400px; /* Altura máxima menor */
     right: 10px;
     bottom: 80px;
     border-radius: 12px;
   }
 
   .chat-header {
-    padding: 12px;
+    padding: 10px;
   }
 
   .chat-header h4 {
@@ -460,6 +488,21 @@
 
   .chat-status {
     font-size: 11px;
+  }
+
+  .chat-avatar {
+    width: 35px;
+    height: 35px;
+    font-size: 12px;
+  }
+
+  .chat-messages {
+    padding: 8px;
+    max-height: 180px; /* Altura máxima ainda menor */
+  }
+
+  .chat-input {
+    padding: 6px;
   }
 
   .chat-input input {
@@ -472,20 +515,58 @@
     height: 36px;
     font-size: 16px;
   }
+
+  .quick-replies {
+    padding: 6px;
+  }
+
+  .chat-whatsapp-cta {
+    margin: 6px;
+    padding: 6px;
+    font-size: 12px;
+  }
 }
 
-/* Landscape Mode */
+/* Landscape Mode - AJUSTADO */
 @media (max-height: 500px) {
   .chatbot-window {
-    height: calc(100vh - 80px);
+    height: calc(100vh - 120px); /* Reduzido para landscape */
+    max-height: 350px;
     bottom: 70px;
   }
 
   .chat-messages {
-    padding: 8px;
+    padding: 6px;
+    max-height: 120px; /* Muito reduzido em landscape */
   }
 
   .quick-replies {
     padding: 5px;
+  }
+
+  .chat-header {
+    padding: 8px;
+  }
+
+  .chat-input {
+    padding: 5px;
+  }
+
+  .chat-whatsapp-cta {
+    margin: 5px;
+    padding: 5px;
+    font-size: 11px;
+  }
+}
+
+/* Ajuste adicional para telas muito pequenas com navbar alta */
+@media (max-width: 768px) and (max-height: 700px) {
+  .chatbot-window {
+    height: calc(100vh - 220px);
+    max-height: 380px;
+  }
+
+  .chat-messages {
+    max-height: 160px;
   }
 }
