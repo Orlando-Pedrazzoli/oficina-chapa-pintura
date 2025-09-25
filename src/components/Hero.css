@@ -497,3 +497,114 @@
     min-height: -webkit-fill-available;
   }
 }
+/* EFEITO PISCAR RECOMENDADO - Adicionar ao Hero.css */
+
+/* Feature Orçamento Estimado com Efeito Piscar Suave */
+.feature-clickable {
+  cursor: pointer;
+  position: relative;
+  animation: elegant-blink 2.5s infinite ease-in-out;
+}
+
+/* Efeito elegante que combina piscar suave com glow */
+@keyframes elegant-blink {
+  0%,
+  100% {
+    background: rgba(55, 65, 81, 0.6);
+    box-shadow: none;
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+  30%,
+  70% {
+    background: rgba(220, 38, 38, 0.2);
+    box-shadow: 0 0 20px rgba(251, 191, 36, 0.3),
+      inset 0 0 10px rgba(251, 191, 36, 0.1);
+    border-color: rgba(251, 191, 36, 0.4);
+  }
+  50% {
+    background: rgba(220, 38, 38, 0.25);
+    box-shadow: 0 0 25px rgba(251, 191, 36, 0.4),
+      inset 0 0 15px rgba(251, 191, 36, 0.15);
+    border-color: rgba(251, 191, 36, 0.5);
+  }
+}
+
+/* Ícone também pisca sutilmente */
+.feature-clickable .feature-icon {
+  animation: icon-pulse 2.5s infinite ease-in-out;
+}
+
+@keyframes icon-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  50% {
+    transform: scale(1.1);
+    filter: brightness(1.3) drop-shadow(0 0 5px rgba(251, 191, 36, 0.5));
+  }
+}
+
+/* Comportamento no hover - para animação e destaca */
+.feature-clickable:hover {
+  animation-play-state: paused;
+  background: rgba(220, 38, 38, 0.4) !important;
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 8px 25px rgba(220, 38, 38, 0.4);
+}
+
+.feature-clickable:hover .feature-icon {
+  animation-play-state: paused;
+  transform: scale(1.2);
+  filter: brightness(1.4);
+}
+
+.feature-clickable:hover .feature-text::after {
+  content: ' →';
+  display: inline-block;
+  animation: arrow-move 0.6s ease-in-out infinite;
+}
+
+@keyframes arrow-move {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+}
+
+/* Para mobile - toque */
+.feature-clickable:active {
+  animation-play-state: paused;
+  background: rgba(220, 38, 38, 0.5);
+  transform: scale(0.98);
+}
+
+/* Opcional: Badge "NOVO" pequeno */
+.feature-clickable::before {
+  content: 'NOVO';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  color: #1f2937;
+  font-size: 0.6rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 10px;
+  animation: badge-pulse 2s infinite;
+}
+
+@keyframes badge-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}

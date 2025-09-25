@@ -1,9 +1,14 @@
 // src/components/Hero.jsx - VERSÃO ORIGINAL COM VÍDEO
 import { useState, useEffect } from 'react';
 import './Hero.css';
+import { useNavigate } from 'react-router-dom';
 
 const Hero = () => {
   const [isLoaded, setIsLoaded] = useState(false);
+  const navigate = useNavigate();
+  const goToBudgetEstimator = () => {
+    navigate('/orcamento');
+  };
 
   useEffect(() => {
     setIsLoaded(true);
@@ -71,9 +76,12 @@ const Hero = () => {
             </p>
 
             <div className='hero-features'>
-              <div className='feature'>
-                <span className='feature-icon'>✅</span>
-                <span className='feature-text'>Orçamento Gratuito</span>
+              <div
+                className='feature feature-clickable'
+                onClick={goToBudgetEstimator}
+              >
+                <span className='feature-icon'>🎯</span>
+                <span className='feature-text'>Orçamento Estimado</span>
               </div>
               <div className='feature'>
                 <span className='feature-icon'>🚗</span>
@@ -84,7 +92,7 @@ const Hero = () => {
                 <span className='feature-text'>Serviço Rápido</span>
               </div>
               <div className='feature'>
-                <span className='feature-icon'>🎯</span>
+                <span className='feature-icon'>✅</span>
                 <span className='feature-text'>Qualidade Garantida</span>
               </div>
               <div className='feature'>
@@ -117,14 +125,6 @@ const Hero = () => {
             </div>
           </div>
         </div>
-      </div>
-
-      {/* Indicador de scroll */}
-      <div className='hero-scroll-indicator'>
-        <div className='scroll-mouse'>
-          <div className='scroll-wheel'></div>
-        </div>
-        <span className='scroll-text'>Scroll para explorar</span>
       </div>
     </section>
   );

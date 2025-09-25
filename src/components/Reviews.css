@@ -449,6 +449,18 @@
     font-size: 3rem;
   }
 
+  /* IMPORTANTE: Esconder rating bars e highlights no mobile */
+  .rating-bars,
+  .highlights {
+    display: none;
+  }
+
+  /* Remover border do average-rating já que não há mais elementos ao lado */
+  .average-rating {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
   .cta-buttons {
     flex-direction: column;
   }
