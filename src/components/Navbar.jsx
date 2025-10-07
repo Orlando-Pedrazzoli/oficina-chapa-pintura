@@ -1,6 +1,9 @@
-// src/components/Navbar.jsx - ATUALIZADO COM ORÇAMENTO ESTIMADO EM DESTAQUE
+// src/components/Navbar.jsx - ATUALIZADO COM SELETOR DE IDIOMA
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { useLanguage } from '../contexts/LanguageContext';
+import { navbarTranslations } from '../translations/navbar';
+import LanguageToggle from './LanguageToggle';
 import './Navbar.css';
 
 const Navbar = () => {
@@ -8,6 +11,10 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const { language } = useLanguage();
+
+  // Obter traduções do idioma atual
+  const t = navbarTranslations[language];
 
   // Fechar menu ao mudar de rota
   useEffect(() => {
@@ -91,7 +98,7 @@ const Navbar = () => {
               }`}
               onClick={handleLinkClick}
             >
-              Início
+              {t.home}
             </Link>
             <Link
               to='/services'
@@ -100,10 +107,10 @@ const Navbar = () => {
               }`}
               onClick={handleLinkClick}
             >
-              Serviços
+              {t.services}
             </Link>
             <Link to='/' className={`nav-link`} onClick={scrollToEstimate}>
-              Orçamento Gratuito
+              {t.freeQuote}
             </Link>
             <Link
               to='/contact'
@@ -112,11 +119,22 @@ const Navbar = () => {
               }`}
               onClick={handleLinkClick}
             >
-              Contacto
+              {t.contact}
             </Link>
+
+            {/* Seletor de idioma - Visível em mobile dentro do menu */}
+            <div className='mobile-language-toggle'>
+              <LanguageToggle />
+            </div>
+
             <button className='nav-cta-btn' onClick={goToBudgetEstimator}>
-              🎯 Orçamento Estimado
+              {t.estimatedBudget}
             </button>
+          </div>
+
+          {/* Seletor de idioma - Visível em desktop */}
+          <div className='desktop-language-toggle'>
+            <LanguageToggle />
           </div>
 
           <div

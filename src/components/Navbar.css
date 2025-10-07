@@ -1,4 +1,4 @@
-/* src/components/Navbar.css - ATUALIZADO COM DESTAQUE NO ORÇAMENTO ESTIMADO */
+/* src/components/Navbar.css - ATUALIZADO COM SELETOR DE IDIOMA */
 .navbar {
   position: fixed;
   top: 0;
@@ -171,6 +171,18 @@
   left: 100%;
 }
 
+/* Seletor de Idioma - Desktop */
+.desktop-language-toggle {
+  display: flex;
+  align-items: center;
+  margin-left: 15px;
+}
+
+/* Seletor de Idioma - Mobile (dentro do menu) */
+.mobile-language-toggle {
+  display: none;
+}
+
 .nav-toggle {
   display: none;
   flex-direction: column;
@@ -234,6 +246,21 @@
 
   .nav-toggle {
     display: flex;
+  }
+
+  /* Esconder seletor de idioma desktop em mobile */
+  .desktop-language-toggle {
+    display: none;
+  }
+
+  /* Mostrar seletor de idioma no menu mobile */
+  .mobile-language-toggle {
+    display: flex;
+    justify-content: center;
+    padding: 15px 0;
+    margin: 20px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
 
   .nav-overlay {
