@@ -1,62 +1,38 @@
-// src/components/FloatingButtons.jsx - COM LOGO WHATSAPP E CHATBOT VERMELHO
+// src/components/FloatingButtons.jsx - VERSÃO COM TRADUÇÃO COMPLETA
 import { useState } from 'react';
+import { useLanguage } from '../contexts/LanguageContext';
+import { floatingButtonsTranslations } from '../translations/floatingButtons';
 import './FloatingButtons.css';
 
 const FloatingButtons = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
-  const [messages, setMessages] = useState([
-    {
-      id: 1,
-      text: 'Olá! Bem-vindo à Street Paint. Como posso ajudá-lo hoje?',
-      sender: 'bot',
-      timestamp: new Date(),
-    },
-  ]);
+  const [messages, setMessages] = useState([]);
   const [inputText, setInputText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const { language } = useLanguage();
+
+  // Obter traduções do idioma atual
+  const t = floatingButtonsTranslations[language];
 
   const WHATSAPP_NUMBER = '351960172705';
 
-  // Base de conhecimento do chatbot
-  const knowledgeBase = {
-    saudacoes: {
-      patterns: ['olá', 'oi', 'bom dia', 'boa tarde', 'boa noite'],
-      responses: ['Olá! Como posso ajudá-lo com seu veículo hoje?'],
-    },
-    servicos: {
-      patterns: ['serviços', 'o que fazem', 'trabalhos'],
-      responses: [
-        'Oferecemos:\n• Martelinho de Ouro\n• Pintura Completa\n• Polimento\n• Restauração\n• Limpeza de Estofos\n\nQual serviço te interessa?',
-      ],
-    },
-    localizacao: {
-      patterns: ['onde', 'localização', 'endereço'],
-      responses: ['📍 Av. Pedro Álvares Cabral 13, Sintra\n📞 960 172 705'],
-    },
-    horarios: {
-      patterns: ['horário', 'horas', 'quando abrem'],
-      responses: [
-        '⏰ Seg-Sex: 09:00-18:00\n⏰ Sábado: 09:00-13:00\n⏰ Domingo: Fechado',
-      ],
-    },
-    precos: {
-      patterns: ['preço', 'quanto custa', 'orçamento'],
-      responses: [
-        'Orçamento GRATUITO! Clique no WhatsApp para falar conosco ou visite-nos.',
-      ],
-    },
-  };
-
-  const quickReplies = [
-    'Que serviços oferecem?',
-    'Onde estão localizados?',
-    'Horários',
-    'Orçamento',
-  ];
+  // Inicializar mensagens quando o idioma mudar
+  useState(() => {
+    setMessages([
+      {
+        id: 1,
+        text: t.initialMessage,
+        sender: 'bot',
+        timestamp: new Date(),
+      },
+    ]);
+  }, [language]);
 
   const openWhatsApp = () => {
     const message =
-      'Olá! Gostaria de informações sobre os serviços da Street Paint.';
+      language === 'pt'
+        ? 'Olá! Gostaria de informações sobre os serviços da Street Paint.'
+        : 'Hello! I would like information about Street Paint services.';
     const whatsappURL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
       message
     )}`;
@@ -66,7 +42,9 @@ const FloatingButtons = () => {
   const findResponse = userMessage => {
     const message = userMessage.toLowerCase();
 
-    for (const [, data] of Object.entries(knowledgeBase)) {
+    for (const [key, data] of Object.entries(t.knowledgeBase)) {
+      if (key === 'defaultResponse') continue;
+
       if (data.patterns.some(pattern => message.includes(pattern))) {
         return data.responses[
           Math.floor(Math.random() * data.responses.length)
@@ -74,7 +52,7 @@ const FloatingButtons = () => {
       }
     }
 
-    return 'Para informações específicas, clique no WhatsApp abaixo ou ligue 960 172 705!';
+    return t.knowledgeBase.defaultResponse;
   };
 
   const sendMessage = () => {
@@ -129,20 +107,20 @@ const FloatingButtons = () => {
         <button
           className={`floating-btn chatbot-btn ${isChatOpen ? 'active' : ''}`}
           onClick={() => setIsChatOpen(!isChatOpen)}
-          aria-label='Chat'
+          aria-label={t.aria.chat}
         >
           <span className='btn-icon'>{isChatOpen ? '✕' : '💬'}</span>
-          <span className='btn-tooltip'>Chat</span>
+          <span className='btn-tooltip'>{t.tooltips.chat}</span>
         </button>
 
         {/* Botão do WhatsApp - COM LOGO */}
         <button
           className='floating-btn whatsapp-btn'
           onClick={openWhatsApp}
-          aria-label='WhatsApp'
+          aria-label={t.aria.whatsapp}
         >
           <WhatsAppIcon />
-          <span className='btn-tooltip'>WhatsApp</span>
+          <span className='btn-tooltip'>{t.tooltips.whatsapp}</span>
         </button>
       </div>
 
@@ -154,14 +132,14 @@ const FloatingButtons = () => {
             <div className='chat-header-info'>
               <div className='chat-avatar'>SP</div>
               <div>
-                <h4>Assistente Street Paint</h4>
-                <span className='chat-status'>Online • Resposta rápida</span>
+                <h4>{t.chatHeader.title}</h4>
+                <span className='chat-status'>{t.chatHeader.status}</span>
               </div>
             </div>
             <button
               className='chat-close'
               onClick={() => setIsChatOpen(false)}
-              aria-label='Fechar'
+              aria-label={t.aria.close}
             >
               ✕
             </button>
@@ -188,7 +166,7 @@ const FloatingButtons = () => {
 
           {/* Quick Replies */}
           <div className='quick-replies'>
-            {quickReplies.map((reply, index) => (
+            {t.quickReplies.map((reply, index) => (
               <button
                 key={index}
                 className='quick-reply-btn'
@@ -206,7 +184,7 @@ const FloatingButtons = () => {
               value={inputText}
               onChange={e => setInputText(e.target.value)}
               onKeyPress={e => e.key === 'Enter' && sendMessage()}
-              placeholder='Digite sua mensagem...'
+              placeholder={t.inputPlaceholder}
             />
             <button onClick={sendMessage} className='send-btn'>
               ➤
@@ -216,7 +194,7 @@ const FloatingButtons = () => {
           {/* WhatsApp Call-to-Action */}
           <button className='chat-whatsapp-cta' onClick={openWhatsApp}>
             <WhatsAppIcon />
-            Prefere WhatsApp? Clique aqui
+            {t.whatsappCTA}
           </button>
         </div>
       )}

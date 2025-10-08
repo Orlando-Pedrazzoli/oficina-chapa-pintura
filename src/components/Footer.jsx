@@ -1,30 +1,33 @@
-// src/components/Footer.jsx - CORRIGIDO E MELHORADO
+// src/components/Footer.jsx - VERSÃO COM TRADUÇÃO COMPLETA
+import { useLanguage } from '../contexts/LanguageContext';
+import { footerTranslations } from '../translations/footer';
 import './Footer.css';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const { language } = useLanguage();
+
+  // Obter traduções do idioma atual
+  const t = footerTranslations[language];
 
   return (
     <footer className='footer'>
       <div className='footer-container'>
         {/* Coluna 1 - Sobre */}
         <div className='footer-section'>
-          <h3>Street Paint</h3>
-          <p>
-            Especialistas em reparação automóvel com mais de 15 anos de
-            experiência em Sintra e região.
-          </p>
+          <h3>{t.about.title}</h3>
+          <p>{t.about.description}</p>
           <div className='social-links'>
-            <a href='#' aria-label='Facebook' title='Facebook'>
+            <a href='#' aria-label={t.aria.facebook} title={t.aria.facebook}>
               📘
             </a>
-            <a href='#' aria-label='Instagram' title='Instagram'>
+            <a href='#' aria-label={t.aria.instagram} title={t.aria.instagram}>
               📷
             </a>
             <a
               href='https://wa.me/351960172705'
-              aria-label='WhatsApp'
-              title='WhatsApp'
+              aria-label={t.aria.whatsapp}
+              title={t.aria.whatsapp}
               target='_blank'
               rel='noopener noreferrer'
             >
@@ -35,30 +38,30 @@ const Footer = () => {
 
         {/* Coluna 2 - Serviços */}
         <div className='footer-section'>
-          <h4>Serviços</h4>
+          <h4>{t.services.title}</h4>
           <ul>
-            <li>Bate Chapa</li>
-            <li>Pintura Automóvel</li>
-            <li>Martelinho de Ouro</li>
-            <li>Polimento de Óticas</li>
-            <li>Restauração de Volantes</li>
+            {t.services.items.map((item, index) => (
+              <li key={index}>{item}</li>
+            ))}
           </ul>
         </div>
 
         {/* Coluna 3 - Contacto */}
         <div className='footer-section'>
-          <h4>Contacto</h4>
+          <h4>{t.contact.title}</h4>
           <div className='contact-info'>
-            <p>📍 Av. Pedro Álvares Cabral 13, Sintra</p>
-            <p>📞 +351 960 172 705</p>
-            <p>✉️ info@streetpaint.pt</p>
-            <p>🕒 Seg-Sex: 9h-18h | Sáb: 9h-13h</p>
+            <p>{t.contact.address}</p>
+            <p>{t.contact.phone}</p>
+            <p>{t.contact.email}</p>
+            <p>{t.contact.hours}</p>
           </div>
         </div>
       </div>
 
       <div className='footer-bottom'>
-        <p>&copy; {currentYear} Street Paint. Todos os direitos reservados.</p>
+        <p>
+          &copy; {currentYear} {t.about.title}. {t.copyright}
+        </p>
       </div>
     </footer>
   );
