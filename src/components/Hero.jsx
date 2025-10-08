@@ -1,11 +1,18 @@
-// src/components/Hero.jsx - VERSÃO ORIGINAL COM VÍDEO
+// src/components/Hero.jsx - VERSÃO COM TRADUÇÃO COMPLETA
 import { useState, useEffect } from 'react';
-import './Hero.css';
 import { useNavigate } from 'react-router-dom';
+import { useLanguage } from '../contexts/LanguageContext';
+import { heroTranslations } from '../translations/hero';
+import './Hero.css';
 
 const Hero = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const navigate = useNavigate();
+  const { language } = useLanguage();
+
+  // Obter traduções do idioma atual
+  const t = heroTranslations[language];
+
   const goToBudgetEstimator = () => {
     navigate('/orcamento');
   };
@@ -27,7 +34,9 @@ const Hero = () => {
   const handleWhatsAppClick = () => {
     const phoneNumber = '351960172705';
     const message =
-      'Olá! Gostaria de obter mais informações sobre os serviços da Street Paint.';
+      language === 'pt'
+        ? 'Olá! Gostaria de obter mais informações sobre os serviços da Street Paint.'
+        : 'Hello! I would like to get more information about Street Paint services.';
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
       message
     )}`;
@@ -59,21 +68,14 @@ const Hero = () => {
         <div className='container'>
           <div className='hero-text'>
             <h1 className='hero-title'>
-              <span className='title-line'>A Oficina de</span>
-              <span className='title-highlight'>Chapa e Pintura</span>
-              <span className='title-line'>Líder em Portugal</span>
+              <span className='title-line'>{t.titleLine1}</span>
+              <span className='title-highlight'>{t.titleHighlight}</span>
+              <span className='title-line'>{t.titleLine2}</span>
             </h1>
 
-            <p className='hero-subtitle'>
-              Especialistas em reparação automóvel com qualidade premium e
-              preços justos
-            </p>
+            <p className='hero-subtitle'>{t.subtitle}</p>
 
-            <p className='hero-description'>
-              Pintura geral, polimento e Martelinho de ouro. Estufa de pintura
-              nas suas instalações, reparações de pára-choques. Carros Nacionais
-              e Importados. Servindo Sintra e região há mais de 15 anos.
-            </p>
+            <p className='hero-description'>{t.description}</p>
 
             <div className='hero-features'>
               <div
@@ -81,27 +83,31 @@ const Hero = () => {
                 onClick={goToBudgetEstimator}
               >
                 <span className='feature-icon'>🎯</span>
-                <span className='feature-text'>Orçamento Estimado</span>
+                <span className='feature-text'>
+                  {t.features.estimatedBudget}
+                </span>
               </div>
               <div className='feature'>
                 <span className='feature-icon'>🚗</span>
-                <span className='feature-text'>Todas as Marcas</span>
+                <span className='feature-text'>{t.features.allBrands}</span>
               </div>
               <div className='feature'>
                 <span className='feature-icon'>⚡</span>
-                <span className='feature-text'>Serviço Rápido</span>
+                <span className='feature-text'>{t.features.fastService}</span>
               </div>
               <div className='feature'>
                 <span className='feature-icon'>✅</span>
-                <span className='feature-text'>Qualidade Garantida</span>
+                <span className='feature-text'>
+                  {t.features.qualityGuaranteed}
+                </span>
               </div>
               <div className='feature'>
                 <span className='feature-icon'>🛡️</span>
-                <span className='feature-text'>2 Anos de Garantia</span>
+                <span className='feature-text'>{t.features.warranty}</span>
               </div>
               <div className='feature'>
                 <span className='feature-icon'>🏆</span>
-                <span className='feature-text'>Certificação Premium</span>
+                <span className='feature-text'>{t.features.certification}</span>
               </div>
             </div>
 
@@ -110,17 +116,17 @@ const Hero = () => {
             <div className='hero-trust'>
               <div className='trust-item'>
                 <span className='trust-number'>500+</span>
-                <span className='trust-label'>Clientes Satisfeitos</span>
+                <span className='trust-label'>{t.trust.clients}</span>
               </div>
               <div className='trust-divider'>|</div>
               <div className='trust-item'>
                 <span className='trust-number'>15+</span>
-                <span className='trust-label'>Anos de Experiência</span>
+                <span className='trust-label'>{t.trust.experience}</span>
               </div>
               <div className='trust-divider'>|</div>
               <div className='trust-item'>
                 <span className='trust-number'>4.8★</span>
-                <span className='trust-label'>Avaliação Google</span>
+                <span className='trust-label'>{t.trust.rating}</span>
               </div>
             </div>
           </div>
