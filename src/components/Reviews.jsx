@@ -1,10 +1,16 @@
-// src/components/Reviews.jsx - CORRIGIDO SEM BADGE E AUTO-ROTAÇÃO MOBILE
+// src/components/Reviews.jsx - VERSÃO COM TRADUÇÃO COMPLETA
 import { useState, useEffect } from 'react';
+import { useLanguage } from '../contexts/LanguageContext';
+import { reviewsTranslations } from '../translations/reviews';
 import './Reviews.css';
 
 const Reviews = () => {
   const [selectedReview, setSelectedReview] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const { language } = useLanguage();
+
+  // Obter traduções do idioma atual
+  const t = reviewsTranslations[language];
 
   // Reviews reais do Google (sem o campo localGuide)
   const reviews = [
@@ -259,8 +265,8 @@ const Reviews = () => {
     <section className='reviews-section'>
       <div className='container'>
         <div className='reviews-header'>
-          <h2>O Que Dizem Nossos Clientes</h2>
-          <p>Avaliações reais do Google</p>
+          <h2>{t.header.title}</h2>
+          <p>{t.header.subtitle}</p>
         </div>
 
         {/* Estatísticas */}
@@ -270,7 +276,7 @@ const Reviews = () => {
               <span className='rating-number'>{stats.averageRating}</span>
               <div className='stars'>{renderStars(5)}</div>
               <span className='total-reviews'>
-                {stats.totalReviews} avaliações no Google
+                {stats.totalReviews} {t.stats.totalReviews}
               </span>
             </div>
 
@@ -295,7 +301,7 @@ const Reviews = () => {
           </div>
 
           <div className='highlights'>
-            <h4>Mais mencionado:</h4>
+            <h4>{t.stats.highlights}</h4>
             <div className='highlight-tags'>
               {stats.highlights.map((highlight, index) => (
                 <span key={index} className='tag'>
@@ -334,7 +340,7 @@ const Reviews = () => {
                         <div className='review-meta'>
                           <span className='date'>{review.date}</span>
                           {review.verified && (
-                            <span className='verified'>✓ Verificado</span>
+                            <span className='verified'>✓ {t.verified}</span>
                           )}
                         </div>
                       </div>
@@ -348,7 +354,7 @@ const Reviews = () => {
 
                   {review.ownerResponse && (
                     <div className='owner-response'>
-                      <strong>Resposta do proprietário:</strong>
+                      <strong>{t.ownerResponse}</strong>
                       <p>{review.ownerResponse}</p>
                     </div>
                   )}
@@ -364,7 +370,7 @@ const Reviews = () => {
         {/* Indicador de rotação automática - apenas desktop */}
         {!isMobile && (
           <div className='auto-rotation-indicator'>
-            <span>Rotação automática ativa</span>
+            <span>{t.rotation.text}</span>
             <div className='progress-bar'>
               <div className='progress-fill'></div>
             </div>
@@ -373,8 +379,8 @@ const Reviews = () => {
 
         {/* CTA */}
         <div className='reviews-cta'>
-          <h3>Junte-se aos nossos clientes satisfeitos!</h3>
-          <p>Agende seu orçamento gratuito hoje mesmo</p>
+          <h3>{t.cta.title}</h3>
+          <p>{t.cta.subtitle}</p>
           <div className='cta-buttons'>
             <a
               href='https://www.google.com/maps/place/Street+Paint+Bate+Chapa+Pintura+e+Recondicionamento+de+Viaturas/@38.7989,-9.3856,15z/data=!4m6!3m5!1s0x0:0x0!8m2!3d38.7989!4d-9.3856!16s%2Fg%2F11c5q0q0q0'
@@ -382,7 +388,7 @@ const Reviews = () => {
               rel='noopener noreferrer'
               className='btn-secondary'
             >
-              <span>Ver no Google</span>
+              <span>{t.cta.buttons.google}</span>
             </a>
             <button
               className='btn-primary'
@@ -394,7 +400,7 @@ const Reviews = () => {
                 }
               }}
             >
-              <span>Orçamento Gratuito</span>
+              <span>{t.cta.buttons.quote}</span>
             </button>
           </div>
         </div>

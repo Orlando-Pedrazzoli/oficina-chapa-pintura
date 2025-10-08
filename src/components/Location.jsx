@@ -1,54 +1,61 @@
+// src/components/Location.jsx - VERSÃO COM TRADUÇÃO COMPLETA
 import React, { useState } from 'react';
+import { useLanguage } from '../contexts/LanguageContext';
+import { locationTranslations } from '../translations/location';
 import './Location.css';
 
 const Location = () => {
   const [activeTab, setActiveTab] = useState('info');
+  const { language } = useLanguage();
 
-  // Informações da oficina
+  // Obter traduções do idioma atual
+  const t = locationTranslations[language];
+
+  // Informações da oficina (constantes)
   const officineInfo = {
-    name: 'Oficina Street Paint',
-    fullName: 'Street Paint Bate Chapa Pintura e Recondicionamento de Viaturas',
-    address: 'Av. Pedro Álvares Cabral Armazém B13',
-    city: 'Sintra',
-    postalCode: '2710-263',
-    country: 'Portugal',
-    phone: '+351 960 172 705',
+    ...t.officineInfo,
     coordinates: {
       lat: 38.7989,
       lng: -9.3856,
     },
   };
 
+  // Horários de funcionamento
   const businessHours = [
-    { day: 'Segunda-feira', hours: '09:00 - 18:00', isOpen: true },
-    { day: 'Terça-feira', hours: '09:00 - 18:00', isOpen: true },
-    { day: 'Quarta-feira', hours: '09:00 - 18:00', isOpen: true },
-    { day: 'Quinta-feira', hours: '09:00 - 18:00', isOpen: true },
-    { day: 'Sexta-feira', hours: '09:00 - 18:00', isOpen: true },
-    { day: 'Sábado', hours: '09:00 - 13:00', isOpen: true },
-    { day: 'Domingo', hours: 'Fechado', isOpen: false },
-  ];
-
-  const features = [
     {
-      icon: '🚗',
-      title: 'Estacionamento Gratuito',
-      description: 'Amplo espaço para deixar seu veículo',
+      day: t.hours.days.monday,
+      hours: '09:00 - 18:00',
+      isOpen: true,
     },
     {
-      icon: '🔧',
-      title: 'Equipamentos Modernos',
-      description: 'Tecnologia de ponta para melhor resultado',
+      day: t.hours.days.tuesday,
+      hours: '09:00 - 18:00',
+      isOpen: true,
     },
     {
-      icon: '👥',
-      title: 'Equipa Especializada',
-      description: 'Profissionais com anos de experiência',
+      day: t.hours.days.wednesday,
+      hours: '09:00 - 18:00',
+      isOpen: true,
     },
     {
-      icon: '📱',
-      title: 'Fácil Acesso',
-      description: 'Localização conveniente em Sintra',
+      day: t.hours.days.thursday,
+      hours: '09:00 - 18:00',
+      isOpen: true,
+    },
+    {
+      day: t.hours.days.friday,
+      hours: '09:00 - 18:00',
+      isOpen: true,
+    },
+    {
+      day: t.hours.days.saturday,
+      hours: '09:00 - 13:00',
+      isOpen: true,
+    },
+    {
+      day: t.hours.days.sunday,
+      hours: t.hours.closed,
+      isOpen: false,
     },
   ];
 
@@ -97,10 +104,8 @@ const Location = () => {
     <section className='location-section'>
       <div className='container'>
         <div className='location-header'>
-          <h2>Encontre-nos</h2>
-          <p>
-            Visite a nossa oficina em Sintra para um atendimento personalizado
-          </p>
+          <h2>{t.header.title}</h2>
+          <p>{t.header.subtitle}</p>
         </div>
 
         <div className='location-content'>
@@ -116,7 +121,7 @@ const Location = () => {
                 allowFullScreen=''
                 loading='lazy'
                 referrerPolicy='no-referrer-when-downgrade'
-                title='Localização Street Paint'
+                title={t.officineInfo.name}
               ></iframe>
             </div>
 
@@ -134,7 +139,7 @@ const Location = () => {
                     fill='currentColor'
                   />
                 </svg>
-                <span>Google Maps</span>
+                <span>{t.navigation.googleMaps}</span>
               </a>
 
               <a
@@ -153,7 +158,7 @@ const Location = () => {
                     fill='currentColor'
                   />
                 </svg>
-                <span>Waze</span>
+                <span>{t.navigation.waze}</span>
               </a>
 
               <a href={`tel:${officineInfo.phone}`} className='nav-btn phone'>
@@ -163,7 +168,7 @@ const Location = () => {
                     fill='currentColor'
                   />
                 </svg>
-                <span>Ligar</span>
+                <span>{t.navigation.call}</span>
               </a>
             </div>
           </div>
@@ -176,19 +181,19 @@ const Location = () => {
                 className={`tab ${activeTab === 'info' ? 'active' : ''}`}
                 onClick={() => setActiveTab('info')}
               >
-                Informações
+                {t.tabs.info}
               </button>
               <button
                 className={`tab ${activeTab === 'hours' ? 'active' : ''}`}
                 onClick={() => setActiveTab('hours')}
               >
-                Horários
+                {t.tabs.hours}
               </button>
               <button
                 className={`tab ${activeTab === 'features' ? 'active' : ''}`}
                 onClick={() => setActiveTab('features')}
               >
-                Facilidades
+                {t.tabs.features}
               </button>
             </div>
 
@@ -202,7 +207,7 @@ const Location = () => {
                         isCurrentlyOpen() ? 'open' : 'closed'
                       }`}
                     >
-                      {isCurrentlyOpen() ? 'Aberto Agora' : 'Fechado'}
+                      {isCurrentlyOpen() ? t.status.open : t.status.closed}
                     </span>
                   </div>
 
@@ -223,7 +228,7 @@ const Location = () => {
                         />
                       </svg>
                       <div>
-                        <strong>Morada:</strong>
+                        <strong>{t.info.address}</strong>
                         <p>{officineInfo.address}</p>
                         <p>
                           {officineInfo.postalCode} {officineInfo.city}
@@ -245,7 +250,7 @@ const Location = () => {
                         />
                       </svg>
                       <div>
-                        <strong>Telefone:</strong>
+                        <strong>{t.info.phone}</strong>
                         <p>{officineInfo.phone}</p>
                       </div>
                     </div>
@@ -255,7 +260,7 @@ const Location = () => {
 
               {activeTab === 'hours' && (
                 <div className='hours-content'>
-                  <h4>Horários de Funcionamento</h4>
+                  <h4>{t.hours.title}</h4>
                   <div className='hours-list'>
                     {businessHours.map((day, index) => (
                       <div
@@ -267,19 +272,19 @@ const Location = () => {
                       </div>
                     ))}
                   </div>
-                  <p className='hours-note'>
-                    Temos flexibilidade para casos urgentes. Contacte-nos!
-                  </p>
+                  <p className='hours-note'>{t.hours.note}</p>
                 </div>
               )}
 
               {activeTab === 'features' && (
                 <div className='features-content'>
-                  <h4>Facilidades</h4>
+                  <h4>{t.features.title}</h4>
                   <div className='features-list'>
-                    {features.map((feature, index) => (
+                    {t.features.items.map((feature, index) => (
                       <div key={index} className='feature-item'>
-                        <span className='feature-icon'>{feature.icon}</span>
+                        <span className='feature-icon'>
+                          {['🚗', '🔧', '👥', '📱'][index]}
+                        </span>
                         <div>
                           <h5>{feature.title}</h5>
                           <p>{feature.description}</p>
