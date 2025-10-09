@@ -1,5 +1,7 @@
-// src/pages/Contact.jsx
+// src/pages/Contact.jsx - VERSÃO COM TRADUÇÃO COMPLETA
 import { useState } from 'react';
+import { useLanguage } from '../contexts/LanguageContext';
+import { contactTranslations } from '../translations/contact';
 import './Contact.css';
 
 const Contact = () => {
@@ -11,6 +13,10 @@ const Contact = () => {
     message: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { language } = useLanguage();
+
+  // Obter traduções do idioma atual
+  const t = contactTranslations[language];
 
   const handleInputChange = e => {
     const { name, value } = e.target;
@@ -25,13 +31,37 @@ const Contact = () => {
     setIsSubmitting(true);
 
     // Preparar mensagem para WhatsApp
-    let message = `📞 *CONTACTO DO WEBSITE*\n\n`;
-    message += `👤 *Nome:* ${formData.name}\n`;
+    let message =
+      language === 'pt'
+        ? `📞 *CONTACTO DO WEBSITE*\n\n`
+        : `📞 *WEBSITE CONTACT*\n\n`;
+
+    message +=
+      language === 'pt'
+        ? `👤 *Nome:* ${formData.name}\n`
+        : `👤 *Name:* ${formData.name}\n`;
+
     message += `📧 *Email:* ${formData.email}\n`;
-    message += `📱 *Telefone:* ${formData.phone}\n`;
-    message += `📋 *Assunto:* ${formData.subject}\n\n`;
-    message += `💬 *Mensagem:*\n${formData.message}\n\n`;
-    message += `⏰ *Enviado em:* ${new Date().toLocaleString('pt-PT')}`;
+
+    message +=
+      language === 'pt'
+        ? `📱 *Telefone:* ${formData.phone}\n`
+        : `📱 *Phone:* ${formData.phone}\n`;
+
+    message +=
+      language === 'pt'
+        ? `📋 *Assunto:* ${formData.subject}\n\n`
+        : `📋 *Subject:* ${formData.subject}\n\n`;
+
+    message +=
+      language === 'pt'
+        ? `💬 *Mensagem:*\n${formData.message}\n\n`
+        : `💬 *Message:*\n${formData.message}\n\n`;
+
+    message +=
+      language === 'pt'
+        ? `⏰ *Enviado em:* ${new Date().toLocaleString('pt-PT')}`
+        : `⏰ *Sent at:* ${new Date().toLocaleString('en-US')}`;
 
     const encodedMessage = encodeURIComponent(message);
     const whatsappURL = `https://wa.me/351912164220?text=${encodedMessage}`;
@@ -49,9 +79,7 @@ const Contact = () => {
       });
       setIsSubmitting(false);
 
-      alert(
-        'Mensagem preparada! O WhatsApp irá abrir para enviar o seu contacto.'
-      );
+      alert(t.form.alert);
     }, 1500);
   };
 
@@ -59,102 +87,96 @@ const Contact = () => {
     <div className='contact-page'>
       <div className='contact-hero'>
         <div className='container'>
-          <h1>Contacte-nos</h1>
-          <p>
-            Estamos aqui para ajudar com todas as suas necessidades de reparação
-            automóvel
-          </p>
+          <h1>{t.hero.title}</h1>
+          <p>{t.hero.subtitle}</p>
         </div>
       </div>
 
       <div className='container'>
         <div className='contact-content'>
           <div className='contact-info'>
-            <h2>Informações de Contacto</h2>
+            <h2>{t.info.title}</h2>
 
             <div className='contact-methods'>
               <div className='contact-method'>
                 <div className='method-icon'>📍</div>
                 <div className='method-details'>
-                  <h3>Localização</h3>
-                  <p>Lisboa, Portugal</p>
-                  <small>Servimos toda a região de Lisboa</small>
+                  <h3>{t.info.methods.location.title}</h3>
+                  <p>{t.info.methods.location.value}</p>
+                  <small>{t.info.methods.location.description}</small>
                 </div>
               </div>
 
               <div className='contact-method'>
                 <div className='method-icon'>📞</div>
                 <div className='method-details'>
-                  <h3>Telefone</h3>
-                  <p>+351 960 172 705</p>
-                  <small>Segunda a Sexta: 8h-18h</small>
+                  <h3>{t.info.methods.phone.title}</h3>
+                  <p>{t.info.methods.phone.value}</p>
+                  <small>{t.info.methods.phone.description}</small>
                 </div>
               </div>
 
               <div className='contact-method'>
                 <div className='method-icon'>✉️</div>
                 <div className='method-details'>
-                  <h3>Email</h3>
-                  <p>info@chapapinturalisboa.pt</p>
-                  <small>Resposta em 24h</small>
+                  <h3>{t.info.methods.email.title}</h3>
+                  <p>{t.info.methods.email.value}</p>
+                  <small>{t.info.methods.email.description}</small>
                 </div>
               </div>
 
               <div className='contact-method'>
                 <div className='method-icon'>📱</div>
                 <div className='method-details'>
-                  <h3>WhatsApp</h3>
-                  <p>+351 960 172 705</p>
-                  <small>Resposta rápida</small>
+                  <h3>{t.info.methods.whatsapp.title}</h3>
+                  <p>{t.info.methods.whatsapp.value}</p>
+                  <small>{t.info.methods.whatsapp.description}</small>
                 </div>
               </div>
             </div>
 
             <div className='working-hours'>
-              <h3>Horário de Funcionamento</h3>
+              <h3>{t.workingHours.title}</h3>
               <div className='hours-grid'>
                 <div className='hours-day'>
-                  <span className='day'>Segunda-feira</span>
-                  <span className='time'>08:00 - 18:00</span>
+                  <span className='day'>{t.workingHours.days.monday}</span>
+                  <span className='time'>{t.workingHours.times.weekday}</span>
                 </div>
                 <div className='hours-day'>
-                  <span className='day'>Terça-feira</span>
-                  <span className='time'>08:00 - 18:00</span>
+                  <span className='day'>{t.workingHours.days.tuesday}</span>
+                  <span className='time'>{t.workingHours.times.weekday}</span>
                 </div>
                 <div className='hours-day'>
-                  <span className='day'>Quarta-feira</span>
-                  <span className='time'>08:00 - 18:00</span>
+                  <span className='day'>{t.workingHours.days.wednesday}</span>
+                  <span className='time'>{t.workingHours.times.weekday}</span>
                 </div>
                 <div className='hours-day'>
-                  <span className='day'>Quinta-feira</span>
-                  <span className='time'>08:00 - 18:00</span>
+                  <span className='day'>{t.workingHours.days.thursday}</span>
+                  <span className='time'>{t.workingHours.times.weekday}</span>
                 </div>
                 <div className='hours-day'>
-                  <span className='day'>Sexta-feira</span>
-                  <span className='time'>08:00 - 18:00</span>
+                  <span className='day'>{t.workingHours.days.friday}</span>
+                  <span className='time'>{t.workingHours.times.weekday}</span>
                 </div>
                 <div className='hours-day'>
-                  <span className='day'>Sábado</span>
-                  <span className='time'>09:00 - 13:00</span>
+                  <span className='day'>{t.workingHours.days.saturday}</span>
+                  <span className='time'>{t.workingHours.times.saturday}</span>
                 </div>
                 <div className='hours-day'>
-                  <span className='day'>Domingo</span>
-                  <span className='time'>Fechado</span>
+                  <span className='day'>{t.workingHours.days.sunday}</span>
+                  <span className='time'>{t.workingHours.times.closed}</span>
                 </div>
               </div>
             </div>
           </div>
 
           <div className='contact-form-section'>
-            <h2>Envie-nos uma Mensagem</h2>
-            <p>
-              Tem alguma dúvida? Entre em contacto connosco e responderemos o
-              mais rapidamente possível.
-            </p>
+            <h2>{t.form.title}</h2>
+            <p>{t.form.subtitle}</p>
 
             <form className='contact-form' onSubmit={handleSubmit}>
               <div className='form-group'>
-                <label htmlFor='name'>Nome Completo *</label>
+                <label htmlFor='name'>{t.form.fields.name.label} *</label>
                 <input
                   type='text'
                   id='name'
@@ -162,12 +184,12 @@ const Contact = () => {
                   value={formData.name}
                   onChange={handleInputChange}
                   required
-                  placeholder='Seu nome completo'
+                  placeholder={t.form.fields.name.placeholder}
                 />
               </div>
 
               <div className='form-group'>
-                <label htmlFor='email'>Email *</label>
+                <label htmlFor='email'>{t.form.fields.email.label} *</label>
                 <input
                   type='email'
                   id='email'
@@ -175,24 +197,24 @@ const Contact = () => {
                   value={formData.email}
                   onChange={handleInputChange}
                   required
-                  placeholder='seu@email.com'
+                  placeholder={t.form.fields.email.placeholder}
                 />
               </div>
 
               <div className='form-group'>
-                <label htmlFor='phone'>Telefone</label>
+                <label htmlFor='phone'>{t.form.fields.phone.label}</label>
                 <input
                   type='tel'
                   id='phone'
                   name='phone'
                   value={formData.phone}
                   onChange={handleInputChange}
-                  placeholder='+351 912164220'
+                  placeholder={t.form.fields.phone.placeholder}
                 />
               </div>
 
               <div className='form-group'>
-                <label htmlFor='subject'>Assunto *</label>
+                <label htmlFor='subject'>{t.form.fields.subject.label} *</label>
                 <select
                   id='subject'
                   name='subject'
@@ -200,20 +222,30 @@ const Contact = () => {
                   onChange={handleInputChange}
                   required
                 >
-                  <option value=''>Selecione o assunto</option>
-                  <option value='Orçamento'>Pedido de Orçamento</option>
-                  <option value='Informações'>
-                    Informações sobre Serviços
+                  <option value=''>{t.form.fields.subject.placeholder}</option>
+                  <option value={t.form.fields.subject.options.budget}>
+                    {t.form.fields.subject.options.budget}
                   </option>
-                  <option value='Agendamento'>Agendamento</option>
-                  <option value='Reclamação'>Reclamação</option>
-                  <option value='Sugestão'>Sugestão</option>
-                  <option value='Outro'>Outro</option>
+                  <option value={t.form.fields.subject.options.info}>
+                    {t.form.fields.subject.options.info}
+                  </option>
+                  <option value={t.form.fields.subject.options.scheduling}>
+                    {t.form.fields.subject.options.scheduling}
+                  </option>
+                  <option value={t.form.fields.subject.options.complaint}>
+                    {t.form.fields.subject.options.complaint}
+                  </option>
+                  <option value={t.form.fields.subject.options.suggestion}>
+                    {t.form.fields.subject.options.suggestion}
+                  </option>
+                  <option value={t.form.fields.subject.options.other}>
+                    {t.form.fields.subject.options.other}
+                  </option>
                 </select>
               </div>
 
               <div className='form-group full-width'>
-                <label htmlFor='message'>Mensagem *</label>
+                <label htmlFor='message'>{t.form.fields.message.label} *</label>
                 <textarea
                   id='message'
                   name='message'
@@ -221,7 +253,7 @@ const Contact = () => {
                   onChange={handleInputChange}
                   required
                   rows='6'
-                  placeholder='Escreva aqui a sua mensagem...'
+                  placeholder={t.form.fields.message.placeholder}
                 />
               </div>
 
@@ -232,10 +264,11 @@ const Contact = () => {
               >
                 {isSubmitting ? (
                   <>
-                    <div className='spinner'></div>A enviar...
+                    <div className='spinner'></div>
+                    {t.form.submit.sending}
                   </>
                 ) : (
-                  'Enviar Mensagem'
+                  t.form.submit.button
                 )}
               </button>
             </form>
@@ -244,45 +277,23 @@ const Contact = () => {
 
         <div className='emergency-contact'>
           <div className='emergency-content'>
-            <h3>🚨 Contacto de Emergência</h3>
-            <p>
-              Para situações urgentes ou acidentes, contacte-nos imediatamente:
-            </p>
+            <h3>{t.emergency.title}</h3>
+            <p>{t.emergency.subtitle}</p>
             <a href='tel:+351912164220' className='emergency-btn'>
-              📞 Ligar Agora: +351 912164220
+              {t.emergency.button}
             </a>
           </div>
         </div>
 
         <div className='faq-section'>
-          <h3>Perguntas Frequentes</h3>
+          <h3>{t.faq.title}</h3>
           <div className='faq-grid'>
-            <div className='faq-item'>
-              <h4>Quanto tempo demora uma reparação?</h4>
-              <p>
-                Depende da extensão dos danos. Reparações simples podem demorar
-                1-2 dias, enquanto trabalhos mais complexos podem levar uma
-                semana.
-              </p>
-            </div>
-            <div className='faq-item'>
-              <h4>Trabalham com seguradoras?</h4>
-              <p>
-                Sim, trabalhamos com todas as principais companhias de seguro em
-                Portugal.
-              </p>
-            </div>
-            <div className='faq-item'>
-              <h4>Oferecem garantia?</h4>
-              <p>
-                Todos os nossos trabalhos incluem garantia de 2 anos para sua
-                tranquilidade.
-              </p>
-            </div>
-            <div className='faq-item'>
-              <h4>Fazem orçamentos gratuitos?</h4>
-              <p>Sim, todos os orçamentos são gratuitos e sem compromisso.</p>
-            </div>
+            {t.faq.items.map((item, index) => (
+              <div key={index} className='faq-item'>
+                <h4>{item.question}</h4>
+                <p>{item.answer}</p>
+              </div>
+            ))}
           </div>
         </div>
       </div>
