@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 
+                            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+  
+  <!-- Página Principal -->
+  <url>
+    <loc>https://www.streetpaint.pt/</loc>
+    <lastmod>2024-11-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://www.streetpaint.pt/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.streetpaint.pt/?lang=en"/>
+    <image:image>
+      <image:loc>https://www.streetpaint.pt/logo-street-paint.jpg</image:loc>
+      <image:title>Street Paint - Oficina Chapa e Pintura Sintra</image:title>
+      <image:caption>Oficina especializada em reparação automóvel em Sintra</image:caption>
+    </image:image>
+  </url>
+  
+  <!-- Serviços -->
+  <url>
+    <loc>https://www.streetpaint.pt/services</loc>
+    <lastmod>2024-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://www.streetpaint.pt/services"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.streetpaint.pt/services?lang=en"/>
+  </url>
+  
+  <!-- Orçamento Online -->
+  <url>
+    <loc>https://www.streetpaint.pt/orcamento</loc>
+    <lastmod>2024-11-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://www.streetpaint.pt/orcamento"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.streetpaint.pt/orcamento?lang=en"/>
+  </url>
+  
+  <!-- Tipos de Veículos para Orçamento -->
+  <url>
+    <loc>https://www.streetpaint.pt/orcamento/sport</loc>
+    <lastmod>2024-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.streetpaint.pt/orcamento/hatchback</loc>
+    <lastmod>2024-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.streetpaint.pt/orcamento/sedan</loc>
+    <lastmod>2024-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.streetpaint.pt/orcamento/suv</loc>
+    <lastmod>2024-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.streetpaint.pt/orcamento/van</loc>
+    <lastmod>2024-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.streetpaint.pt/orcamento/pickup</loc>
+    <lastmod>2024-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <!-- Contacto -->
+  <url>
+    <loc>https://www.streetpaint.pt/contact</loc>
+    <lastmod>2024-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://www.streetpaint.pt/contact"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.streetpaint.pt/contact?lang=en"/>
+  </url>
+</urlset>
