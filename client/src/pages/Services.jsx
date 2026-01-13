@@ -1,13 +1,31 @@
-// src/pages/Services.jsx - VERSÃO COM TRADUÇÃO COMPLETA
+// src/pages/Services.jsx - VERSÃO COM MONGODB + FALLBACK SEGURO
 import { useLanguage } from '../contexts/LanguageContext';
+import { useServices } from '../hooks/useSiteContent';
 import { servicesTranslations } from '../translations/services';
 import './Services.css';
 
 const Services = () => {
   const { language } = useLanguage();
 
-  // Obter traduções do idioma atual
+  // Buscar serviços do MongoDB
+  const { services: dbServices, loading, error } = useServices();
+
+  // Traduções estáticas (fallback)
   const t = servicesTranslations[language];
+
+  // Usar serviços do MongoDB OU fallback para traduções estáticas
+  // IMPORTANTE: Só usa MongoDB se tiver dados, senão usa estático
+  const services = (dbServices && dbServices.length > 0)
+    ? dbServices
+        .filter(s => s.active !== false) // Só ativos
+        .sort((a, b) => (a.order || 0) - (b.order || 0)) // Ordenar
+        .map(s => ({
+          icon: s.icon || '🔧',
+          title: s.title?.[language] || s.title?.pt || 'Serviço',
+          description: s.description?.[language] || s.description?.pt || '',
+          details: s.details?.[language] || s.details?.pt || [],
+        }))
+    : t.services; // FALLBACK: usa traduções estáticas
 
   return (
     <div className='services-page'>
@@ -19,8 +37,15 @@ const Services = () => {
       </div>
 
       <div className='container'>
+        {/* Loading state - mas mostra conteúdo estático enquanto carrega */}
+        {loading && (
+          <div className='loading-notice'>
+            <small>Carregando...</small>
+          </div>
+        )}
+
         <div className='services-grid'>
-          {t.services.map((service, index) => (
+          {services.map((service, index) => (
             <div key={index} className='service-card'>
               <div className='service-icon'>
                 {service.icon.startsWith('/') ? (

@@ -1,6 +1,7 @@
-// src/components/Orcamento.jsx - VERSÃO COM TRADUÇÃO COMPLETA
+// src/components/Orcamento.jsx - VERSÃO COM DADOS DO MONGODB
 import { useState } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
+import { useSiteContent } from '../hooks/useSiteContent';
 import { orcamentoTranslations } from '../translations/orcamento';
 import './Orcamento.css';
 
@@ -18,10 +19,30 @@ const Orcamento = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { language } = useLanguage();
 
+  // Buscar contactos do MongoDB
+  const { content: dbContacts } = useSiteContent('contact');
+
   // Obter traduções do idioma atual
   const t = orcamentoTranslations[language];
 
-  const WHATSAPP_NUMBER = '351960172705'; // Número real da Street Paint
+  // Helper para obter valor do MongoDB ou fallback
+  const getContact = (key, fallback) => {
+    if (dbContacts && dbContacts[`contact_${key}`]) {
+      const value = dbContacts[`contact_${key}`];
+      if (typeof value === 'object' && value[language]) return value[language];
+      if (typeof value === 'object' && value.pt) return value.pt;
+      if (typeof value === 'string') return value;
+    }
+    return fallback;
+  };
+
+  // Dados de contacto do MongoDB
+  const contactData = {
+    phone: getContact('phone', '+351 960 172 705'),
+    whatsapp: getContact('whatsapp', '351960172705'),
+    address: getContact('address', 'Sintra, Portugal'),
+    schedule: getContact('schedule', 'Seg-Sex: 9h-18h'),
+  };
 
   const handleInputChange = e => {
     const { name, value } = e.target;
@@ -122,19 +143,18 @@ const Orcamento = () => {
         : `\nAutomatically sent by Street Paint website`;
 
     const encodedMessage = encodeURIComponent(message);
-    const whatsappURL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
+    // USA WHATSAPP DO MONGODB
+    const whatsappURL = `https://wa.me/${contactData.whatsapp}?text=${encodedMessage}`;
 
     setTimeout(() => {
       window.open(whatsappURL, '_blank');
 
-      // Mostrar instruções específicas sobre as fotos
       if (selectedFiles.length > 0) {
         alert(t.alerts.successWithPhotos(selectedFiles.length));
       } else {
         alert(t.alerts.successNoPhotos);
       }
 
-      // Reset form
       setFormData({
         firstName: '',
         lastName: '',
@@ -187,14 +207,13 @@ const Orcamento = () => {
             <div className='contact-info'>
               <h4>{t.contact.title}</h4>
               <p>
-                <strong>📍 {t.contact.location}</strong>{' '}
-                {t.contact.locationValue}
+                <strong>📍 {t.contact.location}</strong> {contactData.address}
               </p>
               <p>
-                <strong>📞 {t.contact.phone}</strong> {t.contact.phoneValue}
+                <strong>📞 {t.contact.phone}</strong> {contactData.phone}
               </p>
               <p>
-                <strong>🕒 {t.contact.hours}</strong> {t.contact.hoursValue}
+                <strong>🕒 {t.contact.hours}</strong> {contactData.schedule}
               </p>
             </div>
           </div>

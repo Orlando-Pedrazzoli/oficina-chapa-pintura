@@ -1,8 +1,9 @@
-// src/components/Hero.jsx - VERSÃO COM TRADUÇÃO COMPLETA
+// src/components/Hero.jsx - VERSÃO COM DADOS DO MONGODB
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import { heroTranslations } from '../translations/hero';
+import { useSiteContent } from '../hooks/useSiteContent';
 import './Hero.css';
 
 const Hero = () => {
@@ -10,8 +11,44 @@ const Hero = () => {
   const navigate = useNavigate();
   const { language } = useLanguage();
 
-  // Obter traduções do idioma atual
-  const t = heroTranslations[language];
+  // Buscar conteúdo do MongoDB
+  const { content: dbContent } = useSiteContent('homepage');
+  const { content: dbContacts } = useSiteContent('contact');
+
+  // Fallback para traduções estáticas
+  const staticT = heroTranslations[language];
+
+  // Helper para obter texto do MongoDB
+  const getText = (key, fallback) => {
+    if (dbContent && dbContent[key] && dbContent[key][language]) {
+      return dbContent[key][language];
+    }
+    return fallback;
+  };
+
+  // Helper para obter contacto do MongoDB
+  const getContact = (key, fallback) => {
+    if (dbContacts && dbContacts[`contact_${key}`]) {
+      const value = dbContacts[`contact_${key}`];
+      if (typeof value === 'object' && value.pt) return value.pt;
+      if (typeof value === 'string') return value;
+    }
+    return fallback;
+  };
+
+  // WhatsApp do MongoDB
+  const whatsappNumber = getContact('whatsapp', '351960172705');
+
+  // Textos finais (MongoDB com fallback)
+  const t = {
+    titleLine1: getText('hero_title_line1', staticT.titleLine1),
+    titleHighlight: getText('hero_title_highlight', staticT.titleHighlight),
+    titleLine2: getText('hero_title_line2', staticT.titleLine2),
+    subtitle: getText('hero_subtitle', staticT.subtitle),
+    description: getText('hero_description', staticT.description),
+    features: staticT.features,
+    trust: staticT.trust,
+  };
 
   const goToBudgetEstimator = () => {
     navigate('/orcamento');
@@ -32,14 +69,11 @@ const Hero = () => {
   };
 
   const handleWhatsAppClick = () => {
-    const phoneNumber = '351960172705';
     const message =
       language === 'pt'
         ? 'Olá! Gostaria de obter mais informações sobre os serviços da Street Paint.'
         : 'Hello! I would like to get more information about Street Paint services.';
-    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
-      message
-    )}`;
+    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
 
@@ -55,7 +89,6 @@ const Hero = () => {
           poster='/hero-poster.jpg'
         >
           <source src='/hero-video.mp4' type='video/mp4' />
-          {/* Fallback para imagem se vídeo não carregar */}
           <img
             src='/hero-poster.jpg'
             alt='Street Paint - Oficina de Chapa e Pintura'

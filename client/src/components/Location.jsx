@@ -1,6 +1,7 @@
-// src/components/Location.jsx - VERSÃO COM TRADUÇÃO COMPLETA
+// src/components/Location.jsx - VERSÃO COM DADOS DO MONGODB
 import React, { useState } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
+import { useSiteContent } from '../hooks/useSiteContent';
 import { locationTranslations } from '../translations/location';
 import './Location.css';
 
@@ -8,55 +9,52 @@ const Location = () => {
   const [activeTab, setActiveTab] = useState('info');
   const { language } = useLanguage();
 
+  // Buscar contactos do MongoDB
+  const { content: dbContacts } = useSiteContent('contact');
+
   // Obter traduções do idioma atual
   const t = locationTranslations[language];
 
-  // Informações da oficina (constantes)
+  // Helper para obter valor do MongoDB ou fallback
+  const getContact = (key, fallback) => {
+    if (dbContacts && dbContacts[`contact_${key}`]) {
+      const value = dbContacts[`contact_${key}`];
+      if (typeof value === 'object' && value[language]) return value[language];
+      if (typeof value === 'object' && value.pt) return value.pt;
+      if (typeof value === 'string') return value;
+    }
+    return fallback;
+  };
+
+  // Dados de contacto do MongoDB
+  const contactData = {
+    phone: getContact('phone', '+351 960 172 705'),
+    address: getContact('address', 'Rua da Oficina, 123, Sintra'),
+    schedule: getContact('schedule', 'Seg-Sex: 9h-18h'),
+    weekdayHours: getContact('weekday_hours', '09:00 - 18:00'),
+    saturdayHours: getContact('saturday_hours', 'Encerrado'),
+  };
+
+  // Informações da oficina
   const officineInfo = {
     ...t.officineInfo,
+    address: contactData.address,
+    phone: contactData.phone,
     coordinates: {
       lat: 38.7989,
       lng: -9.3856,
     },
   };
 
-  // Horários de funcionamento
+  // Horários de funcionamento - do MongoDB
   const businessHours = [
-    {
-      day: t.hours.days.monday,
-      hours: '09:00 - 18:00',
-      isOpen: true,
-    },
-    {
-      day: t.hours.days.tuesday,
-      hours: '09:00 - 18:00',
-      isOpen: true,
-    },
-    {
-      day: t.hours.days.wednesday,
-      hours: '09:00 - 18:00',
-      isOpen: true,
-    },
-    {
-      day: t.hours.days.thursday,
-      hours: '09:00 - 18:00',
-      isOpen: true,
-    },
-    {
-      day: t.hours.days.friday,
-      hours: '09:00 - 18:00',
-      isOpen: true,
-    },
-    {
-      day: t.hours.days.saturday,
-      hours: '09:00 - 13:00',
-      isOpen: true,
-    },
-    {
-      day: t.hours.days.sunday,
-      hours: t.hours.closed,
-      isOpen: false,
-    },
+    { day: t.hours.days.monday, hours: contactData.weekdayHours, isOpen: contactData.weekdayHours !== 'Encerrado' && contactData.weekdayHours !== 'Closed' },
+    { day: t.hours.days.tuesday, hours: contactData.weekdayHours, isOpen: contactData.weekdayHours !== 'Encerrado' && contactData.weekdayHours !== 'Closed' },
+    { day: t.hours.days.wednesday, hours: contactData.weekdayHours, isOpen: contactData.weekdayHours !== 'Encerrado' && contactData.weekdayHours !== 'Closed' },
+    { day: t.hours.days.thursday, hours: contactData.weekdayHours, isOpen: contactData.weekdayHours !== 'Encerrado' && contactData.weekdayHours !== 'Closed' },
+    { day: t.hours.days.friday, hours: contactData.weekdayHours, isOpen: contactData.weekdayHours !== 'Encerrado' && contactData.weekdayHours !== 'Closed' },
+    { day: t.hours.days.saturday, hours: contactData.saturdayHours, isOpen: contactData.saturdayHours !== 'Encerrado' && contactData.saturdayHours !== 'Closed' },
+    { day: t.hours.days.sunday, hours: t.hours.closed, isOpen: false },
   ];
 
   // URLs para navegação
@@ -78,23 +76,22 @@ const Location = () => {
   // Função para determinar se está aberto agora
   const isCurrentlyOpen = () => {
     const now = new Date();
-    const currentDay = now.getDay(); // 0 = Domingo, 1 = Segunda, etc.
+    const currentDay = now.getDay();
     const currentHour = now.getHours();
     const currentMinute = now.getMinutes();
     const currentTime = currentHour * 60 + currentMinute;
 
-    // Ajustar para o formato português (Segunda = 0)
     const dayIndex = currentDay === 0 ? 6 : currentDay - 1;
     const todayHours = businessHours[dayIndex];
 
     if (!todayHours.isOpen) return false;
 
-    if (dayIndex === 5) {
-      // Sábado
-      return currentTime >= 540 && currentTime < 780; // 09:00 - 13:00
-    } else if (dayIndex < 5) {
-      // Segunda a Sexta
-      return currentTime >= 540 && currentTime < 1080; // 09:00 - 18:00
+    // Parse hours from string like "09:00 - 18:00"
+    const hoursMatch = todayHours.hours.match(/(\d{2}):(\d{2})\s*-\s*(\d{2}):(\d{2})/);
+    if (hoursMatch) {
+      const openTime = parseInt(hoursMatch[1]) * 60 + parseInt(hoursMatch[2]);
+      const closeTime = parseInt(hoursMatch[3]) * 60 + parseInt(hoursMatch[4]);
+      return currentTime >= openTime && currentTime < closeTime;
     }
 
     return false;
@@ -161,7 +158,7 @@ const Location = () => {
                 <span>{t.navigation.waze}</span>
               </a>
 
-              <a href={`tel:${officineInfo.phone}`} className='nav-btn phone'>
+              <a href={`tel:${officineInfo.phone.replace(/\s/g, '')}`} className='nav-btn phone'>
                 <svg width='20' height='20' viewBox='0 0 24 24' fill='none'>
                   <path
                     d='M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02L6.62 10.79z'
@@ -202,11 +199,7 @@ const Location = () => {
               {activeTab === 'info' && (
                 <div className='info-content'>
                   <div className='status-badge'>
-                    <span
-                      className={`status ${
-                        isCurrentlyOpen() ? 'open' : 'closed'
-                      }`}
-                    >
+                    <span className={`status ${isCurrentlyOpen() ? 'open' : 'closed'}`}>
                       {isCurrentlyOpen() ? t.status.open : t.status.closed}
                     </span>
                   </div>
@@ -216,12 +209,7 @@ const Location = () => {
 
                   <div className='contact-info'>
                     <div className='info-item'>
-                      <svg
-                        width='18'
-                        height='18'
-                        viewBox='0 0 24 24'
-                        fill='none'
-                      >
+                      <svg width='18' height='18' viewBox='0 0 24 24' fill='none'>
                         <path
                           d='M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z'
                           fill='#DC2626'
@@ -229,21 +217,14 @@ const Location = () => {
                       </svg>
                       <div>
                         <strong>{t.info.address}</strong>
-                        <p>{officineInfo.address}</p>
-                        <p>
-                          {officineInfo.postalCode} {officineInfo.city}
-                        </p>
+                        <p>{contactData.address}</p>
+                        <p>{officineInfo.postalCode} {officineInfo.city}</p>
                         <p>{officineInfo.country}</p>
                       </div>
                     </div>
 
                     <div className='info-item'>
-                      <svg
-                        width='18'
-                        height='18'
-                        viewBox='0 0 24 24'
-                        fill='none'
-                      >
+                      <svg width='18' height='18' viewBox='0 0 24 24' fill='none'>
                         <path
                           d='M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02L6.62 10.79z'
                           fill='#DC2626'
@@ -251,7 +232,7 @@ const Location = () => {
                       </svg>
                       <div>
                         <strong>{t.info.phone}</strong>
-                        <p>{officineInfo.phone}</p>
+                        <p>{contactData.phone}</p>
                       </div>
                     </div>
                   </div>
@@ -263,10 +244,7 @@ const Location = () => {
                   <h4>{t.hours.title}</h4>
                   <div className='hours-list'>
                     {businessHours.map((day, index) => (
-                      <div
-                        key={index}
-                        className={`hours-item ${!day.isOpen ? 'closed' : ''}`}
-                      >
+                      <div key={index} className={`hours-item ${!day.isOpen ? 'closed' : ''}`}>
                         <span className='day'>{day.day}</span>
                         <span className='time'>{day.hours}</span>
                       </div>

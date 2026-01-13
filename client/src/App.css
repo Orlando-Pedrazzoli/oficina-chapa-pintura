@@ -33,7 +33,7 @@ body {
   flex: 1;
   padding-top: 0;
   position: relative;
-  z-index: 1;
+  /* REMOVIDO z-index para não criar stacking context que conflita com navbar */
 }
 
 /* Container padrão */

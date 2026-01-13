@@ -1,5 +1,6 @@
-// src/components/Footer.jsx - VERSÃO COM TRADUÇÃO COMPLETA
+// src/components/Footer.jsx - VERSÃO COM DADOS DO MONGODB
 import { useLanguage } from '../contexts/LanguageContext';
+import { useSiteContent } from '../hooks/useSiteContent';
 import { footerTranslations } from '../translations/footer';
 import './Footer.css';
 
@@ -7,8 +8,31 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
   const { language } = useLanguage();
 
-  // Obter traduções do idioma atual
+  // Buscar contactos do MongoDB
+  const { content: dbContacts } = useSiteContent('contact');
+
+  // Obter traduções do idioma atual (fallback)
   const t = footerTranslations[language];
+
+  // Helper para obter valor do MongoDB ou fallback
+  const getContact = (key, fallback) => {
+    if (dbContacts && dbContacts[`contact_${key}`]) {
+      const value = dbContacts[`contact_${key}`];
+      if (typeof value === 'object' && value[language]) return value[language];
+      if (typeof value === 'object' && value.pt) return value.pt;
+      if (typeof value === 'string') return value;
+    }
+    return fallback;
+  };
+
+  // Dados de contacto do MongoDB
+  const contactData = {
+    phone: getContact('phone', '+351 960 172 705'),
+    email: getContact('email', 'info@streetpaint.pt'),
+    whatsapp: getContact('whatsapp', '351960172705'),
+    address: getContact('address', 'Rua da Oficina, 123, Sintra'),
+    schedule: getContact('schedule', 'Seg-Sex: 9h-18h | Sáb: 9h-13h'),
+  };
 
   return (
     <footer className='footer'>
@@ -25,7 +49,7 @@ const Footer = () => {
               📷
             </a>
             <a
-              href='https://wa.me/351960172705'
+              href={`https://wa.me/${contactData.whatsapp}`}
               aria-label={t.aria.whatsapp}
               title={t.aria.whatsapp}
               target='_blank'
@@ -50,10 +74,10 @@ const Footer = () => {
         <div className='footer-section'>
           <h4>{t.contact.title}</h4>
           <div className='contact-info'>
-            <p>{t.contact.address}</p>
-            <p>{t.contact.phone}</p>
-            <p>{t.contact.email}</p>
-            <p>{t.contact.hours}</p>
+            <p>📍 {contactData.address}</p>
+            <p>📞 {contactData.phone}</p>
+            <p>✉️ {contactData.email}</p>
+            <p>🕐 {contactData.schedule}</p>
           </div>
         </div>
       </div>

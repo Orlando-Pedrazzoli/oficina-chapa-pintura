@@ -1,7 +1,8 @@
-// src/components/FloatingButtons.jsx - VERSÃO COM TRADUÇÃO COMPLETA
-import { useState } from 'react';
+// src/components/FloatingButtons.jsx - VERSÃO COM MONGODB
+import { useState, useEffect } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { floatingButtonsTranslations } from '../translations/floatingButtons';
+import { useSiteContent } from '../hooks/useSiteContent';
 import './FloatingButtons.css';
 
 const FloatingButtons = () => {
@@ -11,13 +12,33 @@ const FloatingButtons = () => {
   const [isTyping, setIsTyping] = useState(false);
   const { language } = useLanguage();
 
+  // Buscar contactos do MongoDB
+  const { content: dbContacts } = useSiteContent('contact');
+
   // Obter traduções do idioma atual
   const t = floatingButtonsTranslations[language];
 
-  const WHATSAPP_NUMBER = '351960172705';
+  // Helper para obter contacto do MongoDB
+  const getContact = (key, fallback) => {
+    if (dbContacts && dbContacts[`contact_${key}`]) {
+      const value = dbContacts[`contact_${key}`];
+      if (typeof value === 'object' && value[language]) return value[language];
+      if (typeof value === 'object' && value.pt) return value.pt;
+      if (typeof value === 'string') return value;
+    }
+    return fallback;
+  };
 
-  // Inicializar mensagens quando o idioma mudar
-  useState(() => {
+  // WhatsApp do MongoDB (fallback para hardcoded)
+  const WHATSAPP_NUMBER = getContact('whatsapp', '351960172705');
+
+  // Horários do MongoDB
+  const weekdayHours = getContact('weekday_hours', '09:00 - 18:00');
+  const saturdayHours = getContact('saturday_hours', 'Encerrado');
+  const scheduleDisplay = getContact('schedule', 'Seg-Sex: 9h-18h');
+
+  // Inicializar mensagens quando o componente monta ou idioma muda
+  useEffect(() => {
     setMessages([
       {
         id: 1,
@@ -26,7 +47,7 @@ const FloatingButtons = () => {
         timestamp: new Date(),
       },
     ]);
-  }, [language]);
+  }, [language, t.initialMessage]);
 
   const openWhatsApp = () => {
     const message =
@@ -39,8 +60,38 @@ const FloatingButtons = () => {
     window.open(whatsappURL, '_blank');
   };
 
+  // Função para gerar resposta de horário dinâmica
+  const getScheduleResponse = () => {
+    const isSaturdayClosed = saturdayHours.toLowerCase() === 'encerrado' || 
+                             saturdayHours.toLowerCase() === 'closed' ||
+                             saturdayHours.toLowerCase() === 'fechado';
+    
+    if (language === 'pt') {
+      return `Nosso horário de funcionamento é:\n` +
+             `📅 Segunda a Sexta: ${weekdayHours}\n` +
+             `📅 Sábado: ${isSaturdayClosed ? 'Encerrado' : saturdayHours}\n` +
+             `📅 Domingo: Encerrado\n\n` +
+             `Pode sempre enviar mensagem pelo WhatsApp! 📱`;
+    } else {
+      return `Our business hours are:\n` +
+             `📅 Monday to Friday: ${weekdayHours}\n` +
+             `📅 Saturday: ${isSaturdayClosed ? 'Closed' : saturdayHours}\n` +
+             `📅 Sunday: Closed\n\n` +
+             `You can always send a message via WhatsApp! 📱`;
+    }
+  };
+
   const findResponse = userMessage => {
     const message = userMessage.toLowerCase();
+
+    // Verificar se é pergunta sobre horário
+    const schedulePatterns = language === 'pt' 
+      ? ['horário', 'horario', 'hora', 'aberto', 'fechado', 'funciona', 'abre', 'fecha']
+      : ['hours', 'hour', 'open', 'close', 'schedule', 'time'];
+    
+    if (schedulePatterns.some(pattern => message.includes(pattern))) {
+      return getScheduleResponse();
+    }
 
     for (const [key, data] of Object.entries(t.knowledgeBase)) {
       if (key === 'defaultResponse') continue;
