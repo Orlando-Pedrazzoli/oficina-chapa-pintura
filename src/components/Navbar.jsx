@@ -1,4 +1,4 @@
-// src/components/Navbar.jsx - ATUALIZADO COM SELETOR DE IDIOMA
+// src/components/Navbar.jsx - COM ACESSO ADMIN
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -78,6 +78,11 @@ const Navbar = () => {
     setIsMenuOpen(false);
   };
 
+  const goToAdmin = () => {
+    navigate('/admin/login');
+    setIsMenuOpen(false);
+  };
+
   return (
     <>
       <nav className={`navbar ${isScrolled ? 'scrolled' : 'transparent'}`}>
@@ -131,6 +136,16 @@ const Navbar = () => {
               {t.estimatedBudget}
             </button>
           </div>
+
+          {/* Ícone de Admin - Discreto */}
+          <button 
+            className='admin-access-btn'
+            onClick={goToAdmin}
+            title={t.adminAccess}
+            aria-label={t.adminAccess}
+          >
+            🔒
+          </button>
 
           {/* Seletor de idioma - Visível em desktop */}
           <div className='desktop-language-toggle'>

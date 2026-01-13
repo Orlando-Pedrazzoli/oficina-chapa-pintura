@@ -5,13 +5,15 @@ export const navbarTranslations = {
     services: 'Serviços',
     freeQuote: 'Orçamento Gratuito',
     contact: 'Contacto',
-    estimatedBudget: '🎯 Orçamento Estimado',
+    estimatedBudget: 'Orçamento Estimado',
+    adminAccess: 'Acesso Admin'
   },
   en: {
     home: 'Home',
     services: 'Services',
     freeQuote: 'Free Quote',
     contact: 'Contact',
-    estimatedBudget: '🎯 Estimated Budget',
-  },
+    estimatedBudget: 'Estimated Budget',
+    adminAccess: 'Admin Access'
+  }
 };

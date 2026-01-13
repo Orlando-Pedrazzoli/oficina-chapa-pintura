@@ -427,3 +427,94 @@
     -webkit-transform: translateX(0);
   }
 }
+/* ========================================
+   BOTÃO ADMIN - ULTRA DISCRETO
+   ======================================== */
+
+.admin-access-btn {
+  /* Reset total */
+  all: unset;
+  
+  /* Estilos base */
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  
+  /* Tamanho mínimo */
+  width: 24px !important;
+  height: 24px !important;
+  padding: 0 !important;
+  margin: 0 0 0 12px !important;
+  
+  /* Visual */
+  font-size: 14px !important;
+  line-height: 1 !important;
+  color: rgba(255, 255, 255, 0.35) !important;
+  opacity: 0.5;
+  
+  /* Sem background */
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  
+  /* Transição suave */
+  transition: all 0.2s ease !important;
+}
+
+.admin-access-btn:hover {
+  color: rgba(255, 255, 255, 0.9) !important;
+  opacity: 1 !important;
+  transform: scale(1.15) !important;
+  background: transparent !important;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.3) !important;
+}
+
+.admin-access-btn:active {
+  transform: scale(0.95) !important;
+}
+
+.admin-access-btn:focus-visible {
+  outline: 1px solid rgba(255, 255, 255, 0.4) !important;
+  outline-offset: 3px !important;
+}
+
+/* Mobile - Canto inferior esquerdo */
+@media (max-width: 768px) {
+  .admin-access-btn {
+    position: fixed !important;
+    bottom: 20px !important;
+    left: 20px !important;
+    width: 36px !important;
+    height: 36px !important;
+    margin: 0 !important;
+    
+    background: rgba(0, 0, 0, 0.6) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+    
+    z-index: 999 !important;
+    opacity: 0.7 !important;
+    font-size: 16px !important;
+  }
+
+  .admin-access-btn:hover {
+    background: rgba(0, 0, 0, 0.85) !important;
+    opacity: 1 !important;
+    transform: scale(1.1) !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-access-btn {
+    bottom: 15px !important;
+    left: 15px !important;
+    width: 32px !important;
+    height: 32px !important;
+    font-size: 14px !important;
+  }
+}
