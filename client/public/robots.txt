@@ -1,7 +1,7 @@
 # Street Paint - Robots.txt
 # https://www.streetpaint.pt/
 
-# Permitir todos os bots
+# Permitir todos os bots nas páginas públicas
 User-agent: *
 Allow: /
 Disallow: /api/
@@ -11,17 +11,26 @@ Disallow: /private/
 # Sitemap
 Sitemap: https://www.streetpaint.pt/sitemap.xml
 
-# Crawl-delay para bots específicos
+# Google Bot - Sem delay
 User-agent: Googlebot
+Allow: /
 Crawl-delay: 0
 
+# Google Image Bot
+User-agent: Googlebot-Image
+Allow: /
+
+# Bing Bot
 User-agent: Bingbot
+Allow: /
 Crawl-delay: 0
 
+# Yahoo Bot
 User-agent: Slurp
+Allow: /
 Crawl-delay: 0
 
-# Bloquear bots maliciosos conhecidos
+# Bloquear bots de SEO que consomem recursos
 User-agent: AhrefsBot
 Disallow: /
 
@@ -31,6 +40,18 @@ Disallow: /
 User-agent: SemrushBot
 Crawl-delay: 10
 
-# Permitir indexação de imagens
-User-agent: Googlebot-Image
+User-agent: DotBot
+Disallow: /
+
+User-agent: BLEXBot
+Disallow: /
+
+# Permitir redes sociais
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
 Allow: /

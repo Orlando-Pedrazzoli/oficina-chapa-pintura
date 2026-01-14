@@ -1,218 +1,241 @@
+// server/scripts/seedDatabase.js
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import User from '../models/User.js';
 import PartPrice from '../models/PartPrice.js';
 import Service from '../models/Service.js';
 import SiteContent from '../models/SiteContent.js';
+import User from '../models/User.js';
 
 dotenv.config();
 
-// PREÇOS DAS PEÇAS
-const partPricesData = [
-  { partId: 'para-choque-dianteiro', name: { pt: 'Pára-choques Dianteiro', en: 'Front Bumper' }, prices: { paint: 180, paintAndDent: 380 } },
-  { partId: 'para-choque-traseiro', name: { pt: 'Pára-choques Traseiro', en: 'Rear Bumper' }, prices: { paint: 180, paintAndDent: 380 } },
-  { partId: 'capo', name: { pt: 'Capô', en: 'Hood' }, prices: { paint: 250, paintAndDent: 450 } },
-  { partId: 'porta-dianteira-esquerda', name: { pt: 'Porta Dianteira (Esq.)', en: 'Front Door (Left)' }, prices: { paint: 200, paintAndDent: 400 } },
-  { partId: 'porta-dianteira-direita', name: { pt: 'Porta Dianteira (Dir.)', en: 'Front Door (Right)' }, prices: { paint: 200, paintAndDent: 400 } },
-  { partId: 'porta-traseira-esquerda', name: { pt: 'Porta Traseira (Esq.)', en: 'Rear Door (Left)' }, prices: { paint: 200, paintAndDent: 400 } },
-  { partId: 'porta-traseira-direita', name: { pt: 'Porta Traseira (Dir.)', en: 'Rear Door (Right)' }, prices: { paint: 200, paintAndDent: 400 } },
-  { partId: 'guarda-lamas-dianteiro-esquerdo', name: { pt: 'Guarda-lamas Diant. (Esq.)', en: 'Front Fender (Left)' }, prices: { paint: 150, paintAndDent: 300 } },
-  { partId: 'guarda-lamas-dianteiro-direito', name: { pt: 'Guarda-lamas Diant. (Dir.)', en: 'Front Fender (Right)' }, prices: { paint: 150, paintAndDent: 300 } },
-  { partId: 'ilharga-esquerda', name: { pt: 'Ilharga (Esq.)', en: 'Quarter Panel (Left)' }, prices: { paint: 150, paintAndDent: 300 } },
-  { partId: 'ilharga-direita', name: { pt: 'Ilharga (Dir.)', en: 'Quarter Panel (Right)' }, prices: { paint: 150, paintAndDent: 300 } },
-  { partId: 'mala', name: { pt: 'Tampa da Bagageira', en: 'Trunk Lid' }, prices: { paint: 220, paintAndDent: 420 } },
-  { partId: 'tejadilho', name: { pt: 'Tejadilho', en: 'Roof' }, prices: { paint: 300, paintAndDent: 500 } },
-  { partId: 'retrovisor-esquerdo', name: { pt: 'Retrovisor Esquerdo', en: 'Left Mirror' }, prices: { paint: 80, paintAndDent: 150 } },
-  { partId: 'retrovisor-direito', name: { pt: 'Retrovisor Direito', en: 'Right Mirror' }, prices: { paint: 80, paintAndDent: 150 } },
-  { partId: 'embaladeira-esquerda', name: { pt: 'Embaladeira (Esq.)', en: 'Rocker Panel (Left)' }, prices: { paint: 120, paintAndDent: 250 } },
-  { partId: 'embaladeira-direita', name: { pt: 'Embaladeira (Dir.)', en: 'Rocker Panel (Right)' }, prices: { paint: 120, paintAndDent: 250 } },
-  { partId: 'aileron', name: { pt: 'Aileron', en: 'Spoiler' }, prices: { paint: 100, paintAndDent: 200 } },
+// Dados das peças com preços (18 peças)
+const partPrices = [
+  // Frente
+  { partId: 'hood', namePT: 'Capô', nameEN: 'Hood', paintPrice: 180, paintDentPrice: 280, position: 'front' },
+  { partId: 'front-bumper', namePT: 'Para-choques Frontal', nameEN: 'Front Bumper', paintPrice: 200, paintDentPrice: 300, position: 'front' },
+  { partId: 'front-fender-left', namePT: 'Para-lamas Frontal Esquerdo', nameEN: 'Front Left Fender', paintPrice: 150, paintDentPrice: 250, position: 'front' },
+  { partId: 'front-fender-right', namePT: 'Para-lamas Frontal Direito', nameEN: 'Front Right Fender', paintPrice: 150, paintDentPrice: 250, position: 'front' },
+  
+  // Laterais
+  { partId: 'front-door-left', namePT: 'Porta Frontal Esquerda', nameEN: 'Front Left Door', paintPrice: 180, paintDentPrice: 280, position: 'left' },
+  { partId: 'front-door-right', namePT: 'Porta Frontal Direita', nameEN: 'Front Right Door', paintPrice: 180, paintDentPrice: 280, position: 'right' },
+  { partId: 'rear-door-left', namePT: 'Porta Traseira Esquerda', nameEN: 'Rear Left Door', paintPrice: 180, paintDentPrice: 280, position: 'left' },
+  { partId: 'rear-door-right', namePT: 'Porta Traseira Direita', nameEN: 'Rear Right Door', paintPrice: 180, paintDentPrice: 280, position: 'right' },
+  { partId: 'side-skirt-left', namePT: 'Saia Lateral Esquerda', nameEN: 'Left Side Skirt', paintPrice: 120, paintDentPrice: 200, position: 'left' },
+  { partId: 'side-skirt-right', namePT: 'Saia Lateral Direita', nameEN: 'Right Side Skirt', paintPrice: 120, paintDentPrice: 200, position: 'right' },
+  
+  // Traseira
+  { partId: 'trunk', namePT: 'Mala/Porta-bagagens', nameEN: 'Trunk', paintPrice: 200, paintDentPrice: 300, position: 'back' },
+  { partId: 'rear-bumper', namePT: 'Para-choques Traseiro', nameEN: 'Rear Bumper', paintPrice: 200, paintDentPrice: 300, position: 'back' },
+  { partId: 'rear-fender-left', namePT: 'Para-lamas Traseiro Esquerdo', nameEN: 'Rear Left Fender', paintPrice: 180, paintDentPrice: 280, position: 'back' },
+  { partId: 'rear-fender-right', namePT: 'Para-lamas Traseiro Direito', nameEN: 'Rear Right Fender', paintPrice: 180, paintDentPrice: 280, position: 'back' },
+  
+  // Topo
+  { partId: 'roof', namePT: 'Tejadilho', nameEN: 'Roof', paintPrice: 300, paintDentPrice: 450, position: 'top' },
+  
+  // Espelhos
+  { partId: 'mirror-left', namePT: 'Espelho Esquerdo', nameEN: 'Left Mirror', paintPrice: 50, paintDentPrice: 80, position: 'left' },
+  { partId: 'mirror-right', namePT: 'Espelho Direito', nameEN: 'Right Mirror', paintPrice: 50, paintDentPrice: 80, position: 'right' },
+  
+  // Completo
+  { partId: 'full-car', namePT: 'Carro Completo', nameEN: 'Full Car', paintPrice: 2500, paintDentPrice: 3500, position: 'full' },
 ];
 
-// TODOS OS 9 SERVIÇOS COMPLETOS
-const servicesData = [
+// Dados dos 9 serviços
+const services = [
   {
+    order: 0,
     icon: '/chapa.png',
     title: { pt: 'Bate Chapa', en: 'Auto Body' },
     description: {
-      pt: 'Reparação especializada de chapa e estrutura da viatura com técnicas profissionais de endireitamento.',
-      en: 'Specialized repair of body and vehicle structure with professional straightening techniques.'
+      pt: 'Reparação profissional de carroçaria com técnicas avançadas para restaurar a estrutura original do seu veículo.',
+      en: 'Professional body repair with advanced techniques to restore your vehicle\'s original structure.'
     },
     details: {
-      pt: ['Reparação de estruturas danificadas', 'Soldadura de chapas metálicas', 'Correção de deformações', 'Substituição de painéis', 'Reparação de sinistros'],
-      en: ['Damaged structure repair', 'Metal sheet welding', 'Deformation correction', 'Panel replacement', 'Accident repair']
+      pt: ['Reparação de amolgadelas', 'Substituição de painéis', 'Alinhamento de carroçaria', 'Soldadura especializada'],
+      en: ['Dent repair', 'Panel replacement', 'Body alignment', 'Specialized welding']
     },
-    order: 0,
-    active: true
+    isActive: true
   },
   {
+    order: 1,
     icon: '/martelinho.jpg',
     title: { pt: 'Martelinho de Ouro', en: 'Paintless Dent Repair' },
     description: {
-      pt: 'Técnica especializada para reparação de amolgadelas sem danificar a pintura original.',
-      en: 'Specialized technique for repairing dents without damaging the original paint.'
+      pt: 'Técnica especializada para remover amolgadelas sem danificar a pintura original do veículo.',
+      en: 'Specialized technique to remove dents without damaging the vehicle\'s original paint.'
     },
     details: {
-      pt: ['Reparação sem pintura (PDR)', 'Preserva pintura original', 'Amolgadelas de granizo', 'Danos de estacionamento', 'Resultado invisível'],
-      en: ['Paintless repair (PDR)', 'Preserves original paint', 'Hail dents', 'Parking damage', 'Invisible results']
+      pt: ['Preserva pintura original', 'Processo rápido', 'Custo reduzido', 'Resultado invisível'],
+      en: ['Preserves original paint', 'Quick process', 'Reduced cost', 'Invisible result']
     },
-    order: 1,
-    active: true
+    isActive: true
   },
   {
+    order: 2,
     icon: '/revitalizacao-pintura.jpg',
     title: { pt: 'Revitalização de Pintura', en: 'Paint Restoration' },
     description: {
-      pt: 'Devolva o brilho original à pintura do seu veículo com técnicas profissionais de revitalização.',
-      en: 'Restore the original shine to your vehicle paint with professional restoration techniques.'
+      pt: 'Restauramos o brilho original da pintura do seu carro com polimento profissional e tratamentos especializados.',
+      en: 'We restore the original shine of your car\'s paint with professional polishing and specialized treatments.'
     },
     details: {
-      pt: ['Remoção de riscos superficiais', 'Polimento profissional', 'Correção de oxidação', 'Proteção UV', 'Acabamento espelhado'],
-      en: ['Surface scratch removal', 'Professional polishing', 'Oxidation correction', 'UV protection', 'Mirror finish']
+      pt: ['Polimento técnico', 'Correção de riscos', 'Proteção cerâmica', 'Brilho duradouro'],
+      en: ['Technical polishing', 'Scratch correction', 'Ceramic protection', 'Long-lasting shine']
     },
-    order: 2,
-    active: true
+    isActive: true
   },
   {
+    order: 3,
     icon: '/pintura-interior.jpg',
     title: { pt: 'Pintura de Interior', en: 'Interior Painting' },
     description: {
-      pt: 'Renovação completa do interior do veículo com pintura especializada para plásticos e tecidos.',
-      en: 'Complete interior renovation with specialized painting for plastics and fabrics.'
+      pt: 'Renovação completa das peças interiores do veículo com acabamento de fábrica.',
+      en: 'Complete renovation of vehicle interior parts with factory finish.'
     },
     details: {
-      pt: ['Painéis e consolas', 'Molduras e acabamentos', 'Pintura de plásticos', 'Cores personalizadas', 'Proteção anti-UV'],
-      en: ['Panels and consoles', 'Trims and finishes', 'Plastic painting', 'Custom colors', 'Anti-UV protection']
+      pt: ['Tablier e consolas', 'Painéis de portas', 'Acabamento premium', 'Cores personalizadas'],
+      en: ['Dashboard and consoles', 'Door panels', 'Premium finish', 'Custom colors']
     },
-    order: 3,
-    active: true
+    isActive: true
   },
   {
+    order: 4,
     icon: '/pintura-jante.jpg',
     title: { pt: 'Pintura de Jantes', en: 'Rim Painting' },
     description: {
-      pt: 'Restauração e pintura de jantes com acabamentos especiais e cores personalizadas.',
-      en: 'Restoration and painting of rims with special finishes and custom colors.'
+      pt: 'Transforme o visual do seu carro com pintura profissional de jantes em qualquer cor.',
+      en: 'Transform the look of your car with professional rim painting in any color.'
     },
     details: {
-      pt: ['Preparação completa', 'Primer especializado', 'Cores metalizadas', 'Acabamento mate ou brilhante', 'Proteção anti-corrosão'],
-      en: ['Complete preparation', 'Specialized primer', 'Metallic colors', 'Matte or glossy finish', 'Anti-corrosion protection']
+      pt: ['Qualquer cor disponível', 'Reparação de danos', 'Acabamento brilhante ou mate', 'Proteção duradoura'],
+      en: ['Any color available', 'Damage repair', 'Glossy or matte finish', 'Durable protection']
     },
-    order: 4,
-    active: true
+    isActive: true
   },
   {
+    order: 5,
     icon: '/polimento-otica.jpg',
     title: { pt: 'Polimento de Óticas', en: 'Headlight Polishing' },
     description: {
-      pt: 'Restauração da transparência dos faróis e farolins para melhor visibilidade e estética.',
-      en: 'Restoration of headlight and taillight transparency for better visibility and aesthetics.'
+      pt: 'Restauração completa de faróis oxidados, devolvendo a transparência e melhorando a iluminação.',
+      en: 'Complete restoration of oxidized headlights, restoring transparency and improving lighting.'
     },
     details: {
-      pt: ['Remoção de amarelecimento', 'Polimento profissional', 'Proteção UV', 'Melhora da iluminação', 'Aspeto como novo'],
-      en: ['Yellowing removal', 'Professional polishing', 'UV protection', 'Improved lighting', 'Like-new appearance']
+      pt: ['Remove oxidação', 'Melhora iluminação', 'Aumenta segurança', 'Resultado imediato'],
+      en: ['Removes oxidation', 'Improves lighting', 'Increases safety', 'Immediate result']
     },
-    order: 5,
-    active: true
+    isActive: true
   },
   {
+    order: 6,
     icon: '/restauracao-volante.jpg',
     title: { pt: 'Restauração de Volantes', en: 'Steering Wheel Restoration' },
     description: {
-      pt: 'Renovação completa de volantes em pele, couro ou outros materiais com acabamento profissional.',
-      en: 'Complete renovation of leather, suede or other material steering wheels with professional finishing.'
+      pt: 'Renovação completa de volantes em pele, restaurando o conforto e aparência original.',
+      en: 'Complete renovation of leather steering wheels, restoring comfort and original appearance.'
     },
     details: {
-      pt: ['Reparação de desgaste', 'Retintura de pele/couro', 'Restauração de costuras', 'Acabamentos personalizados', 'Proteção contra desgaste'],
-      en: ['Wear repair', 'Leather/suede re-dyeing', 'Stitch restoration', 'Custom finishes', 'Wear protection']
+      pt: ['Restauro de pele', 'Recosedura', 'Hidratação profunda', 'Personalização'],
+      en: ['Leather restoration', 'Restitching', 'Deep conditioning', 'Customization']
     },
-    order: 6,
-    active: true
+    isActive: true
   },
   {
+    order: 7,
     icon: '/estofo.jpg',
     title: { pt: 'Limpeza de Estofos', en: 'Upholstery Cleaning' },
     description: {
-      pt: 'Limpeza profunda e tratamento de estofos em tecido, pele e outros materiais.',
-      en: 'Deep cleaning and treatment of upholstery in fabric, leather and other materials.'
+      pt: 'Limpeza profunda de estofos e interiores, eliminando manchas e odores indesejados.',
+      en: 'Deep cleaning of upholstery and interiors, eliminating stains and unwanted odors.'
     },
     details: {
-      pt: ['Limpeza a vapor', 'Remoção de nódoas', 'Tratamento anti-bacteriano', 'Proteção de tecidos', 'Desodorização profissional'],
-      en: ['Steam cleaning', 'Stain removal', 'Anti-bacterial treatment', 'Fabric protection', 'Professional deodorization']
+      pt: ['Limpeza a vapor', 'Remove manchas difíceis', 'Elimina odores', 'Higienização completa'],
+      en: ['Steam cleaning', 'Removes tough stains', 'Eliminates odors', 'Complete sanitization']
     },
-    order: 7,
-    active: true
+    isActive: true
   },
   {
+    order: 8,
     icon: '/pintura-de-carro.jpg',
     title: { pt: 'Pintura Completa', en: 'Complete Painting' },
     description: {
-      pt: 'Pintura total do veículo com preparação completa e acabamentos de qualidade premium.',
-      en: 'Full vehicle painting with complete preparation and premium quality finishes.'
+      pt: 'Pintura total do veículo com acabamento de fábrica e garantia de qualidade.',
+      en: 'Total vehicle painting with factory finish and quality guarantee.'
     },
     details: {
-      pt: ['Preparação total da carroçaria', 'Primer de alta qualidade', 'Pintura em cabine', 'Verniz de proteção', 'Garantia de qualidade'],
-      en: ['Complete body preparation', 'High-quality primer', 'Booth painting', 'Protective varnish', 'Quality guarantee']
+      pt: ['Preparação completa', 'Tinta de alta qualidade', 'Acabamento premium', 'Garantia incluída'],
+      en: ['Complete preparation', 'High quality paint', 'Premium finish', 'Warranty included']
     },
-    order: 8,
-    active: true
+    isActive: true
   }
 ];
 
-// CONTEÚDO DO SITE - CONTACTOS E HORÁRIOS
-const siteContentData = [
-  // CONTACTOS
+// Conteúdo do site (contactos) - SÁBADO FECHADO
+const siteContents = [
   { key: 'contact_phone', section: 'contact', content: { pt: '+351 960 172 705', en: '+351 960 172 705' } },
   { key: 'contact_email', section: 'contact', content: { pt: 'info@streetpaint.pt', en: 'info@streetpaint.pt' } },
-  { key: 'contact_whatsapp', section: 'contact', content: { pt: '351960172705', en: '351960172705' } },
-  { key: 'contact_address', section: 'contact', content: { pt: 'Rua da Oficina, 123, Sintra', en: 'Rua da Oficina, 123, Sintra' } },
-  
-  // HORÁRIOS
+  { key: 'contact_whatsapp', section: 'contact', content: '351960172705' },
+  { key: 'contact_address', section: 'contact', content: { pt: 'Av. Pedro Álvares Cabral 13, Armazém B13, 2710-263 Sintra', en: 'Av. Pedro Álvares Cabral 13, Warehouse B13, 2710-263 Sintra' } },
   { key: 'contact_schedule', section: 'contact', content: { pt: 'Seg-Sex: 9h-18h', en: 'Mon-Fri: 9am-6pm' } },
   { key: 'contact_weekday_hours', section: 'contact', content: { pt: '09:00 - 18:00', en: '09:00 - 18:00' } },
   { key: 'contact_saturday_hours', section: 'contact', content: { pt: 'Encerrado', en: 'Closed' } },
 ];
 
-const seedDatabase = async () => {
+// Admin user
+const adminUser = {
+  username: 'admin',
+  password: 'streetpaint2024',
+};
+
+async function seedDatabase() {
   try {
     await mongoose.connect(process.env.MONGODB_URI);
-    console.log('✅ Conectado ao MongoDB');
+    console.log('✅ MongoDB conectado');
 
-    // Limpar dados
-    await User.deleteMany({});
+    // Limpar dados existentes
     await PartPrice.deleteMany({});
     await Service.deleteMany({});
     await SiteContent.deleteMany({});
-    console.log('🗑️  Dados antigos removidos');
+    console.log('🗑️ Dados antigos removidos');
 
-    // Criar admin
-    await User.create({ username: 'admin', password: 'admin123' });
-    console.log('👤 Admin criado');
+    // Inserir preços das peças
+    await PartPrice.insertMany(partPrices);
+    console.log(`✅ ${partPrices.length} preços de peças inseridos`);
 
-    // Criar preços
-    await PartPrice.insertMany(partPricesData);
-    console.log('💰 Preços criados (18 peças)');
+    // Inserir serviços
+    await Service.insertMany(services);
+    console.log(`✅ ${services.length} serviços inseridos`);
 
-    // Criar serviços
-    await Service.insertMany(servicesData);
-    console.log('🔧 Serviços criados (9 serviços)');
+    // Inserir conteúdos do site
+    await SiteContent.insertMany(siteContents);
+    console.log(`✅ ${siteContents.length} conteúdos do site inseridos`);
 
-    // Criar conteúdo
-    await SiteContent.insertMany(siteContentData);
-    console.log('📝 Conteúdo criado (contactos + horários)');
+    // Verificar se admin existe, se não, criar
+    const existingAdmin = await User.findOne({ username: adminUser.username });
+    if (!existingAdmin) {
+      await User.create(adminUser);
+      console.log('✅ Utilizador admin criado');
+    } else {
+      console.log('ℹ️ Utilizador admin já existe');
+    }
 
-    console.log('\n═══════════════════════════════════════');
-    console.log('✅ Database populada com sucesso!');
-    console.log('═══════════════════════════════════════');
-    console.log('📝 Login: admin / admin123');
-    console.log('🌐 Admin: http://localhost:5173/admin/login');
-    console.log('═══════════════════════════════════════');
-    
+    console.log('\n🎉 Base de dados populada com sucesso!');
+    console.log('📊 Resumo:');
+    console.log(`   - ${partPrices.length} preços de peças`);
+    console.log(`   - ${services.length} serviços`);
+    console.log(`   - ${siteContents.length} conteúdos (contactos)`);
+    console.log(`   - 1 utilizador admin`);
+    console.log('\n⏰ Horário configurado:');
+    console.log('   - Segunda a Sexta: 09:00 - 18:00');
+    console.log('   - Sábado: FECHADO');
+    console.log('   - Domingo: FECHADO');
+
     process.exit(0);
   } catch (error) {
-    console.error('❌ Erro:', error);
+    console.error('❌ Erro ao popular base de dados:', error);
     process.exit(1);
   }
-};
+}
 
 seedDatabase();

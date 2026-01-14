@@ -11,17 +11,17 @@ export const contactTranslations = {
       methods: {
         location: {
           title: 'Localização',
-          value: 'Lisboa, Portugal',
+          value: 'Sintra, Portugal',
           description: 'Servimos toda a região de Lisboa',
         },
         phone: {
           title: 'Telefone',
           value: '+351 960 172 705',
-          description: 'Segunda a Sexta: 8h-18h',
+          description: 'Segunda a Sexta: 9h-18h',
         },
         email: {
           title: 'Email',
-          value: 'info@chapapinturalisboa.pt',
+          value: 'info@streetpaint.pt',
           description: 'Resposta em 24h',
         },
         whatsapp: {
@@ -43,8 +43,8 @@ export const contactTranslations = {
         sunday: 'Domingo',
       },
       times: {
-        weekday: '08:00 - 18:00',
-        saturday: '09:00 - 13:00',
+        weekday: '09:00 - 18:00',
+        saturday: 'Fechado',
         closed: 'Fechado',
       },
     },
@@ -63,7 +63,7 @@ export const contactTranslations = {
         },
         phone: {
           label: 'Telefone',
-          placeholder: '+351 912164220',
+          placeholder: '+351 912345678',
         },
         subject: {
           label: 'Assunto',
@@ -93,7 +93,7 @@ export const contactTranslations = {
       title: '🚨 Contacto de Emergência',
       subtitle:
         'Para situações urgentes ou acidentes, contacte-nos imediatamente:',
-      button: '📞 Ligar Agora: +351 912164220',
+      button: '📞 Ligar Agora',
     },
     faq: {
       title: 'Perguntas Frequentes',
@@ -117,6 +117,10 @@ export const contactTranslations = {
           question: 'Fazem orçamentos gratuitos?',
           answer: 'Sim, todos os orçamentos são gratuitos e sem compromisso.',
         },
+        {
+          question: 'Qual o horário de funcionamento?',
+          answer: 'Estamos abertos de Segunda a Sexta das 9h às 18h. Sábados e Domingos estamos encerrados.',
+        },
       ],
     },
   },
@@ -130,17 +134,17 @@ export const contactTranslations = {
       methods: {
         location: {
           title: 'Location',
-          value: 'Lisbon, Portugal',
+          value: 'Sintra, Portugal',
           description: 'We serve the entire Lisbon region',
         },
         phone: {
           title: 'Phone',
           value: '+351 960 172 705',
-          description: 'Monday to Friday: 8am-6pm',
+          description: 'Monday to Friday: 9am-6pm',
         },
         email: {
           title: 'Email',
-          value: 'info@chapapinturalisboa.pt',
+          value: 'info@streetpaint.pt',
           description: 'Response within 24h',
         },
         whatsapp: {
@@ -162,8 +166,8 @@ export const contactTranslations = {
         sunday: 'Sunday',
       },
       times: {
-        weekday: '08:00 - 18:00',
-        saturday: '09:00 - 13:00',
+        weekday: '09:00 - 18:00',
+        saturday: 'Closed',
         closed: 'Closed',
       },
     },
@@ -182,7 +186,7 @@ export const contactTranslations = {
         },
         phone: {
           label: 'Phone',
-          placeholder: '+351 912164220',
+          placeholder: '+351 912345678',
         },
         subject: {
           label: 'Subject',
@@ -210,7 +214,7 @@ export const contactTranslations = {
     emergency: {
       title: '🚨 Emergency Contact',
       subtitle: 'For urgent situations or accidents, contact us immediately:',
-      button: '📞 Call Now: +351 912164220',
+      button: '📞 Call Now',
     },
     faq: {
       title: 'Frequently Asked Questions',
@@ -233,6 +237,10 @@ export const contactTranslations = {
         {
           question: 'Do you provide free quotes?',
           answer: 'Yes, all quotes are free and without obligation.',
+        },
+        {
+          question: 'What are your business hours?',
+          answer: 'We are open Monday to Friday from 9am to 6pm. Saturdays and Sundays we are closed.',
         },
       ],
     },

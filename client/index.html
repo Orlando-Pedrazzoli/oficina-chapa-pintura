@@ -167,10 +167,19 @@
           {
             "@type": "OpeningHoursSpecification",
             "dayOfWeek": "Saturday",
-            "opens": "09:00",
-            "closes": "13:00"
+            "opens": "00:00",
+            "closes": "00:00",
+            "description": "Fechado"
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": "Sunday",
+            "opens": "00:00",
+            "closes": "00:00",
+            "description": "Fechado"
           }
         ],
+        "specialOpeningHoursSpecification": [],
         "priceRange": "€€",
         "paymentAccepted": [
           "Cash",
@@ -241,6 +250,30 @@
                 "name": "Polimento de Óticas",
                 "description": "Restauração de faróis e farolins"
               }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Pintura de Jantes",
+                "description": "Pintura e restauração de jantes em qualquer cor"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Restauração de Volantes",
+                "description": "Restauração completa de volantes em pele"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Limpeza de Estofos",
+                "description": "Limpeza profunda de estofos e interiores"
+              }
             }
           ]
         },
@@ -303,6 +336,12 @@
             "position": 3,
             "name": "Orçamento",
             "item": "https://www.streetpaint.pt/orcamento"
+          },
+          {
+            "@type": "ListItem",
+            "position": 4,
+            "name": "Contacto",
+            "item": "https://www.streetpaint.pt/contact"
           }
         ]
       }
@@ -337,8 +376,44 @@
               "@type": "Answer",
               "text": "Todos os nossos trabalhos incluem garantia de 2 anos para sua tranquilidade."
             }
+          },
+          {
+            "@type": "Question",
+            "name": "Qual o horário de funcionamento da Street Paint?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Estamos abertos de Segunda a Sexta-feira das 09:00 às 18:00. Sábados e Domingos estamos encerrados."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Fazem orçamentos gratuitos?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Sim, todos os orçamentos são gratuitos e sem compromisso. Pode pedir online ou visitar-nos na oficina."
+            }
           }
         ]
+      }
+    </script>
+
+    <!-- LocalBusiness with Hours Schema (redundância para garantir) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "Street Paint Sintra",
+        "openingHours": [
+          "Mo-Fr 09:00-18:00"
+        ],
+        "telephone": "+351960172705",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Av. Pedro Álvares Cabral 13",
+          "addressLocality": "Sintra",
+          "postalCode": "2710-263",
+          "addressCountry": "PT"
+        }
       }
     </script>
   </head>
