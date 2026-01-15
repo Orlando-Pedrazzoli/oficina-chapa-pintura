@@ -159,7 +159,7 @@
 }
 
 .cookie-toggle input:checked + .toggle-slider {
-  background-color: #48bb78;
+  background-color: #bb4848;
 }
 
 .cookie-toggle input:checked + .toggle-slider:before {
@@ -173,7 +173,7 @@
 
 .cookie-toggle.disabled .toggle-slider {
   cursor: not-allowed;
-  background-color: #48bb78;
+  background-color: #bb4848;
 }
 
 /* Ações Detalhadas */
@@ -200,12 +200,12 @@
 .btn-accept {
   background: linear-gradient(135deg, #48bb78, #38a169);
   color: white;
-  box-shadow: 0 4px 12px rgba(72, 187, 120, 0.4);
+  box-shadow: 0 4px 12px rgba(187, 72, 72, 0.4);
 }
 
 .btn-accept:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(72, 187, 120, 0.5);
+  box-shadow: 0 6px 16px rgba(187, 72, 72, 0.5);
 }
 
 .btn-reject {
