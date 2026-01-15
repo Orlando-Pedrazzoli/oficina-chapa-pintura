@@ -159,7 +159,7 @@
 }
 
 .cookie-toggle input:checked + .toggle-slider {
-  background-color: #bb4848;
+  background-color: #dc2626;
 }
 
 .cookie-toggle input:checked + .toggle-slider:before {
@@ -173,7 +173,7 @@
 
 .cookie-toggle.disabled .toggle-slider {
   cursor: not-allowed;
-  background-color: #bb4848;
+  background-color: #dc2626;
 }
 
 /* Ações Detalhadas */
@@ -198,14 +198,15 @@
 }
 
 .btn-accept {
-  background: linear-gradient(135deg, #48bb78, #38a169);
+  background: linear-gradient(135deg, #dc2626, #b91c1c);
   color: white;
-  box-shadow: 0 4px 12px rgba(187, 72, 72, 0.4);
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
 }
 
 .btn-accept:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(187, 72, 72, 0.5);
+  box-shadow: 0 6px 16px rgba(220, 38, 38, 0.5);
+  background: linear-gradient(135deg, #ef4444, #dc2626);
 }
 
 .btn-reject {
@@ -229,14 +230,15 @@
 }
 
 .btn-save {
-  background: linear-gradient(135deg, #4299e1, #3182ce);
+  background: linear-gradient(135deg, #dc2626, #b91c1c);
   color: white;
-  box-shadow: 0 4px 12px rgba(66, 153, 225, 0.4);
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
 }
 
 .btn-save:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(66, 153, 225, 0.5);
+  box-shadow: 0 6px 16px rgba(220, 38, 38, 0.5);
+  background: linear-gradient(135deg, #ef4444, #dc2626);
 }
 
 /* Footer */
@@ -248,7 +250,7 @@
 }
 
 .cookie-link {
-  color: #4299e1;
+  color: #dc2626;
   text-decoration: none;
   font-size: 13px;
   font-weight: 600;
@@ -256,7 +258,7 @@
 }
 
 .cookie-link:hover {
-  color: #3182ce;
+  color: #b91c1c;
   text-decoration: underline;
 }
 
