@@ -4,6 +4,7 @@ import ScrollToTop from './components/ScrollToTop';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import FloatingButtons from './components/FloatingButtons';
+import CookieConsent from './components/CookieConsent'; // ADICIONAR
 
 // Pages
 import Homepage from './pages/Homepage';
@@ -41,6 +42,7 @@ function App() {
               </Routes>
               <Footer />
               <FloatingButtons />
+              <CookieConsent /> {/* ADICIONAR AQUI */}
             </>
           } />
         </Routes>
