@@ -4,7 +4,7 @@ import ScrollToTop from './components/ScrollToTop';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import FloatingButtons from './components/FloatingButtons';
-import CookieConsent from './components/CookieConsent'; // ADICIONAR
+import CookieConsent from './components/CookieConsent';
 
 // Pages
 import Homepage from './pages/Homepage';
@@ -12,6 +12,7 @@ import Services from './pages/Services';
 import Contact from './pages/Contact';
 import BudgetEstimator from './pages/BudgetEstimator';
 import BudgetDetails from './pages/BudgetDetails';
+import PrivacyPolicy from './pages/PrivacyPolicy'; // ADICIONAR
 
 // Admin Pages
 import AdminLogin from './pages/Admin/Login';
@@ -39,10 +40,11 @@ function App() {
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/orcamento" element={<BudgetEstimator />} />
                 <Route path="/orcamento/:carType" element={<BudgetDetails />} />
+                <Route path="/privacy-policy" element={<PrivacyPolicy />} /> {/* ADICIONAR */}
               </Routes>
               <Footer />
               <FloatingButtons />
-              <CookieConsent /> {/* ADICIONAR AQUI */}
+              <CookieConsent />
             </>
           } />
         </Routes>

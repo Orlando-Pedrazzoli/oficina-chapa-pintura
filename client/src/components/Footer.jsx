@@ -1,4 +1,4 @@
-// src/components/Footer.jsx - VERSÃO COM DADOS DO MONGODB
+import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useSiteContent } from '../hooks/useSiteContent';
 import { footerTranslations } from '../translations/footer';
@@ -7,14 +7,9 @@ import './Footer.css';
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   const { language } = useLanguage();
-
-  // Buscar contactos do MongoDB
   const { content: dbContacts } = useSiteContent('contact');
-
-  // Obter traduções do idioma atual (fallback)
   const t = footerTranslations[language];
 
-  // Helper para obter valor do MongoDB ou fallback
   const getContact = (key, fallback) => {
     if (dbContacts && dbContacts[`contact_${key}`]) {
       const value = dbContacts[`contact_${key}`];
@@ -25,7 +20,6 @@ const Footer = () => {
     return fallback;
   };
 
-  // Dados de contacto do MongoDB
   const contactData = {
     phone: getContact('phone', '+351 960 172 705'),
     email: getContact('email', 'info@streetpaint.pt'),
@@ -37,30 +31,15 @@ const Footer = () => {
   return (
     <footer className='footer'>
       <div className='footer-container'>
-        {/* Coluna 1 - Sobre */}
         <div className='footer-section'>
           <h3>{t.about.title}</h3>
           <p>{t.about.description}</p>
           <div className='social-links'>
-            <a href='#' aria-label={t.aria.facebook} title={t.aria.facebook}>
-              📘
-            </a>
-            <a href='#' aria-label={t.aria.instagram} title={t.aria.instagram}>
-              📷
-            </a>
-            <a
-              href={`https://wa.me/${contactData.whatsapp}`}
-              aria-label={t.aria.whatsapp}
-              title={t.aria.whatsapp}
-              target='_blank'
-              rel='noopener noreferrer'
-            >
-              📱
-            </a>
+            <a href='#' aria-label={t.aria.facebook} title={t.aria.facebook}>📘</a>
+            <a href='#' aria-label={t.aria.instagram} title={t.aria.instagram}>📷</a>
+            <a href={`https://wa.me/${contactData.whatsapp}`} aria-label={t.aria.whatsapp} title={t.aria.whatsapp} target='_blank' rel='noopener noreferrer'>📱</a>
           </div>
         </div>
-
-        {/* Coluna 2 - Serviços */}
         <div className='footer-section'>
           <h4>{t.services.title}</h4>
           <ul>
@@ -69,8 +48,6 @@ const Footer = () => {
             ))}
           </ul>
         </div>
-
-        {/* Coluna 3 - Contacto */}
         <div className='footer-section'>
           <h4>{t.contact.title}</h4>
           <div className='contact-info'>
@@ -81,11 +58,13 @@ const Footer = () => {
           </div>
         </div>
       </div>
-
       <div className='footer-bottom'>
-        <p>
-          &copy; {currentYear} {t.about.title}. {t.copyright}
-        </p>
+        <p>&copy; {currentYear} {t.about.title}. {t.copyright}</p>
+        <div className='footer-links'>
+          <Link to='/privacy-policy' className='footer-link'>
+            {language === 'pt' ? 'Política de Privacidade' : 'Privacy Policy'}
+          </Link>
+        </div>
       </div>
     </footer>
   );
